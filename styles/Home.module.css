@@ -1,9 +1,11 @@
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
+  padding: 30px;
+}
+
+.movie_grid {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0px;
+
 }
