@@ -1,5 +1,6 @@
-import Image from 'next/image'
+
 import styles from '../styles/Home.module.css'
+import Trending from '../components/trending'
 
 export async function getStaticProps () {
   const baseURL = "https://api.themoviedb.org/3/"
@@ -35,18 +36,7 @@ export default function Home({movies}) {
   return (
     <div className={styles.container}>
       <h1>🍿Popcorn</h1>
-      <ul className={styles.movie_grid}>
-        {
-          movies.map( movie => {
-            return (
-              <li key={movie.id}>
-                <Image src={movie.image} alt={movie.title} width="185" height="278"/>
-                {/* {movie.title} */}
-              </li>
-            )
-          })
-        }
-      </ul>
+      <Trending movies={movies} />
     </div>
   )
 }
