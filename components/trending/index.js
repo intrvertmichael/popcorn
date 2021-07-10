@@ -16,7 +16,7 @@ const Trending = ({movies}) => {
 
     return (
         <>
-            <h3>Trending Movies</h3>
+            <h3>Trending this week</h3>
             <ul className={styles.movie_grid}>
                 { trendingMovies }
             </ul>

@@ -11,7 +11,7 @@ export async function getStaticProps () {
 
   const movies = data.results.map( movie => {
 
-    const imagePath = `https://image.tmdb.org/t/p/w185_and_h278_bestv2${movie.poster_path}`
+    const imagePath = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
 
     return {
       id: movie.id,

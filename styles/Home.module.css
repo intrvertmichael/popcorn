@@ -1,7 +1,5 @@
 .container {
   padding: 30px;
-  width: 900px;
-  margin: auto;
 }
 
 .movie_grid {
@@ -9,9 +7,7 @@
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0px;
-
 }
 
 .movie_grid li {
-  width: 150px;
 }
