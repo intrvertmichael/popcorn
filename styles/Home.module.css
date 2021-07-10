@@ -1,5 +1,8 @@
 .container {
-  padding: 30px;
+  padding: 75px 50px 1000px;
+  background: linear-gradient( transparent 0%, black 75px);
+  margin-top: -75px;
+  position: relative;
 }
 
 .movie_grid {
@@ -7,7 +10,13 @@
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0px;
+  margin: 0px;
 }
 
 .movie_grid li {
+  width: 12.5%;
+}
+
+.movie_grid a {
+  display: flex;
 }

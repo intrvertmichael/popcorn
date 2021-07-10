@@ -38,26 +38,21 @@ export const getStaticProps = async (context) => {
 }
 
 const MovieDetails = ({movie, images}) => {
-    // console.log(movie)
-    // console.log(images.backdrops)
+
     let altPics
     if(images){
         altPics = images.backdrops.map( (img, key) => {
-            console.log(img)
+
             const w = img.width.toString()
             const h = img.height.toString()
 
             const altImage = `https://image.tmdb.org/t/p/original/${img.file_path}`
-
-            console.log(altImage)
 
             return <Image key={key} src={altImage} width={960} height={540} alt={key}/>
         })
     }
 
     const image = `https://image.tmdb.org/t/p/w185_and_h278_bestv2${movie.poster_path}`
-
-    const backdrop = `https://image.tmdb.org/t/p/w185_and_h278_bestv2${movie.backdrop_path}`
 
     const genres = movie.genres.map( g => {
         return <li key={g.id}> {g.name} </li>
@@ -85,8 +80,6 @@ const MovieDetails = ({movie, images}) => {
             <ul>{genres}</ul>
 
             <Image src={image} alt={movie.title} width="185" height="278"/>
-            <Image src={backdrop} alt={movie.id} width="185" height="278"/>
-
 
             {
                 altPics?
