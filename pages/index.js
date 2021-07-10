@@ -29,10 +29,6 @@ export async function getStaticProps () {
 
 
 export default function Home({movies}) {
-
-  console.log(movies)
-  console.log("movies")
-
   return (
     <div className={styles.container}>
       <h1>🍿Popcorn</h1>
