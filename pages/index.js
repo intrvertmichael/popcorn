@@ -33,10 +33,26 @@ export default function Home({movies}) {
     <>
       <Trending movies={movies} />
       <div className={styles.container}>
-        <div className="title">
-          <h1>🍿Popcorn</h1>
-          <h2>What should we watch?</h2>
+        <div className={styles.title}>
+          <div>
+            <h1>🍿Popcorn</h1>
+            <h2>Find what to watch</h2>
+          </div>
+
+          <div>
+            <h3>Sign Up</h3>
+            <h3>Log In</h3>
+          </div>
         </div>
+
+        <div className={styles.genre_verbs}>
+          <h2>I want to see a movie that makes me</h2>
+          <ul>
+            <li> laugh </li>
+            <li> cry </li>
+          </ul>
+        </div>
+
       </div>
     </>
   )

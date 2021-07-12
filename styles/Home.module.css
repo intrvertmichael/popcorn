@@ -1,9 +1,51 @@
+
+
 .container {
-  padding: 75px 50px 1000px;
+  padding: 75px 50px;
   background: linear-gradient( transparent 0%, black 75px);
   margin-top: -75px;
   position: relative;
 }
+
+
+/*
+Title
+- - - - - - - - - - - - - - - - -
+*/
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title h1, .title h2, .title h3 {
+  display: inline-block;
+  font-weight: normal;
+}
+
+.title h1, .title h2 {
+  font-size: 25px;
+}
+
+.title h1 {
+  margin-right: 20px;
+}
+
+.title h2 {
+  color: #9b9b9b;
+}
+
+.title h3 {
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+
+/*
+Movie Grid
+- - - - - - - - - - - - - - - - -
+*/
 
 .movie_grid {
   display: flex;
@@ -20,3 +62,49 @@
 .movie_grid a {
   display: flex;
 }
+
+
+/*
+Genre Verbs
+- - - - - - - - - - - - - - - - -
+*/
+
+.genre_verbs {
+  padding: 50px;
+}
+
+.genre_verbs h2{
+  font-weight: normal;
+}
+
+.genre_verbs ul{
+  margin: 0px;
+  padding: 0px;
+}
+
+.genre_verbs li{
+  list-style-type: none;
+  padding: 10px;
+  font-size: 0.8em;
+  border: 1px solid #9b9b9b;
+  color: #9b9b9b;
+  width: fit-content;
+  display: inline-block;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+
+.not_found {
+  width: 500px;
+  margin: auto;
+  background: white;
+  color: black;
+  text-align: center;
+  font-size: 30px;
+  padding: 0px 50px 30px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+

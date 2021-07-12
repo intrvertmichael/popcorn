@@ -12,24 +12,10 @@ body {
 }
 
 a {
-  color: red;
   text-decoration: none;
+  color: blue
 }
 
 * {
   box-sizing: border-box;
-}
-
-.title h1, .title h2 {
-  display: inline-block;
-  font-weight: normal;
-}
-
-.title h1 {
-  margin-right: 30px;
-}
-
-.title h2 {
-  font-size: 20px;
-  color: rgb(155, 155, 155);
 }
