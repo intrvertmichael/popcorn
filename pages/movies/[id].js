@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import styles from '../../styles/Movie.module.css'
+import { strictEqual } from 'assert'
 
 export const getStaticPaths = async () => {
     const baseURL = "https://api.themoviedb.org/3/"
@@ -52,40 +54,53 @@ const MovieDetails = ({movie, images}) => {
         })
     }
 
-    const image = `https://image.tmdb.org/t/p/w185_and_h278_bestv2${movie.poster_path}`
+    const image = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
 
     const genres = movie.genres.map( g => {
         return <li key={g.id}> {g.name} </li>
         }
     )
 
-
     return (
-        <div>
-            <Link href='/'>
-                <a>
-                    Home
-                </a>
-            </Link>
+        <div className={styles.container}>
 
-            <p>Rating: {movie.vote_average}</p>
-            <p>Number of Votes: {movie.vote_count}</p>
+            <div className={styles.header}>
+                <Link href='/'>
+                    <a>🍿 Popcorn</a>
+                </Link>
+            </div>
 
-            <h3>{movie.title}</h3>
-            <h4>{movie.tagline}</h4>
-            <p>{movie.overview}</p>
-            <p> Released: {movie.release_date}</p>
-            <p> Runtime: {movie.runtime} minutes</p>
+            <div className={styles.hero}>
+                {altPics[1]}
+            </div>
 
-            <ul>{genres}</ul>
+            <div className={styles.poster} >
+                <Image src={image} alt={movie.title} width="185" height="278" />
+            </div>
 
-            <Image src={image} alt={movie.title} width="185" height="278"/>
+            <div className={styles.movie_info}>
+                <div className={styles.rating}>
+                    <span>{movie.vote_average}</span>
+                    <p>{movie.vote_count} votes</p>
+                </div>
 
-            {
-                altPics?
-                altPics
-                : ''
-            }
+                <div className={styles.movie_description}>
+                    <h1>{movie.title}</h1>
+                    <h2>{movie.tagline}</h2>
+                    <p className={styles.overview}>{movie.overview}</p>
+
+                    <div className={styles.details}>
+                        <p> Released: {movie.release_date}</p>
+                        <p> Runtime: {movie.runtime} minutes</p>
+                    </div>
+
+                    <ul className={styles.genres}>{genres}</ul>
+                </div>
+
+                <div className={styles.alt_pics}>
+                    {altPics}
+                </div>
+            </div>
         </div>
     )
 }
