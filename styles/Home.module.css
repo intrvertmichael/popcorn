@@ -108,3 +108,18 @@ Genre Verbs
   border-radius: 5px;
 }
 
+
+
+.genre_movies {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px;
+  padding: 0px;
+}
+
+.genre_movies li {
+  width: 12.5%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
