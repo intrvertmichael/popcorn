@@ -49,17 +49,19 @@ export default function Home({movies, genres, actionMovies}) {
         {genres.map( (genre, key) => <li key={key}>{genre.name}</li>)}
         </ul>
 
-        <h3>Animated Movies</h3>
-        <ol className={styles.genre_movies}>
-          {actionMovies? actionMovies.map( movie => {
-            const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
-            return (
-              <li key={movie.id}>
-                <Image src={img} alt={movie.original_title} width="192" height="288"/>
-              </li>
-            )
-          }):''}
-        </ol>
+        <div className={styles.genre_movies_wrapper}>
+          <h3>Animated Movies</h3>
+          <ol className={styles.genre_movies}>
+            {actionMovies? actionMovies.map( movie => {
+              const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
+              return (
+                <li key={movie.id}>
+                  <Image src={img} alt={movie.original_title} width="192" height="288"/>
+                </li>
+              )
+            }):''}
+          </ol>
+        </div>
 
       </div>
     </>
