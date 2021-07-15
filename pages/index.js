@@ -36,6 +36,11 @@ export default function Home({movies, genres, actionMovies}) {
           </div>
         </div>
 
+
+        <ul>
+        {genres.map( (genre, key) => <li key={key}>{genre.name} : {genre.id}</li>)}
+        </ul>
+
         <div className={styles.genre_verbs}>
           <h2>I want to see a movie that makes me</h2>
           <ul>
@@ -45,12 +50,8 @@ export default function Home({movies, genres, actionMovies}) {
 
         </div>
 
-        <ul>
-        {genres.map( (genre, key) => <li key={key}>{genre.name}</li>)}
-        </ul>
-
+        <h3 className={styles.genre_movies_title}> I love Animation movies</h3>
         <div className={styles.genre_movies_wrapper}>
-          <h3>Animated Movies</h3>
           <ol className={styles.genre_movies}>
             {actionMovies? actionMovies.map( movie => {
               const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path

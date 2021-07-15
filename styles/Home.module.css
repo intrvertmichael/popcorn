@@ -1,7 +1,6 @@
 
 
 .container {
-  padding: 75px 50px;
   background: linear-gradient( transparent 0%, black 75px);
   margin-top: -75px;
   position: relative;
@@ -17,6 +16,7 @@ Title
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 75px 50px;
 }
 
 .title h1, .title h2, .title h3 {
@@ -114,6 +114,11 @@ Genre Verbs
   overflow: scroll;
 }
 
+.genre_movies_title {
+  padding: 0px 50px;
+  font-size: 1.5em;
+  font-weight: normal;
+}
 .genre_movies {
   display: flex;
   width: fit-content;
