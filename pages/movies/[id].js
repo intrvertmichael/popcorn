@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../../styles/Movie.module.css'
 import { strictEqual } from 'assert'
+import Rating from '../../components/rating'
 
 export const getStaticPaths = async () => {
     const baseURL = "https://api.themoviedb.org/3/"
@@ -79,10 +80,11 @@ const MovieDetails = ({movie, images}) => {
             </div>
 
             <div className={styles.movie_info}>
-                <div className={styles.rating}>
-                    <span>{movie.vote_average}</span>
-                    <p>{movie.vote_count} votes</p>
-                </div>
+                <Rating
+                    style={styles.rating}
+                    score={movie.vote_average}
+                    count={movie.vote_count}
+                />
 
                 <div className={styles.movie_description}>
                     <h1>{movie.title}</h1>
