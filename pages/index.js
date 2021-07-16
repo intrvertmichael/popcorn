@@ -37,7 +37,7 @@ export default function Home({movies, genres, actionMovies}) {
         </div>
 
 
-        <ul>
+        <ul className={styles.genre_list}>
         {genres.map( (genre, key) => <li key={key}>{genre.name} : {genre.id}</li>)}
         </ul>
 
