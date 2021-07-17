@@ -6,20 +6,27 @@ export async function getStaticProps () {
 
   const movies = await getTrending()
   const genres = await getGenres()
-  const actionMovies= await getActionMovies()
 
-  console.log("genres", genres)
+  // call firebase
+  // use firebase response to choose what 3 genres to show
+  const favGenre = [80, 12, 16]
+
+  let allFavMovies = await Promise.all(favGenre.map( async genre => {
+    const movies = await getMoviesFromGenre(genre)
+    return movies
+  }))
+
 
   return {
     props: {
       movies,
       genres,
-      actionMovies
+      allFavMovies
     }
   }
 }
 
-export default function Home({movies, genres, actionMovies}) {
+export default function Home({movies, genres, allFavMovies}) {
   return (
     <>
       <Trending movies={movies} />
@@ -50,18 +57,28 @@ export default function Home({movies, genres, actionMovies}) {
 
         </div>
 
-        <h3 className={styles.genre_movies_title}> I love Animation movies</h3>
         <div className={styles.genre_movies_wrapper}>
-          <ol className={styles.genre_movies}>
-            {actionMovies? actionMovies.map( movie => {
-              const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
-              return (
-                <li key={movie.id}>
-                  <Image src={img} alt={movie.original_title} width="192" height="288"/>
-                </li>
-              )
-            }):''}
-          </ol>
+          {
+            allFavMovies?
+            allFavMovies.map( (movieList, key) => (
+              <>
+              <h3 className={styles.genre_movies_title}> I love %Genre% movies</h3>
+              <ul key={key} className={styles.genre_movies}>
+              {
+                movieList.map( movie => {
+                  const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
+                  return (
+                    <li key={movie.id}>
+                      <Image src={img} alt={movie.original_title} width="192" height="288"/>
+                    </li>
+                  )
+                })
+              }
+              </ul>
+              </>
+            ))
+            : ''
+          }
         </div>
 
       </div>
@@ -105,14 +122,14 @@ async function getGenres() {
   return data.genres
 }
 
-async function getActionMovies() {
+// get more pages = &page=2
 
+async function getMoviesFromGenre(genreID) {
   const baseURL = "https://api.themoviedb.org/3"
   const key = process.env.MOVIE_KEY
+  const url = baseURL + "/discover/movie?api_key=" + key + "&with_genres=" + genreID
 
-  const res = await fetch(baseURL +"/discover/movie?api_key=" + key + "&with_genres=16" )
-  // get genre movies = &with_genres=16
-  // get more pages = &page=2
+  const res = await fetch(url)
   const data = await res.json()
 
   return data.results
