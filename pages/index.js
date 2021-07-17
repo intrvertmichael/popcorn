@@ -9,13 +9,13 @@ export async function getStaticProps () {
 
   // call firebase
   // use firebase response to choose what 3 genres to show
-  const favGenre = [80, 12, 16]
+  const favGenre = [10402, 16, 878]
 
-  let allFavMovies = await Promise.all(favGenre.map( async genre => {
-    const movies = await getMoviesFromGenre(genre)
-    return movies
+  let allFavMovies = await Promise.all(favGenre.map( async genreID => {
+    const genreTitle = genres.find( g => g.id === genreID).name
+    const movies = await getMoviesFromGenre(genreID)
+    return { title: genreTitle, movies: movies }
   }))
-
 
   return {
     props: {
@@ -27,6 +27,7 @@ export async function getStaticProps () {
 }
 
 export default function Home({movies, genres, allFavMovies}) {
+
   return (
     <>
       <Trending movies={movies} />
@@ -57,15 +58,15 @@ export default function Home({movies, genres, allFavMovies}) {
 
         </div>
 
-        <div className={styles.genre_movies_wrapper}>
           {
             allFavMovies?
             allFavMovies.map( (movieList, key) => (
               <>
-              <h3 className={styles.genre_movies_title}> I love %Genre% movies</h3>
+              <h3 className={styles.genre_movies_title}> {movieList.title} movies</h3>
+              <div className={styles.genre_movies_wrapper}>
               <ul key={key} className={styles.genre_movies}>
               {
-                movieList.map( movie => {
+                movieList.movies.map( movie => {
                   const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
                   return (
                     <li key={movie.id}>
@@ -75,11 +76,11 @@ export default function Home({movies, genres, allFavMovies}) {
                 })
               }
               </ul>
+              </div>
               </>
             ))
             : ''
           }
-        </div>
 
       </div>
     </>
