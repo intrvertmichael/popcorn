@@ -4,22 +4,9 @@ import Rating from '../../components/Rating'
 import Header from '../../components/Header'
 
 export const getStaticPaths = async () => {
-    const baseURL = "https://api.themoviedb.org/3/"
-    const key = process.env.MOVIE_KEY
-    const keyPath = "?api_key=" + key
-
-    const res = await fetch(baseURL +"/trending/movie/week" + keyPath)
-    const data = await res.json()
-
-    const moviePaths = data.results.map( movie => {
-        return {
-            params: { id: movie.id.toString() }
-        }
-    })
-
     return {
-        paths: moviePaths,
-        fallback: false
+        paths: [],
+        fallback: true
     }
 }
 
@@ -43,7 +30,10 @@ export const getStaticProps = async (context) => {
 
 const MovieDetails = ({movie, images}) => {
 
+    if(!movie || !images) return false
+
     let altPics
+
     if(images){
         altPics = images.backdrops.map( (img, key) => {
             const altImage = `https://image.tmdb.org/t/p/original/${img.file_path}`
@@ -52,12 +42,7 @@ const MovieDetails = ({movie, images}) => {
     }
 
     const image = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
-
-    const genres = movie.genres.map( g => {
-        return <li key={g.id}> {g.name} </li>
-        }
-    )
-
+    const genres = movie.genres.map( g => <li key={g.id}> {g.name} </li> )
     const randomBg = altPics? Math.floor(altPics.length * Math.random()): 0
 
     return (

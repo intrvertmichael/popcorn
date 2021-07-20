@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Trending from '../components/Trending'
 import Header from '../components/Header'
+import MovieBar from '../components/MovieBar'
 
 export async function getStaticProps () {
 
@@ -48,36 +48,13 @@ export default function Home({movies, genres, allFavMovies}) {
             <li> laugh </li>
             <li> cry </li>
           </ul>
-
         </div>
 
-          {
-            allFavMovies?
-            <>
-              <h3>Your favorite Genres are: </h3>
-              {
-                allFavMovies.map( (movieList, key) => (
-                  <div key={key}>
-                    <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
-                    <div className={styles.genre_movies_wrapper}>
-                      <ul className={styles.genre_movies}>
-                      {
-                        movieList.movies.map( movie => {
-                          const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
-                          return (
-                            <li key={movie.id}>
-                              <Image src={img} alt={movie.original_title} width="192" height="288"/>
-                            </li>
-                          ) })
-                      }
-                      </ul>
-                    </div>
-                  </div>
-                ))
-              }
-            </>
-            : ''
-          }
+        {
+          allFavMovies?
+          allFavMovies.map( (movieList, key) => <MovieBar movieList = {movieList} key= {key} />)
+          : ''
+        }
 
       </div>
     </>
