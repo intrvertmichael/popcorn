@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../../styles/Movie.module.css'
 import Rating from '../../components/Rating'
@@ -47,12 +46,7 @@ const MovieDetails = ({movie, images}) => {
     let altPics
     if(images){
         altPics = images.backdrops.map( (img, key) => {
-
-            const w = img.width.toString()
-            const h = img.height.toString()
-
             const altImage = `https://image.tmdb.org/t/p/original/${img.file_path}`
-
             return <Image key={key} src={altImage} width={960} height={540} alt={key}/>
         })
     }
@@ -64,13 +58,17 @@ const MovieDetails = ({movie, images}) => {
         }
     )
 
+    const randomBg = altPics? Math.floor(altPics.length * Math.random()): 0
+
     return (
         <div className={styles.container}>
 
             <Header />
 
             <div className={styles.hero}>
-                {altPics[1]}
+                {
+                    altPics[randomBg]
+                }
             </div>
 
             <div className={styles.poster} >
