@@ -45,6 +45,17 @@ const MovieDetails = ({movie, images}) => {
     const genres = movie.genres.map( g => <li key={g.id}> {g.name} </li> )
     const randomBg = altPics? Math.floor(altPics.length * Math.random()): 0
 
+    const date = new Date(movie.release_date)
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const month = months[date.getMonth()]
+    const day = date.getDate()
+    const year = date.getFullYear()
+    const fullDate = `${month} ${day}, ${year}`
+
+    const lengthHours = Math.floor(movie.runtime / 60)
+    const lengthMins = movie.runtime % 60
+    const fullLength = (lengthHours > 1 ? lengthHours + " hours and " :  lengthHours + " hour and " )+ lengthMins + " minutes"
+
     return (
         <div className={styles.container}>
 
@@ -73,8 +84,8 @@ const MovieDetails = ({movie, images}) => {
                     <p className={styles.overview}>{movie.overview}</p>
 
                     <div className={styles.details}>
-                        <p> Released: {movie.release_date}</p>
-                        <p> Runtime: {movie.runtime} minutes</p>
+                        <p> Released on {fullDate}</p>
+                        <p> Length: {fullLength}</p>
                     </div>
 
                     <ul className={styles.genres}>{genres}</ul>
