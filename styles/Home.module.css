@@ -41,10 +41,6 @@ Genre Verbs
   padding: 50px;
 }
 
-.genre_verbs h2{
-  font-weight: normal;
-}
-
 .genre_verbs ul{
   margin: 0px;
   padding: 0px;
@@ -52,7 +48,7 @@ Genre Verbs
 
 .genre_verbs li{
   list-style-type: none;
-  padding: 10px;
+  padding: 5px 10px;
   font-size: 0.8em;
   border: 1px solid #9b9b9b;
   color: #9b9b9b;
@@ -90,23 +86,23 @@ Genre Verbs
 .genre_movies_wrapper {
   width: 100%;
   overflow: scroll;
+  scroll-snap-type: x mandatory;
 }
 
 .genre_movies_title {
   padding: 0px 50px;
   font-size: 1.5em;
-  font-weight: normal;
 }
 .genre_movies {
   display: flex;
-  width: fit-content;
+  width: 286vw;
   margin: 0px;
   padding: 0px;
 }
 
 .genre_movies li {
-  width: 150px;
   list-style-type: none;
   display: flex;
   flex-direction: column;
+  scroll-snap-align: end;
 }

@@ -53,25 +53,29 @@ export default function Home({movies, genres, allFavMovies}) {
 
           {
             allFavMovies?
-            allFavMovies.map( (movieList, key) => (
-              <>
-              <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
-              <div className={styles.genre_movies_wrapper}>
-                <ul key={key} className={styles.genre_movies}>
-                {
-                  movieList.movies.map( movie => {
-                    const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
-                    return (
-                      <li key={movie.id}>
-                        <Image src={img} alt={movie.original_title} width="192" height="288"/>
-                      </li>
-                    )
-                  })
-                }
-                </ul>
-              </div>
-              </>
-            ))
+            <>
+              <h3>Your favorite Genres are: </h3>
+              {
+                allFavMovies.map( (movieList, key) => (
+                  <div key={key}>
+                    <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+                    <div className={styles.genre_movies_wrapper}>
+                      <ul className={styles.genre_movies}>
+                      {
+                        movieList.movies.map( movie => {
+                          const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
+                          return (
+                            <li key={movie.id}>
+                              <Image src={img} alt={movie.original_title} width="192" height="288"/>
+                            </li>
+                          ) })
+                      }
+                      </ul>
+                    </div>
+                  </div>
+                ))
+              }
+            </>
             : ''
           }
 
