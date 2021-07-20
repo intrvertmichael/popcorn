@@ -3,6 +3,8 @@ import Trending from '../components/Trending'
 import Header from '../components/Header'
 import MovieBar from '../components/MovieBar'
 
+import { getTrending, getGenres, getMoviesFromGenre } from '../requests/movie.api'
+
 export async function getStaticProps () {
 
   const movies = await getTrending()
@@ -52,7 +54,7 @@ export default function Home({movies, genres, allFavMovies}) {
 
         {
           allFavMovies?
-          allFavMovies.map( (movieList, key) => <MovieBar movieList = {movieList} key= {key} />)
+          allFavMovies.map( (movieList, key) => <MovieBar movieList = {movieList} key={key} />)
           : ''
         }
 
@@ -64,51 +66,3 @@ export default function Home({movies, genres, allFavMovies}) {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-async function getTrending() {
-  const baseURL = "https://api.themoviedb.org/3/"
-  const key = process.env.MOVIE_KEY
-  const keyPath = "?api_key=" + key
-
-  const res = await fetch(baseURL +"/trending/movie/week" + keyPath)
-  const data = await res.json()
-
-  const movies = []
-
-  for(let i = 0; i < 16; i++){
-    let movie = data.results[i]
-    const imagePath = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
-    movies.push ({
-      id: movie.id,
-      title: movie.original_title,
-      image: imagePath
-    })
-  }
-
-  return movies
-}
-
-async function getGenres() {
-  const baseURL = "https://api.themoviedb.org/3/"
-  const key = process.env.MOVIE_KEY
-  const keyPath = "?api_key=" + key
-
-  const res = await fetch(baseURL +"/genre/movie/list" + keyPath)
-  const data = await res.json()
-
-  return data.genres
-}
-
-// get more pages = &page=2
-
-async function getMoviesFromGenre(genreID) {
-  const baseURL = "https://api.themoviedb.org/3"
-  const key = process.env.MOVIE_KEY
-  const keyPath = "?api_key=" + key
-
-  const url = baseURL + "/discover/movie" + keyPath + "&with_genres=" + genreID
-
-  const res = await fetch(url)
-  const data = await res.json()
-
-  return data.results
-}

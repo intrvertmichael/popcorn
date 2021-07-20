@@ -3,6 +3,8 @@ import styles from '../../styles/Movie.module.css'
 import Rating from '../../components/Rating'
 import Header from '../../components/Header'
 
+import { getSingleMovie, getImageList } from '../../requests/movie.api'
+
 export const getStaticPaths = async () => {
     return {
         paths: [],
@@ -12,19 +14,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
     const id= context.params.id
-    const baseURL = "https://api.themoviedb.org/3/"
-    const key = process.env.MOVIE_KEY
-    const keyPath = "?api_key=" + key
-
-    const res = await fetch(baseURL +"/movie/"+ id + keyPath)
-    const data = await res.json()
-
-    // getting images
-    const imageRes = await fetch(baseURL +"/movie/"+ id +"/images" + keyPath)
-    const imageData = await imageRes.json()
+    const movie = await getSingleMovie(id)
+    const imageData = await getImageList(id)
 
     return {
-        props: { movie: data, images: imageData }
+        props: {
+            movie: movie,
+            images: imageData
+        }
     }
 }
 
