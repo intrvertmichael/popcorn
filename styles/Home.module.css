@@ -1,46 +1,14 @@
 
-
 .container {
   background: linear-gradient( transparent 0%, black 75px);
   margin-top: -75px;
   position: relative;
 }
 
-
-/*
-Title
-- - - - - - - - - - - - - - - - -
-*/
-
-.title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 75px 50px;
+.home_header {
+  margin: auto;
+  padding: 75px 25px;
 }
-
-.title h1, .title h2, .title h3 {
-  display: inline-block;
-  font-weight: normal;
-}
-
-.title h1, .title h2 {
-  font-size: 25px;
-}
-
-.title h1 {
-  margin-right: 20px;
-}
-
-.title h2 {
-  color: #9b9b9b;
-}
-
-.title h3 {
-  margin-left: 20px;
-  font-size: 16px;
-}
-
 
 /*
 Movie Grid

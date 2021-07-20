@@ -1,14 +1,15 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../../styles/Movie.module.css'
-import { strictEqual } from 'assert'
-import Rating from '../../components/rating'
+import Rating from '../../components/Rating'
+import Header from '../../components/Header'
 
 export const getStaticPaths = async () => {
     const baseURL = "https://api.themoviedb.org/3/"
     const key = process.env.MOVIE_KEY
+    const keyPath = "?api_key=" + key
 
-    const res = await fetch(baseURL +"/trending/movie/week?api_key=" + key)
+    const res = await fetch(baseURL +"/trending/movie/week" + keyPath)
     const data = await res.json()
 
     const moviePaths = data.results.map( movie => {
@@ -27,12 +28,13 @@ export const getStaticProps = async (context) => {
     const id= context.params.id
     const baseURL = "https://api.themoviedb.org/3/"
     const key = process.env.MOVIE_KEY
+    const keyPath = "?api_key=" + key
 
-    const res = await fetch(baseURL +"/movie/"+ id +"?api_key=" + key)
+    const res = await fetch(baseURL +"/movie/"+ id + keyPath)
     const data = await res.json()
 
     // getting images
-    const imageRes = await fetch(baseURL +"/movie/"+ id +"/images?api_key=" + key)
+    const imageRes = await fetch(baseURL +"/movie/"+ id +"/images" + keyPath)
     const imageData = await imageRes.json()
 
     return {
@@ -65,11 +67,7 @@ const MovieDetails = ({movie, images}) => {
     return (
         <div className={styles.container}>
 
-            <div className={styles.header}>
-                <Link href='/'>
-                    <a>🍿 Popcorn</a>
-                </Link>
-            </div>
+            <Header />
 
             <div className={styles.hero}>
                 {altPics[1]}

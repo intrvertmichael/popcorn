@@ -1,0 +1,57 @@
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+}
+
+.header h1, .header h2, .header h3 {
+    display: inline-block;
+    font-weight: normal;
+}
+
+/*
+- - - - - - - - - - -
+Font Size
+- - - - - - - - - - -
+*/
+
+.header h1, .header h2 {
+    font-size: 1.2em;
+}
+
+.header h3 {
+    font-size: 1em;
+}
+
+
+/*
+- - - - - - - - - - -
+Gaps
+- - - - - - - - - - -
+*/
+
+.header h1 {
+    margin-right: 20px;
+}
+
+.header h3 {
+    margin-left: 20px;
+}
+
+
+/*
+- - - - - - - - - - -
+Colors
+- - - - - - - - - - -
+*/
+
+.header a {
+    color: white;
+}
+
+.header h2 {
+    color: #9b9b9b;
+}

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Trending from '../components/trending'
+import Trending from '../components/Trending'
+import Header from '../components/Header'
 
 export async function getStaticProps () {
 
@@ -32,18 +33,10 @@ export default function Home({movies, genres, allFavMovies}) {
     <>
       <Trending movies={movies} />
       <div className={styles.container}>
-        <div className={styles.title}>
-          <div>
-            <h1>🍿Popcorn</h1>
-            <h2>Find what to watch</h2>
-          </div>
 
-          <div>
-            <h3>Sign Up</h3>
-            <h3>Log In</h3>
-          </div>
+        <div className={styles.home_header}>
+          <Header />
         </div>
-
 
         <ul className={styles.genre_list}>
         {genres.map( (genre, key) => <li key={key}>{genre.name} : {genre.id}</li>)}
@@ -62,20 +55,20 @@ export default function Home({movies, genres, allFavMovies}) {
             allFavMovies?
             allFavMovies.map( (movieList, key) => (
               <>
-              <h3 className={styles.genre_movies_title}> {movieList.title} movies</h3>
+              <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
               <div className={styles.genre_movies_wrapper}>
-              <ul key={key} className={styles.genre_movies}>
-              {
-                movieList.movies.map( movie => {
-                  const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
-                  return (
-                    <li key={movie.id}>
-                      <Image src={img} alt={movie.original_title} width="192" height="288"/>
-                    </li>
-                  )
-                })
-              }
-              </ul>
+                <ul key={key} className={styles.genre_movies}>
+                {
+                  movieList.movies.map( movie => {
+                    const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
+                    return (
+                      <li key={movie.id}>
+                        <Image src={img} alt={movie.original_title} width="192" height="288"/>
+                      </li>
+                    )
+                  })
+                }
+                </ul>
               </div>
               </>
             ))
@@ -93,8 +86,9 @@ export default function Home({movies, genres, allFavMovies}) {
 async function getTrending() {
   const baseURL = "https://api.themoviedb.org/3/"
   const key = process.env.MOVIE_KEY
+  const keyPath = "?api_key=" + key
 
-  const res = await fetch(baseURL +"/trending/movie/week?api_key=" + key)
+  const res = await fetch(baseURL +"/trending/movie/week" + keyPath)
   const data = await res.json()
 
   const movies = []
@@ -110,14 +104,14 @@ async function getTrending() {
   }
 
   return movies
-
 }
 
 async function getGenres() {
   const baseURL = "https://api.themoviedb.org/3/"
   const key = process.env.MOVIE_KEY
+  const keyPath = "?api_key=" + key
 
-  const res = await fetch(baseURL +"/genre/movie/list?api_key=" + key)
+  const res = await fetch(baseURL +"/genre/movie/list" + keyPath)
   const data = await res.json()
 
   return data.genres
@@ -128,7 +122,9 @@ async function getGenres() {
 async function getMoviesFromGenre(genreID) {
   const baseURL = "https://api.themoviedb.org/3"
   const key = process.env.MOVIE_KEY
-  const url = baseURL + "/discover/movie?api_key=" + key + "&with_genres=" + genreID
+  const keyPath = "?api_key=" + key
+
+  const url = baseURL + "/discover/movie" + keyPath + "&with_genres=" + genreID
 
   const res = await fetch(url)
   const data = await res.json()
