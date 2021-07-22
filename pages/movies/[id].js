@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import styles from '../../styles/Movie.module.css'
 import Rating from '../../components/Rating'
-import Header from '../../components/Header'
+import Layout from '../../components/Layout'
 
 import { getSingleMovie, getImageList, createMovieImageURL } from '../../requests/movie.api'
 
@@ -32,10 +32,7 @@ const MovieDetails = ({movie, images}) => {
     const fullLength = createFullLength(movie.runtime)
 
     return (
-        <div className={styles.container}>
-
-            <Header />
-
+        <Layout>
             <div className={styles.hero}>
                 { altPics[randomBg] }
             </div>
@@ -65,7 +62,7 @@ const MovieDetails = ({movie, images}) => {
                     {altPics}
                 </div>
             </div>
-        </div>
+        </Layout>
     )
 }
 

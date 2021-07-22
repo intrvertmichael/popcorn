@@ -1,6 +1,6 @@
 
 import Image from 'next/image'
-import Header from '../../components/Header'
+import Layout from '../../components/Layout'
 import { getMoviesFromGenre, createMovieImageURL } from '../../requests/movie.api'
 
 import styles from '../../styles/Genre.module.css'
@@ -21,9 +21,7 @@ const GenreDetails = ({movies}) => {
 
 
     return (
-        <div>
-            <Header />
-
+        <Layout>
             <ul className={styles.genre_movies}>
                 {
                     movies.map( movie => {
@@ -37,7 +35,7 @@ const GenreDetails = ({movies}) => {
                     })
                 }
             </ul>
-        </div>
+        </Layout>
     )
 }
 
