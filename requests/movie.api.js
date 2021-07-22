@@ -24,6 +24,10 @@ function getURL(type, id) {
 
 }
 
+export function createMovieImageURL(path){
+    return 'https://image.tmdb.org/t/p/original/' + path
+}
+
 export async function getTrending() {
     const url = getURL("trending")
     const res = await fetch(url)
@@ -33,7 +37,7 @@ export async function getTrending() {
 
     for(let i = 0; i < 16; i++){
         let movie = data.results[i]
-        const imagePath = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+        const imagePath = createMovieImageURL(movie.poster_path)
         movies.push ({
             id: movie.id,
             title: movie.original_title,

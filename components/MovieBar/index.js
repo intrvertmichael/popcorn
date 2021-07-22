@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
+import {createMovieImageURL} from '../../requests/movie.api'
 
 const MovieBar = ({movieList}) => {
     return (
@@ -10,7 +11,7 @@ const MovieBar = ({movieList}) => {
                 <ul className={styles.genre_movies}>
                 {
                     movieList.movies.map( movie => {
-                        const img = 'https://image.tmdb.org/t/p/original/' + movie.poster_path
+                        const img = createMovieImageURL(movie.poster_path)
 
                         return (
                             <li key={movie.id}>

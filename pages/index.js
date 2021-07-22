@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Trending from '../components/Trending'
 import Header from '../components/Header'
@@ -41,7 +42,15 @@ export default function Home({movies, genres, allFavMovies}) {
         </div>
 
         <ul className={styles.genre_list}>
-        {genres.map( (genre, key) => <li key={key}>{genre.name} : {genre.id}</li>)}
+        {
+          genres.map( (genre, key) =>(
+            <Link href={'/genres/'+ genre.id} key={key}>
+              <a>
+                <li>{genre.name}</li>
+              </a>
+            </Link>
+          ))
+        }
         </ul>
 
         <div className={styles.genre_verbs}>
@@ -62,7 +71,3 @@ export default function Home({movies, genres, allFavMovies}) {
     </>
   )
 }
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-

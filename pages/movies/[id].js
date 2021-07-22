@@ -3,7 +3,7 @@ import styles from '../../styles/Movie.module.css'
 import Rating from '../../components/Rating'
 import Header from '../../components/Header'
 
-import { getSingleMovie, getImageList } from '../../requests/movie.api'
+import { getSingleMovie, getImageList, createMovieImageURL } from '../../requests/movie.api'
 
 export const getStaticPaths = async () => {
     return { paths: [], fallback: true }
@@ -21,11 +21,11 @@ const MovieDetails = ({movie, images}) => {
     if(!movie || !images) return false
 
     const altPics = images.backdrops.map( (img, key) => {
-        const altImage = `https://image.tmdb.org/t/p/original/${img.file_path}`
+        const altImage = createMovieImageURL(img.file_path)
         return <Image key={key} src={altImage} width={960} height={540} alt={key}/>
     })
 
-    const posterImage = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+    const posterImage = createMovieImageURL(movie.poster_path)
     const genres = movie.genres.map( g => <li key={g.id}> {g.name} </li> )
     const randomBg = altPics? Math.floor(altPics.length * Math.random()): 0
     const fullDate = createFullDate(movie.release_date)
