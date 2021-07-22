@@ -1,6 +1,6 @@
+import styles from '../../styles/Movie.module.css'
 
-
-const Rating = ({style, score, count}) => {
+const Rating = ({score, count}) => {
 
     const good = {
         backgroundImage: "linear-gradient(25deg, #2a8535, #5dac4d, #8cd567, #bcff82)"
@@ -15,7 +15,7 @@ const Rating = ({style, score, count}) => {
     if(score < 5) color = bad
 
     return (
-        <div className={style} style={color}>
+        <div className={styles.rating} style={color}>
             <span>{score}</span>
             <p>{count} votes</p>
         </div>
