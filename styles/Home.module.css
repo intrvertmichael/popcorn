@@ -96,6 +96,12 @@ Genre Verbs
   background: rgba( 255, 255, 255, 0.08 );
 }
 
+
+/*
+Genre Movies
+- - - - - - - - - - - - - - - - -
+*/
+
 .genre_movies_wrapper {
   width: 100%;
   overflow: scroll;
@@ -103,19 +109,18 @@ Genre Verbs
 }
 
 .genre_movies_title {
-  padding: 0px 50px;
+  padding: 0px 30px;
   font-size: 1.5em;
 }
+
 .genre_movies {
   display: flex;
   width: 286.5%;
+  /* width will be dynamic depending on how many movies are shown on movie bar */
   margin: 0px;
   padding: 0px;
 }
 
 .genre_movies li {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
   scroll-snap-align: end;
 }

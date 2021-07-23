@@ -13,7 +13,7 @@ function getURL(type, id) {
         return baseURL +"/genre/movie/list" + keyPath
 
         case "moviesFromGenre":
-        return baseURL + "/discover/movie" + keyPath + "&with_genres=" + id
+        return baseURL + "/discover/movie" + keyPath + "&with_genres=" + id + "&page"
 
         case "singleMovie":
         return baseURL +"/movie/"+ id + keyPath
@@ -69,7 +69,7 @@ export async function getMoviesFromGenre(genreID) {
     const url = getURL("moviesFromGenre", genreID)
     const res = await fetch(url)
     const data = await res.json()
-    return data.results
+    return data
 }
 
 export async function getSingleMovie(id){

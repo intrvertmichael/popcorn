@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from '../../styles/Movie.module.css'
+import styles from '../../styles/MovieDetails.module.css'
 import Rating from '../../components/Rating'
 import Layout from '../../components/Layout'
 

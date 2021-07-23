@@ -1,4 +1,4 @@
-import styles from '../../styles/Movie.module.css'
+import styles from '../../styles/MovieDetails.module.css'
 
 const Rating = ({score, count}) => {
 
