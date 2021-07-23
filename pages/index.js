@@ -44,11 +44,13 @@ export default function Home({movies, genres, allFavMovies}) {
         <ul className={styles.genre_list}>
         {
           genres.map( (genre, key) =>(
-            <Link href={'/genres/'+ genre.id} key={key}>
-              <a>
-                <li>{genre.name}</li>
-              </a>
-            </Link>
+            <li key={key}>
+              <Link href={'/genres/'+ genre.id}>
+                <a>
+                  {genre.name}
+                </a>
+              </Link>
+            </li>
           ))
         }
         </ul>

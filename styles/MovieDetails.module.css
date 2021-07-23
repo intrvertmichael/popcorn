@@ -93,13 +93,13 @@ Genres
     margin-bottom: 30px;
 }
 
-.genres li{
+.genres li {
     list-style-type: none;
     display: inline-block;
     padding: 10px;
     background: #141414;
     color: #9b9b9b;
-    margin-right: 5px;
+    margin: 0px 5px 5px 0px;
     border-radius: 2px;
     font-size: 0.9em;
 }

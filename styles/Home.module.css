@@ -75,24 +75,25 @@ Genre Verbs
 .genre_list {
   display: flex;
   flex-wrap: wrap;
+  width: 80%;
   margin: auto;
-  width: fit-content;
 }
 
 .genre_list li {
   list-style-type: none;
   width: fit-content;
-  width: 200px;
-  padding: 0px 10px;
+  width: 180px;
+  padding: 0px 20px;
   margin: 0px 10px;
   text-align: right;
+  box-sizing: border-box;
 }
 
 .genre_list a {
   color: white;
 }
 
-.genre_list a:hover {
+.genre_list li:hover {
   background: rgba( 255, 255, 255, 0.08 );
 }
 
