@@ -4,6 +4,7 @@ import Rating from '../../components/Rating'
 import Layout from '../../components/Layout'
 
 import { getSingleMovie, getImageList, createMovieImageURL } from '../../requests/movie.api'
+import Link from 'next/link'
 
 export const getStaticPaths = async () => {
     return { paths: [], fallback: true }
@@ -26,7 +27,13 @@ const MovieDetails = ({movie, images}) => {
     })
 
     const posterImage = createMovieImageURL(movie.poster_path)
-    const genres = movie.genres.map( g => <li key={g.id}> {g.name} </li> )
+    const genres = movie.genres.map( g => (
+            <Link href={'/genres/' + g.id}  key={g.id}>
+                <a>
+                    <li> {g.name} </li>
+                </a>
+            </Link>
+        ))
     const randomBg = altPics? Math.floor(altPics.length * Math.random()): 0
     const fullDate = createFullDate(movie.release_date)
     const fullLength = createFullLength(movie.runtime)
