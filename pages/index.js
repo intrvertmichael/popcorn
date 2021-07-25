@@ -45,7 +45,7 @@ export default function Home({movies, genres, allFavMovies}) {
         {
           genres.map( (genre, key) =>(
             <li key={key}>
-              <Link href={'/genres/'+ genre.id}>
+              <Link href={'/genre/'+ genre.id}>
                 <a>
                   {genre.name}
                 </a>
@@ -64,10 +64,12 @@ export default function Home({movies, genres, allFavMovies}) {
         </div>
 
         {
-          allFavMovies?
-          allFavMovies.map( (movieList, key) => <MovieBar movieList = {movieList} key={key} />)
-          : ''
+          // allFavMovies?
+          // allFavMovies.map( (movieList, key) => <MovieBar movieList = {movieList} key={key} />)
+          // : ''
         }
+
+        <MovieBar movieList = {allFavMovies[0]} />
 
       </div>
     </>

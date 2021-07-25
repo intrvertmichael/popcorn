@@ -31,8 +31,10 @@
 
 .movie_info h3 {
     font-size: 1.2em;
+    margin-bottom: 0px;
 }
 
 .movie_info p {
     color: #9b9b9b;
+    margin-top: 0px;
 }

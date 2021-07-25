@@ -35,7 +35,7 @@ export async function getTrending() {
 
     const movies = []
 
-    for(let i = 0; i < 16; i++){
+    for(let i = 0; i < 8; i++){
         let movie = data.results[i]
         const imagePath = createMovieImageURL(movie.poster_path)
         movies.push ({

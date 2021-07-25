@@ -5,6 +5,10 @@ import styles from '../../styles/Movie.module.css'
 
 const Movie = ({movie}) => {
 
+    const titleLimit = 20
+    const title = movie.original_title.length > titleLimit ?
+                        movie.original_title.substring(0, titleLimit) + '...'
+                        : movie.original_title
     const poster = createMovieImageURL(movie.poster_path)
 
     return (
@@ -16,7 +20,7 @@ const Movie = ({movie}) => {
                     <h3>
                         <Link href={'/movies/' + movie.id}>
                             <a>
-                                {movie.original_title}
+                                {title}
                             </a>
                         </Link>
                     </h3>

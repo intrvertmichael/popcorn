@@ -28,7 +28,7 @@ const MovieDetails = ({movie, images}) => {
 
     const posterImage = createMovieImageURL(movie.poster_path)
     const genres = movie.genres.map( g => (
-            <Link href={'/genres/' + g.id}  key={g.id}>
+            <Link href={'/genre/' + g.id}  key={g.id}>
                 <a>
                     <li> {g.name} </li>
                 </a>

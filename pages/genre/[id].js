@@ -1,4 +1,4 @@
-
+import Link from 'next/link'
 import Layout from '../../components/Layout'
 import Movie from '../../components/Movie'
 import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
@@ -10,6 +10,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
     const id= context.params.id
+    console.log(context.params)
     const movies = await getMoviesFromGenre(id)
     const genreLabel = await getGenreLabel(id)
     return { props: { movies, genreLabel } }
@@ -31,6 +32,11 @@ const GenreDetails = ({movies, genreLabel}) => {
 
             <nav className={styles.genre_nav}>
                 <p>Page {movies.page} / {movies.total_pages}</p>
+                <Link href={'/genre/' + genreLabel.id + '?page=2'}>
+                    <a>
+                        Next
+                    </a>
+                </Link>
             </nav>
         </Layout>
     )
