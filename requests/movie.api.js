@@ -1,6 +1,6 @@
 
 
-function getURL(type, id) {
+function getURL(type, id, page) {
     const baseURL = "https://api.themoviedb.org/3"
     const key = process.env.MOVIE_KEY
     const keyPath = "?api_key=" + key
@@ -13,7 +13,10 @@ function getURL(type, id) {
         return baseURL +"/genre/movie/list" + keyPath
 
         case "moviesFromGenre":
-        return baseURL + "/discover/movie" + keyPath + "&with_genres=" + id + "&page"
+        return baseURL + "/discover/movie" + keyPath + "&with_genres=" + id
+
+        case "moviesFromGenre&page":
+        return baseURL + "/discover/movie" + keyPath + "&with_genres=" + id + "&page=" + page
 
         case "singleMovie":
         return baseURL +"/movie/"+ id + keyPath
@@ -65,8 +68,12 @@ export async function getGenreLabel(id) {
 
 // get more pages = &page=2
 
-export async function getMoviesFromGenre(genreID) {
-    const url = getURL("moviesFromGenre", genreID)
+export async function getMoviesFromGenre(genreID, page) {
+
+    let url
+    if(page) url = getURL("moviesFromGenre&page", genreID, page)
+    else url = getURL("moviesFromGenre", genreID)
+
     const res = await fetch(url)
     const data = await res.json()
     return data

@@ -4,21 +4,28 @@ import Movie from '../../components/Movie'
 import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
 import styles from '../../styles/Genre.module.css'
 
-export const getStaticPaths = async () => {
-    return { paths: [], fallback: true }
-}
+// export const getStaticPaths = async () => {
+//     return { paths: [], fallback: true }
+// }
 
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
     const id= context.params.id
-    console.log(context.params)
-    const movies = await getMoviesFromGenre(id)
+    let page = context.query.page? context.query.page : 1
+
+    let movies
+    if(context.query.page) movies = await getMoviesFromGenre(id, page)
+    else movies = await getMoviesFromGenre(id)
+
     const genreLabel = await getGenreLabel(id)
-    return { props: { movies, genreLabel } }
+
+    return { props: { movies, genreLabel, page } }
 }
 
-const GenreDetails = ({movies, genreLabel}) => {
+const GenreDetails = ({movies, genreLabel, page}) => {
 
-    if(!movies) return false
+    if(!movies && !genreLabel && !page) return false
+
+    const nextPage = (parseInt(page) + 1).toString()
 
     return (
         <Layout>
@@ -31,8 +38,8 @@ const GenreDetails = ({movies, genreLabel}) => {
             </ul>
 
             <nav className={styles.genre_nav}>
-                <p>Page {movies.page} / {movies.total_pages}</p>
-                <Link href={'/genre/' + genreLabel.id + '?page=2'}>
+                <p>Page {page} / {movies.total_pages}</p>
+                <Link href={'/genre/' + genreLabel.id + '?page=' + nextPage}>
                     <a>
                         Next
                     </a>
