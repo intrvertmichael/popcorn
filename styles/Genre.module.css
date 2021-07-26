@@ -29,6 +29,23 @@
 
 .genre_nav {
     padding: 50px;
+    margin-bottom: 100px;
     text-align: center;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+}
+
+.genre_nav span {
+    color: white;
+    font-size: 1.5em;
+    margin: 0px 5px;
+}
+
+.genre_nav a {
+    padding: 0px 20px;
+    color: white;
     font-size: 1.5em;
 }
