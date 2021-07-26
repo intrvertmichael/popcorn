@@ -126,3 +126,7 @@ Genre Movies
 .genre_movies li {
   scroll-snap-align: end;
 }
+
+.movie_bar {
+  margin-top: 400px;
+}

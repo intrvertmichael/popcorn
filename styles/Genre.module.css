@@ -44,8 +44,11 @@
     margin: 0px 5px;
 }
 
-.genre_nav a {
+.genre_nav a, .genre_nav p {
     padding: 0px 20px;
-    color: white;
     font-size: 1.5em;
+}
+
+.genre_nav a {
+    color: white;
 }

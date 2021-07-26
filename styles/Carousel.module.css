@@ -16,6 +16,8 @@
 .images {
     position: relative;
     height: 540px;
+    border-radius: 2px;
+    overflow: hidden;
     margin-bottom: 10px;
 }
 

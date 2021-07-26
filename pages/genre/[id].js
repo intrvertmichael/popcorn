@@ -46,7 +46,7 @@ const GenreDetails = ({movies, genreLabel, page}) => {
                         <a>
                             ←
                         </a>
-                    </Link> : ''
+                    </Link> : <p> ← </p>
                 }
 
 
@@ -58,7 +58,7 @@ const GenreDetails = ({movies, genreLabel, page}) => {
                         <a>
                             →
                         </a>
-                    </Link> : ''
+                    </Link> : <p> → </p>
                 }
 
             </nav>
