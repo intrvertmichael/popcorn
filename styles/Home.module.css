@@ -77,12 +77,13 @@ Genre Verbs
   flex-wrap: wrap;
   width: 80%;
   margin: auto;
+  padding: 0px;
 }
 
 .genre_list li {
   list-style-type: none;
   width: fit-content;
-  width: 180px;
+  width: 160px;
   padding: 0px 20px;
   margin: 0px 10px;
   text-align: right;

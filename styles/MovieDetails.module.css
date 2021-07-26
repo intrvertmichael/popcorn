@@ -117,14 +117,3 @@ Details
 .details p {
     margin: 0px;
 }
-
-
-/*
-Alternative Pictures
-- - - - - - - - - - - - -
-*/
-
-.alt_pics {
-    display: flex;
-    flex-direction: column;
-}

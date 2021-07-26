@@ -5,6 +5,7 @@ import Layout from '../../components/Layout'
 
 import { getSingleMovie, getImageList, createMovieImageURL } from '../../requests/movie.api'
 import Link from 'next/link'
+import Carousel from '../../components/Carousel'
 
 export const getStaticPaths = async () => {
     return { paths: [], fallback: true }
@@ -65,9 +66,7 @@ const MovieDetails = ({movie, images}) => {
                     <ul className={styles.genres}>{genres}</ul>
                 </div>
 
-                <div className={styles.alt_pics}>
-                    {altPics}
-                </div>
+                <Carousel images={altPics} />
             </div>
         </Layout>
     )

@@ -1,0 +1,40 @@
+
+.carousel {
+    margin-bottom: 50px;
+}
+
+.carousel button{
+    border: none;
+    background: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.images {
+    position: relative;
+    height: 540px;
+    margin-top: 10px;
+}
+
+.alt_pics {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: gray;
+}
+
+.nav span {
+    color: white;
+}
+
+.label {
+    text-align: center;
+    width: 50px;
+}
