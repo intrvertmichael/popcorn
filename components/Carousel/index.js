@@ -3,7 +3,8 @@ import { useState } from 'react'
 import styles from '../../styles/Carousel.module.css'
 
 const Carousel = ({images}) => {
-    const [pos, setPos] = useState(0)
+    const randomBg = images? Math.floor(images.length * Math.random()): 0
+    const [pos, setPos] = useState(randomBg)
 
     if(!images) return false
 
@@ -19,6 +20,13 @@ const Carousel = ({images}) => {
 
     return (
         <div className={styles.carousel}>
+
+            <div className={styles.images}>
+                <div className={styles.alt_pics}>
+                    {images[pos]}
+                </div>
+            </div>
+
             <div className={styles.nav}>
                 <button onClick={backClicked}> ◀ </button>
                 <div className={styles.label}>
@@ -27,11 +35,6 @@ const Carousel = ({images}) => {
                 <button onClick={nextClicked}> ▶ </button>
             </div>
 
-            <div className={styles.images}>
-                <div className={styles.alt_pics}>
-                    {images[pos]}
-                </div>
-            </div>
         </div>
     )
 }

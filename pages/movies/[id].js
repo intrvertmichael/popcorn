@@ -29,25 +29,24 @@ const MovieDetails = ({movie, images}) => {
 
     const posterImage = createMovieImageURL(movie.poster_path)
     const genres = movie.genres.map( g => (
-            <Link href={'/genre/' + g.id}  key={g.id}>
-                <a>
-                    <li> {g.name} </li>
-                </a>
-            </Link>
-        ))
-    const randomBg = altPics? Math.floor(altPics.length * Math.random()): 0
+        <Link href={'/genre/' + g.id}  key={g.id}>
+            <a>
+                <li> {g.name} </li>
+            </a>
+        </Link>
+    ))
+
     const fullDate = createFullDate(movie.release_date)
     const fullLength = createFullLength(movie.runtime)
 
     return (
         <Layout>
-            <div className={styles.hero}>
-                { altPics[randomBg] }
-            </div>
+            <Carousel images={altPics} />
 
             <div className={styles.poster} >
                 <Image src={posterImage} alt={movie.title} width="185" height="278" />
             </div>
+
 
             <div className={styles.movie_info}>
                 <Rating score={movie.vote_average} count={movie.vote_count} />
@@ -66,7 +65,6 @@ const MovieDetails = ({movie, images}) => {
                     <ul className={styles.genres}>{genres}</ul>
                 </div>
 
-                <Carousel images={altPics} />
             </div>
         </Layout>
     )
