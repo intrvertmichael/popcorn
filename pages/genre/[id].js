@@ -4,10 +4,6 @@ import Movie from '../../components/Movie'
 import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
 import styles from '../../styles/Genre.module.css'
 
-// export const getStaticPaths = async () => {
-//     return { paths: [], fallback: true }
-// }
-
 export const getServerSideProps = async (context) => {
     const id= context.params.id
     let page = context.query.page? context.query.page : 1

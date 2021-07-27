@@ -23,6 +23,9 @@ function getURL(type, id, page) {
 
         case "imageList":
         return baseURL +"/movie/"+ id +"/images" + keyPath
+
+        case "search":
+        return baseURL + "/search/movie/" + keyPath + "&query=" + id + "&page=" + page
     }
 
 }
@@ -91,4 +94,11 @@ export async function getImageList(id){
     const res = await fetch(url)
     const data = await res.json()
     return data
+}
+
+export async function searchForMovie(query, page = 1){
+    const url = getURL("search", query, page)
+    const res = await fetch(url)
+    const data = await res.json()
+    return data;
 }

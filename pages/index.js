@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import MovieBar from '../components/MovieBar'
 
 import { getTrending, getGenres, getMoviesFromGenre } from '../requests/movie.api'
+import SearchBar from '../components/SearchBar'
 
 export async function getStaticProps () {
 
@@ -54,6 +55,8 @@ export default function Home({movies, genres, allFavMovies}) {
           ))
         }
         </ul>
+
+        <SearchBar />
 
         <div className={styles.genre_verbs}>
           <h2>I want to see a movie that makes me</h2>
