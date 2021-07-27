@@ -35,14 +35,44 @@
 .results_wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
-.results_wrapper button{
+.clear_search {
     font-size: 1em;
     background: none;
     border: none;
     color: white;
+    width: fit-content;
     padding: 30px;
+    margin: auto;
+    cursor: pointer;
+}
+
+.results_wrapper nav {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: gray;
+}
+
+.results_wrapper nav span {
+    color: white;
+}
+
+.results_wrapper nav p {
+    padding: 0px 10px;
+}
+
+.results_wrapper nav button {
+    padding: 0px 10px;
+    background: none;
+    border: none;
+    font-size: 1em;
+    color: white;
+    cursor: pointer;
 }
 
 .results {
