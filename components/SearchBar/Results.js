@@ -1,6 +1,12 @@
 import styles from '../../styles/SeachBar.module.css'
 
 const Results = ({results, setSearchText, setResults, fetchResults}) => {
+
+    if (results.movies.length < 1 ) {
+        return <div className={styles.clear_search}>No matching movies found</div>
+    }
+
+
     return (
         <div className={styles.results_wrapper}>
             <button className={styles.clear_search} onClick={()=> {
