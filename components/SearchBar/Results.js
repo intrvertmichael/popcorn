@@ -2,17 +2,28 @@ import styles from '../../styles/SeachBar.module.css'
 
 const Results = ({results, setSearchText, setResults, fetchResults}) => {
 
+    function clearResults(){
+        setSearchText(null)
+        setResults(null)
+    }
+
     if (results.movies.length < 1 ) {
-        return <div className={styles.clear_search}>No matching movies found</div>
+        return (
+            <div
+                className={styles.clear_search}
+                onClick={clearResults}
+                style={{textAlign: "center"}}
+                >
+                No matching movies found. <br/>
+                Please try again
+            </div>
+        )
     }
 
 
     return (
         <div className={styles.results_wrapper}>
-            <button className={styles.clear_search} onClick={()=> {
-                setSearchText(null)
-                setResults(null)
-            }}> Clear Search </button>
+            <button className={styles.clear_search} onClick={clearResults}> Clear Search </button>
 
             <ul className={styles.results}>
                 {results.movies}
