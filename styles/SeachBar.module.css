@@ -1,7 +1,3 @@
-.search {
-    padding: 100px;
-    text-align: center;
-}
 
 .search_bar {
     width: fit-content;
@@ -79,14 +75,16 @@
 .results {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    width: 90%;
+    max-width: calc(192px * 5);
     padding: 0px;
-    margin: 0px;
+    margin: 0px auto;
 }
 
 .results li {
     list-style-type: none;
-    width: fit-content;
+    width: 20%;
+    max-width: fit-content;
     text-align: left;
     display: flex;
 }

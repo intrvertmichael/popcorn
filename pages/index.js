@@ -1,11 +1,14 @@
-import Link from 'next/link'
+
 import styles from '../styles/Home.module.css'
+import { getTrending, getGenres, getMoviesFromGenre } from '../requests/movie.api'
+
 import Trending from '../components/Trending'
 import Header from '../components/Header'
 import MovieBar from '../components/MovieBar'
-
-import { getTrending, getGenres, getMoviesFromGenre } from '../requests/movie.api'
 import SearchBar from '../components/SearchBar'
+import GenreList from '../components/Genre/List'
+import GenreVerbs from '../components/Genre/Verbs'
+
 
 export async function getStaticProps () {
 
@@ -36,35 +39,12 @@ export default function Home({movies, genres, allFavMovies}) {
   return (
     <>
       <Trending movies={movies} />
+
       <div className={styles.container}>
-
-        <div className={styles.home_header}>
-          <Header />
-        </div>
-
-        <ul className={styles.genre_list}>
-        {
-          genres.map( (genre, key) =>(
-            <li key={key}>
-              <Link href={'/genre/'+ genre.id}>
-                <a>
-                  {genre.name}
-                </a>
-              </Link>
-            </li>
-          ))
-        }
-        </ul>
-
+        <Header />
+        <GenreList genres={genres} />
         <SearchBar />
-
-        <div className={styles.genre_verbs}>
-          <h2>I want to see a movie that makes me</h2>
-          <ul>
-            <li> laugh </li>
-            <li> cry </li>
-          </ul>
-        </div>
+        <GenreVerbs />
 
         {
           // allFavMovies?

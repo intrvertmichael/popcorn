@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import styles from '../../styles/SeachBar.module.css'
 
 const Results = ({results, setSearchText, setResults, fetchResults}) => {

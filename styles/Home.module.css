@@ -2,12 +2,8 @@
 .container {
   background: linear-gradient( transparent 0%, black 75px);
   margin-top: -75px;
+  padding-top: 75px;
   position: relative;
-}
-
-.home_header {
-  margin: auto;
-  padding: 75px 25px;
 }
 
 /*
@@ -38,7 +34,7 @@ Genre Verbs
 */
 
 .genre_verbs {
-  padding: 50px;
+  padding: 150px;
 }
 
 .genre_verbs ul{
@@ -76,7 +72,7 @@ Genre Verbs
   display: flex;
   flex-wrap: wrap;
   width: 80%;
-  margin: auto;
+  margin: 150px auto;
   padding: 0px;
 }
 
