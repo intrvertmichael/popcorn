@@ -18,7 +18,7 @@ const Movie = ({movie}) => {
             <div className={styles.movie_info}>
                 <div>
                     <h3>
-                        <Link href={'/movies/' + movie.id}>
+                        <Link href={'/movie/' + movie.id}>
                             <a>
                                 {title}
                             </a>

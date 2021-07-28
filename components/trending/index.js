@@ -6,7 +6,7 @@ const Trending = ({movies}) => {
 
     const trendingMovies = movies.map( movie => (
         <li key={movie.id}>
-            <Link href={'/movies/' + movie.id}>
+            <Link href={'/movie/' + movie.id}>
                 <a>
                 <Image src={movie.image} alt={movie.title} width="185" height="278"/>
                 </a>
