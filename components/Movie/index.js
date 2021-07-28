@@ -11,8 +11,11 @@ const Movie = ({movie}) => {
                         : movie.original_title
     const poster = createMovieImageURL(movie.poster_path)
 
+    if(!movie.poster_path) return false
+
     return (
         <li className={styles.movie_li} key={movie.id}>
+
             <Image src={poster} alt={movie.original_title} width="192" height="288"/>
 
             <div className={styles.movie_info}>
