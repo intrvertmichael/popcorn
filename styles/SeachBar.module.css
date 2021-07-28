@@ -26,6 +26,7 @@
 
 .search_bar input {
     font-size: 1.5em;
+    padding: 20px;
 }
 
 .search_bar button {
