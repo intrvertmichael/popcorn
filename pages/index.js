@@ -15,8 +15,7 @@ export async function getStaticProps () {
   const movies = await getTrending()
   const genres = await getGenres()
 
-  // call firebase
-  // use firebase response to choose what 3 genres to show
+  // call firebase. use firebase response to choose what 3 genres to show as favorites
   const favGenre = [10402, 16, 878]
 
   let allFavMovies = await Promise.all(favGenre.map( async genreID => {
@@ -25,13 +24,7 @@ export async function getStaticProps () {
     return { title: genreTitle, movies: movies.results }
   }))
 
-  return {
-    props: {
-      movies,
-      genres,
-      allFavMovies
-    }
-  }
+  return { props: { movies, genres, allFavMovies } }
 }
 
 export default function Home({movies, genres, allFavMovies}) {
@@ -46,14 +39,7 @@ export default function Home({movies, genres, allFavMovies}) {
         <SearchBar />
         <GenreVerbs />
 
-        {
-          // allFavMovies?
-          // allFavMovies.map( (movieList, key) => <MovieBar movieList = {movieList} key={key} />)
-          // : ''
-        }
-
         <MovieBar movieList = {allFavMovies[0]} />
-
       </div>
     </>
   )

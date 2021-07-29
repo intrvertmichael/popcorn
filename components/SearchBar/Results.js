@@ -2,6 +2,8 @@ import styles from '../../styles/SeachBar.module.css'
 
 const Results = ({results, setSearchText, setResults, fetchResults}) => {
 
+    if(!results) return false
+
     function clearResults(){
         setSearchText(null)
         setResults(null)

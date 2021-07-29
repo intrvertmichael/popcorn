@@ -46,11 +46,7 @@ const SearchBar = () => {
                 <button> 🔎 </button>
             </form>
 
-            {
-                results?
-                <Results {...{results, setSearchText, setResults, fetchResults}} />
-                : ''
-            }
+            <Results {...{results, setSearchText, setResults, fetchResults}} />
         </div>
     )
 }
