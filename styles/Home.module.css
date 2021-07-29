@@ -113,8 +113,6 @@ Genre Movies
 
 .genre_movies {
   display: flex;
-  width: 286.5%;
-  /* width will be dynamic depending on how many movies are shown on movie bar */
   margin: 0px;
   padding: 0px;
 }
