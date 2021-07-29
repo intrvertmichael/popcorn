@@ -40,7 +40,7 @@ const SearchBar = () => {
             <form className={styles.search_bar} onSubmit={searchSubmitted}>
                 <input
                     type="text"
-                    placeholder="Enter a movie title here..."
+                    placeholder="Search for a movie..."
                     onChange={typing}
                     value={searchText? searchText.value : ''} />
                 <button> 🔎 </button>

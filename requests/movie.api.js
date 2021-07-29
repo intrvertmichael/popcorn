@@ -26,6 +26,9 @@ function getURL(type, id, page) {
 
         case "search":
         return baseURL + "/search/movie/" + keyPath + "&query=" + id + "&page=" + page
+
+        case "similarMovies":
+        return baseURL + "/movie/" + id + "/similar" + keyPath
     }
 
 }
@@ -98,6 +101,13 @@ export async function getImageList(id){
 
 export async function searchForMovie(query, page = 1){
     const url = getURL("search", query, page)
+    const res = await fetch(url)
+    const data = await res.json()
+    return data;
+}
+
+export async function getSimilarMovies(id){
+    const url = getURL("similarMovies", id)
     const res = await fetch(url)
     const data = await res.json()
     return data;
