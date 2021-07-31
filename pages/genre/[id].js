@@ -24,6 +24,26 @@ const GenreDetails = ({movies, genreLabel, page}) => {
     const nextPage = (parseInt(page) + 1).toString()
     const prevPage = (parseInt(page) - 1).toString()
 
+    const backBtn = (
+        movies.page > 1 ?
+        <Link href={'/genre/' + genreLabel.id + '?page=' + prevPage}>
+            <a>
+                ←
+            </a>
+        </Link>
+        : <p> ← </p>
+    )
+
+    const nextBtn = (
+        movies.page < movies.total_pages ?
+        <Link href={'/genre/' + genreLabel.id + '?page=' + nextPage}>
+            <a>
+                →
+            </a>
+        </Link>
+        : <p> → </p>
+    )
+
     return (
         <Layout>
             <div className={styles.genre_title}>
@@ -35,28 +55,9 @@ const GenreDetails = ({movies, genreLabel, page}) => {
             </ul>
 
             <nav className={styles.genre_nav}>
-
-                {
-                    movies.page > 1 ?
-                    <Link href={'/genre/' + genreLabel.id + '?page=' + prevPage}>
-                        <a>
-                            ←
-                        </a>
-                    </Link> : <p> ← </p>
-                }
-
-
+                {backBtn}
                 <p>Page <span>{page}</span> / {movies.total_pages}</p>
-
-                {
-                    movies.page < movies.total_pages ?
-                    <Link href={'/genre/' + genreLabel.id + '?page=' + nextPage}>
-                        <a>
-                            →
-                        </a>
-                    </Link> : <p> → </p>
-                }
-
+                {nextBtn}
             </nav>
         </Layout>
     )

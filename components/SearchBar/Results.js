@@ -22,6 +22,22 @@ const Results = ({results, setSearchText, setResults, fetchResults}) => {
         )
     }
 
+    const backBtn = (
+        results.page > 1 ?
+        <button onClick={() => fetchResults(results.page - 1)}>
+            ←
+        </button>
+        : <p>←</p>
+    )
+
+    const nextBtn = (
+        results.page < results.total_pages ?
+        <button onClick={() => fetchResults(results.page + 1)}>
+            →
+        </button>
+        : <p>→</p>
+    )
+
 
     return (
         <div className={styles.results_wrapper}>
@@ -32,23 +48,9 @@ const Results = ({results, setSearchText, setResults, fetchResults}) => {
             </ul>
 
             <nav>
-                {
-                    results.page > 1 ?
-                        <button onClick={() => fetchResults(results.page - 1)}>
-                            ←
-                        </button>
-                        : <p>←</p>
-                }
-
+                {backBtn}
                 <p>Page <span>{results.page}</span> / {results.total_pages}</p>
-
-                {
-                    results.page < results.total_pages ?
-                        <button onClick={() => fetchResults(results.page + 1)}>
-                            →
-                        </button>
-                        : <p>→</p>
-                }
+                {nextBtn}
             </nav>
         </div>
     )

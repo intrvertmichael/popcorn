@@ -18,6 +18,8 @@ export async function getStaticProps () {
   // call firebase. use firebase response to choose what 3 genres to show as favorites
   const favGenre = [10402, 16, 878]
 
+  // not sure if to show a bar for top 3 favs
+  // or only most favorite genre.
   let allFavMovies = await Promise.all(favGenre.map( async genreID => {
     const genreTitle = genres.find( g => g.id === genreID).name
     const movies = await getMoviesFromGenre(genreID)
