@@ -25,7 +25,7 @@ const SearchBar = () => {
     }
 
     function searchSubmitted(){
-        if(searchText && searchText.value === '') setResults(null)
+        if(!searchText || searchText.value === '') setResults(null)
         else fetchResults()
     }
 
