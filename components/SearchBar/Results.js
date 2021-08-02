@@ -47,11 +47,15 @@ const Results = ({results, setSearchText, setResults, fetchResults}) => {
                 {results.movies}
             </ul>
 
-            <nav>
-                {backBtn}
-                <p>Page <span>{results.page}</span> / {results.total_pages}</p>
-                {nextBtn}
-            </nav>
+            {
+                results.total_pages > 1?
+                <nav>
+                    {backBtn}
+                    <p>Page <span>{results.page}</span> / {results.total_pages}</p>
+                    {nextBtn}
+                </nav>
+                : ""
+            }
         </div>
     )
 }

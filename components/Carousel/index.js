@@ -27,13 +27,18 @@ const Carousel = ({images}) => {
                 </div>
             </div>
 
-            <div className={styles.nav}>
-                <button onClick={backClicked}> ◀ </button>
-                <div className={styles.label}>
-                    <span>{pos}</span> / {images.length -1}
+
+            {
+                images.length > 1 ?
+                <div className={styles.nav}>
+                    <button onClick={backClicked}> ◀ </button>
+                    <div className={styles.label}>
+                        <span>{pos}</span> / {images.length - 1}
+                    </div>
+                    <button onClick={nextClicked}> ▶ </button>
                 </div>
-                <button onClick={nextClicked}> ▶ </button>
-            </div>
+                : ''
+            }
 
         </div>
     )

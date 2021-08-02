@@ -3,7 +3,7 @@ import Movie from '../Movie'
 
 const MovieBar = ({movieList}) => {
 
-    if(!movieList) return false
+    if(!movieList || movieList.movies.length <= 1) return false
 
     const movie_length = movieList.movies.length
     const movie_image_size = 20
