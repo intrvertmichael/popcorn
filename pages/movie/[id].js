@@ -65,6 +65,7 @@ const MovieDetails = ({movie, images, recommended}) => {
                         <p> {fullLength} long</p>
                     </div>
 
+
                     <ul className={styles.genres}>{genres}</ul>
                 </div>
 

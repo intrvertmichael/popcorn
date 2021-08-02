@@ -62,7 +62,7 @@ Description
 }
 
 .movie_description {
-    padding: 30px 50px;
+    padding: 30px 50px 100px;
     max-width: 700px;
     margin: auto;
 }
@@ -84,8 +84,7 @@ Genres
 }
 
 .genres {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 75px;
 }
 
 .genres li {
@@ -107,6 +106,7 @@ Details
 
 .details {
     font-size: 0.9em;
+    text-align: right;
 }
 
 .details p {

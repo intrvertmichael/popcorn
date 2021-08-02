@@ -7,10 +7,7 @@ const MovieBar = ({movieList}) => {
 
     const movie_length = movieList.movies.length
     const movie_image_size = 20
-    let ul_width = movieList.movies.length * movie_image_size
-
-    console.log('length: ', movie_length)
-    console.log('ul_width: ', ul_width)
+    const ul_width = movie_length * movie_image_size
 
     return (
         <div className={styles.movie_bar}>

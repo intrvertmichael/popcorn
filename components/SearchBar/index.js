@@ -7,6 +7,7 @@ const SearchBar = () => {
 
     const [searchText, setSearchText] = useState()
     const [results, setResults] = useState()
+    const [timer, setTimer] = useState()
 
     async function fetchResults(requested_page){
 
@@ -23,9 +24,7 @@ const SearchBar = () => {
         setResults( {movies, page, total_pages} )
     }
 
-    function searchSubmitted(e){
-        e.preventDefault()
-
+    function searchSubmitted(){
         if(searchText && searchText.value === '') setResults(null)
         else fetchResults()
     }
@@ -33,11 +32,18 @@ const SearchBar = () => {
     function typing(e){
         e.preventDefault()
         setSearchText({ value: e.target.value })
+
+        clearTimeout(timer)
+        const timer_id = setTimeout(searchSubmitted, 500)
+        setTimer(timer_id)
     }
 
     return (
         <div className={styles.search}>
-            <form className={styles.search_bar} onSubmit={searchSubmitted}>
+            <form className={styles.search_bar} onSubmit={ e => {
+                e.preventDefault()
+                searchSubmitted()
+            } }>
                 <input
                     type="text"
                     placeholder="Search for a movie..."
