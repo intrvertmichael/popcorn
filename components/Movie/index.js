@@ -16,7 +16,7 @@ const Movie = ({movie}) => {
     return (
         <li className={styles.movie_li} key={movie.id}>
 
-            <Image src={poster} alt={movie.original_title} width="192" height="288"/>
+            <Image src={poster} alt={movie.original_title} width="288" height="432"/>
 
             <div className={styles.movie_info}>
                 <div>

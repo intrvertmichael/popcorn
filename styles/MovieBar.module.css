@@ -1,0 +1,22 @@
+
+.genre_movies_wrapper {
+    width: 100%;
+    overflow: scroll;
+    scroll-snap-type: x mandatory;
+}
+
+.genre_movies_title {
+    padding: 0px 30px;
+    box-sizing: border-box;
+    font-size: 1.5em;
+}
+
+.genre_movies {
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+}
+
+.genre_movies li {
+    scroll-snap-align: end;
+}

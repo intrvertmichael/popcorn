@@ -7,7 +7,7 @@
 }
 
 /*
-Movie Grid
+Movie Grid @ Top
 - - - - - - - - - - - - - - - - -
 */
 
@@ -92,35 +92,4 @@ Genre Verbs
 
 .genre_list li:hover {
   background: rgba( 255, 255, 255, 0.08 );
-}
-
-
-/*
-Genre Movies
-- - - - - - - - - - - - - - - - -
-*/
-
-.genre_movies_wrapper {
-  width: 100%;
-  overflow: scroll;
-  scroll-snap-type: x mandatory;
-}
-
-.genre_movies_title {
-  padding: 0px 30px;
-  font-size: 1.5em;
-}
-
-.genre_movies {
-  display: flex;
-  margin: 0px;
-  padding: 0px;
-}
-
-.genre_movies li {
-  scroll-snap-align: end;
-}
-
-.movie_bar {
-  margin-top: 400px;
 }

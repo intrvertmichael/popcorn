@@ -3,7 +3,7 @@ import styles from '../../styles/MovieDetails.module.css'
 import Rating from '../../components/Rating'
 import Layout from '../../components/Layout'
 
-import { getSingleMovie, getImageList, createMovieImageURL, getSimilarMovies } from '../../requests/movie.api'
+import { getSingleMovie, getImageList, createMovieImageURL, getRecommendedMovies } from '../../requests/movie.api'
 import Link from 'next/link'
 import Carousel from '../../components/Carousel'
 import MovieBar from '../../components/MovieBar'
@@ -16,14 +16,14 @@ export const getStaticProps = async (context) => {
     const id= context.params.id
     const movie = await getSingleMovie(id)
     const images = await getImageList(id)
-    const similar = await getSimilarMovies(id)
+    const recommended = await getRecommendedMovies(id)
 
-    return { props: { movie, images, similar } }
+    return { props: { movie, images, recommended } }
 }
 
-const MovieDetails = ({movie, images, similar}) => {
+const MovieDetails = ({movie, images, recommended}) => {
 
-    if(!movie || !images || !similar) return false
+    if(!movie || !images || !recommended) return false
 
     const altPics = images.backdrops.map( (img, key) => {
         const altImage = createMovieImageURL(img.file_path)
@@ -68,7 +68,7 @@ const MovieDetails = ({movie, images, similar}) => {
                     <ul className={styles.genres}>{genres}</ul>
                 </div>
 
-                <MovieBar movieList={{ movies: similar.results, title:"Similar Movies"}}/>
+                <MovieBar movieList={{ movies: recommended.results, title:"Recommended Movies"}}/>
 
             </div>
         </Layout>
