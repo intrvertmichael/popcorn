@@ -6,7 +6,7 @@
     display: flex;
 }
 
-.genre_movies, .genre_movies li, .genre_movies li a {
+.genre_movies, .genre_movies li {
     display: flex;
 }
 
