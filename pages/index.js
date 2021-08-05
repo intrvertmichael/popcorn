@@ -8,9 +8,6 @@ import SearchBar from '../components/SearchBar'
 import GenreList from '../components/Genre/List'
 import GenreVerbs from '../components/Genre/Verbs'
 
-import { useGetFirebaseUser } from '../context/FirebaseContext'
-import { useEffect } from 'react'
-
 export async function getStaticProps () {
 
   const movies = await getTrending()
@@ -32,8 +29,6 @@ export async function getStaticProps () {
 
 export default function Home({movies, genres, allFavMovies}) {
 
-  const firebaseUser = useGetFirebaseUser()
-
   return (
     <>
       <Trending movies={movies} />
@@ -41,11 +36,6 @@ export default function Home({movies, genres, allFavMovies}) {
       <div className={styles.container}>
         <Header />
         <GenreList genres={genres} />
-
-        <div>
-          username: {firebaseUser? firebaseUser.name: ''}
-        </div>
-
         <SearchBar />
         <GenreVerbs />
 

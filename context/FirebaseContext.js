@@ -10,15 +10,15 @@ const FirebaseContext = ({children}) => {
 
     const [firebaseUser, setFirebaseUser] = useState()
 
-    let stored_user
-    if (typeof window !== "undefined" && localStorage.getItem('user')){
-        const ls_user = localStorage.getItem('user')
-        stored_user = JSON.parse(ls_user)
-    }
-
     useEffect( () => {
-        if(stored_user && !firebaseUser) setFirebaseUser(stored_user)
-    }, [firebaseUser, stored_user])
+        let stored_user = localStorage.getItem('user')
+
+        if(stored_user && !firebaseUser) {
+            stored_user = JSON.parse(stored_user)
+            setFirebaseUser(stored_user)
+        }
+
+    }, [firebaseUser])
 
     return (
         <GetFirebaseUserContext.Provider value={firebaseUser}>
