@@ -1,9 +1,9 @@
 
-import Link from "next/link";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
+import Header from '../components/Header'
+
 import { useSetFirebaseUser, useGetFirebaseUser } from "../context/FirebaseContext";
 import firebase from "../requests/firebase/config";
-
 
 const Auth = () => {
     const setFirebaseUser = useSetFirebaseUser()
@@ -28,29 +28,27 @@ const Auth = () => {
         }
     }
 
-    async function signOut(){
-        await firebase.auth().signOut()
-        localStorage.removeItem('user');
-        setFirebaseUser(null)
+    if(!firebaseUser) {
+        return(
+            <div>
+                <Header />
+                <StyledFirebaseAuth
+                    uiConfig={uiConfig}
+                    firebaseAuth={firebase.auth()}
+                />
+            </div>
+        )
     }
-
-    if(!firebaseUser) return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
 
     return (
         <div>
+            <Header />
             <h3>Auth Page</h3>
 
             <div>
                 <p>{firebaseUser.name}</p>
                 <p>{firebaseUser.email}</p>
                 <p>{firebaseUser.id}</p>
-                <button onClick={signOut}>Sign Out</button>
-
-                <Link href='/'>
-                    <a>
-                        Home
-                    </a>
-                </Link>
             </div>
         </div>
     )
