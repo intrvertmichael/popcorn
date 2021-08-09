@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from '../../styles/MovieBar.module.css'
 import Movie from '../Movie'
 
@@ -11,8 +12,11 @@ const MovieBar = ({movieList}) => {
 
     return (
         <div className={styles.movie_bar}>
-
-            <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+            <Link href={`/genre/${movieList.genreID}`}>
+                <a>
+                    <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+                </a>
+            </Link>
 
             <div className={styles.genre_movies_wrapper}>
                 <ul className={styles.genre_movies} style={{width: `${ul_width}%`}}>

@@ -21,7 +21,7 @@ export async function getStaticProps () {
   let allFavMovies = await Promise.all(favGenre.map( async genreID => {
     const genreTitle = genres.find( g => g.id === genreID).name
     const movies = await getMoviesFromGenre(genreID)
-    return { title: genreTitle, movies: movies.results }
+    return { title: genreTitle, genreID, movies: movies.results }
   }))
 
   return { props: { movies, genres, allFavMovies } }

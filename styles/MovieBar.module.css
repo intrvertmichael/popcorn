@@ -20,3 +20,7 @@
 .genre_movies li {
     scroll-snap-align: end;
 }
+
+.movie_bar a {
+    color: white;
+}
