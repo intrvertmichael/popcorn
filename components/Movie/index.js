@@ -4,9 +4,8 @@ import {createMovieImageURL} from '../../requests/movie.api'
 import styles from '../../styles/Movie.module.css'
 import { useGetFirebaseUser } from '../../context/FirebaseContext'
 
-import {post_data} from '../../pages/api/crud'
-
 const Movie = ({movie}) => {
+
     const firebaseUser = useGetFirebaseUser()
 
     // title
@@ -19,8 +18,12 @@ const Movie = ({movie}) => {
     // event handlers
     async function liked_movie() {
         console.log("button was pressed")
-        // const api_fb = await fetch('/api/crud')
-        const api_fb = await fetch('/api/crud', {method: 'POST'})
+        // const api_fb = await fetch('/api/crud',{method: 'GET', headers: { uid: firebaseUser.id}})
+        const api_fb = await fetch('/api/movie_crud', {method: 'POST', headers: {
+            liked: true,
+            user_id: firebaseUser.id,
+            movie_id: movie.id,
+        }})
         // const api_fb = await fetch('/api/crud', {method: 'PUT'})
         console.log("api_fb", api_fb)
         console.log(firebaseUser.name, "likes", movie.original_title)
