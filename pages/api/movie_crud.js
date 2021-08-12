@@ -23,9 +23,10 @@ export default async function handler(req, res) {
         const data = res.data()
 
         console.log(data) // if no data a document should be created before adding the data
-        console.log(liked)
 
         if(liked) {
+            console.log(liked)
+
             if(!data){
                 // create document and set first movie
                 const post_movie = await db.collection("movies").doc(user_id).set({
@@ -36,18 +37,26 @@ export default async function handler(req, res) {
             }
 
             // check if data includes liked movie
-            const current_likes = data.liked
-            const exists = current_likes.filter( liked => liked.movie_id === movie_id)
-            const movie_in_list = exists.length > 0
+            const exists_in_liked = data.liked.filter( liked => liked.movie_id === movie_id).length > 0
+            const exists_in_disliked = data.disliked.filter( disliked => disliked.movie_id === movie_id).length > 0
 
-            if(!movie_in_list){
+            if(!exists_in_liked){
                 console.log("posted because movie doesnt exists")
 
-                // if it DOES NOT then add to liked movies then post
-                current_likes.push({ movie_id: movie_id })
+                if(exists_in_disliked){
+                    // if it exists in disliked then remove it
+                    // before adding it to the liked list
+                    console.log("this movie exists in dislikes so it will be removed")
+                    const filtered = data.disliked.filter( disliked => disliked.movie_id !== movie_id)
+                    console.log("filtered", filtered)
+                    await db.collection("movies").doc(user_id).update({
+                        disliked: filtered
+                    })
+                }
 
-                const post_movie = await db.collection("movies").doc(user_id).set({
-                    liked: current_likes
+                // if it DOES NOT then add to liked movies then post
+                await db.collection("movies").doc(user_id).update({
+                    liked: [...data.liked, { movie_id: movie_id }]
                 })
             } else {
                 // if it DOES then don't add to liked movies
