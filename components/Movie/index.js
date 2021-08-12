@@ -17,21 +17,31 @@ const Movie = ({movie}) => {
 
     // event handlers
     async function liked_movie() {
-        console.log("button was pressed")
         // const api_fb = await fetch('/api/crud',{method: 'GET', headers: { uid: firebaseUser.id}})
-        const api_fb = await fetch('/api/movie_crud', {method: 'POST', headers: {
-            liked: true,
-            user_id: firebaseUser.id,
-            movie_id: movie.id,
-        }})
+        console.log("liked button pressed")
+        const api_fb = await fetch('/api/movie_crud', {
+            method: 'POST',
+            headers: {
+                liked: true,
+                user_id: firebaseUser.id,
+                movie_id: movie.id,
+            }
+        })
         // const api_fb = await fetch('/api/crud', {method: 'PUT'})
         console.log("api_fb", api_fb)
-        console.log(firebaseUser.name, "likes", movie.original_title)
     }
 
     async function disliked_movie() {
-        const api_fb = await fetch('/api/crud', {method: 'DELETE'})
-        console.log(firebaseUser.name, "DOES NOT like", movie.original_title)
+        // const api_fb = await fetch('/api/crud', {method: 'DELETE'})
+        // console.log(firebaseUser.name, "DOES NOT like", movie.original_title)
+        console.log("disliked button pressed")
+        await fetch('/api/movie_crud', {
+            method: 'POST',
+            headers: {
+                user_id: firebaseUser.id,
+                movie_id: movie.id,
+            }
+        })
     }
 
     if(!movie.poster_path) return false

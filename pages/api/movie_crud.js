@@ -1,84 +1,143 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 
+const db = firebase.firestore()
+const test = 'eJD52RAYwV5hLD0zz8uL'
+const test2 = 'thisisafakeid'
+
 export default async function handler(req, res) {
-
-    const {user_id, movie_id, liked} = req.headers
-
-    const db = firebase.firestore()
-    const test = 'eJD52RAYwV5hLD0zz8uL'
-    const test2 = 'thisisafakeid'
-
-    if (req.method === 'GET') {
-        console.log("inside GET request")
-
-        const querySnapshot = await db.collection("users").doc(test2).get()
-        console.log(querySnapshot.data())
-        res.status(200).json({...querySnapshot})
+    const routes = {
+        POST: postHandler,
+        PUT: putHandler,
+        DELETE: deleteHandler,
+        GET: getHandler,
     }
 
-    else if (req.method === 'POST') {
-        console.log("inside POST request")
-        const res = await db.collection("movies").doc(user_id).get()
-        const data = res.data()
+    return routes[req.method](req, res)
+}
 
-        console.log(data) // if no data a document should be created before adding the data
+async function getHandler(req, res) {
+    console.log("inside GET request")
 
-        if(liked) {
-            console.log(liked)
+    const querySnapshot = await db.collection("users").doc(test2).get()
+    console.log(querySnapshot.data())
+    res.status(200).json({ ...querySnapshot })
+}
 
-            if(!data){
-                // create document and set first movie
-                const post_movie = await db.collection("movies").doc(user_id).set({
-                    liked: [{ movie_id: movie_id }]
-                })
+async function deleteHandler(req, res) {
+    console.log("inside DELETE request")
 
-                return res.status(200).json({post_movie})
-            }
+    const { user_id, movie_id } = req.headers
+    const fb_data = await db.collection("users").doc(user_id).delete()
+    res.status(200).json({ fb_data })
+}
 
-            // check if data includes liked movie
-            const exists_in_liked = data.liked.filter( liked => liked.movie_id === movie_id).length > 0
-            const exists_in_disliked = data.disliked.filter( disliked => disliked.movie_id === movie_id).length > 0
+async function putHandler(req, res) {
+    console.log('inside the put rquest');
 
-            if(!exists_in_liked){
-                console.log("posted because movie doesnt exists")
+    const fb_data = await db.collection("users").doc(test2).update({ another_name: "Yafi" })
+    res.status(200).json({ fb_data }).end()
+}
 
-                if(exists_in_disliked){
-                    // if it exists in disliked then remove it
-                    // before adding it to the liked list
-                    console.log("this movie exists in dislikes so it will be removed")
-                    const filtered = data.disliked.filter( disliked => disliked.movie_id !== movie_id)
-                    console.log("filtered", filtered)
-                    await db.collection("movies").doc(user_id).update({
-                        disliked: filtered
-                    })
-                }
+// POST - - - - - - - - -
 
-                // if it DOES NOT then add to liked movies then post
-                await db.collection("movies").doc(user_id).update({
-                    liked: [...data.liked, { movie_id: movie_id }]
-                })
-            } else {
-                // if it DOES then don't add to liked movies
-                console.log("didnt post because movie exists")
-            }
+async function postHandler(req, res) {
+    const { liked } = req.headers
 
-            res.status(200).json({post_movie})
+    if (liked) return handleLiked(req, res)
+    if (!liked) return handleDisliked(req, res)
+}
 
-        }
+async function handleLiked(req, res){
+    console.log("handling liked movie")
+
+    const { user_id, movie_id } = req.headers
+
+    const fb_res = await db.collection("movies").doc(user_id).get()
+    const fb_data = fb_res.data()
+
+    if (!fb_data) {
+        // create document and set first movie
+        await db.collection("movies").doc(user_id).set({
+            liked: [{ movie_id }],
+            disliked: []
+        })
+
+        return res.status(200).end()
     }
 
-    else if (req.method === 'PUT') {
-        console.log("inside PUT request")
+    // check if movie is in liked/disliked list
+    const exists_in_liked = fb_data.liked ? fb_data.liked.find(liked => liked.movie_id === movie_id) : null
+    const exists_in_disliked = fb_data.disliked ? fb_data.disliked.find(disliked => disliked.movie_id === movie_id) : null
 
-        const data = await db.collection("users").doc(test2).update({another_name: "Yafi"})
-        res.status(200).json({data})
+    if (exists_in_liked) {
+        // movie is exists in liked so it will remove it from the list
+        const filtered = fb_data.liked.filter(liked => liked.movie_id !== movie_id)
+        await db.collection("movies").doc(user_id).update({
+            liked: filtered
+        })
+
+        return res.status(200).end()
     }
 
-    else if (req.method === 'DELETE') {
-        console.log("inside DELETE request")
-
-        const data = await db.collection("users").doc(test2).delete()
-        res.status(200).json({data})
+    if (exists_in_disliked) {
+        // if movie exists in disliked remove it
+        const filtered = fb_data.disliked.filter(disliked => disliked.movie_id !== movie_id)
+        await db.collection("movies").doc(user_id).update({
+            disliked: filtered
+        })
     }
+
+    await db.collection("movies").doc(user_id).update({
+        liked: [...fb_data.liked, { movie_id: movie_id }]
+    })
+
+    return res.status(200).end()
+}
+
+async function handleDisliked(req, res){
+    console.log("handling disliked movie")
+
+    const { user_id, movie_id } = req.headers
+
+    const fb_res = await db.collection("movies").doc(user_id).get()
+    const fb_data = fb_res.data()
+
+    if (!fb_data) {
+        // create document and set first movie
+        await db.collection("movies").doc(user_id).set({
+            liked: [],
+            disliked: [{ movie_id }]
+        })
+
+        return res.status(200).end()
+    }
+
+    // check if movie is in liked/disliked list
+    const exists_in_liked = fb_data.liked ? fb_data.liked.find(liked => liked.movie_id === movie_id) : null
+    const exists_in_disliked = fb_data.disliked ? fb_data.disliked.find(disliked => disliked.movie_id === movie_id) : null
+
+    if (exists_in_disliked) {
+        // movie is exists in disliked so it will remove it from the list
+        const filtered = fb_data.disliked.filter(disliked => disliked.movie_id !== movie_id)
+        await db.collection("movies").doc(user_id).update({
+            disliked: filtered
+        })
+
+        return res.status(200).end()
+    }
+
+    if (exists_in_liked) {
+        // if movie exists in liked remove it
+        const filtered = fb_data.liked.filter(liked => liked.movie_id !== movie_id)
+        await db.collection("movies").doc(user_id).update({
+            liked: filtered
+        })
+    }
+
+    await db.collection("movies").doc(user_id).update({
+        disliked: [...fb_data.disliked, { movie_id: movie_id }]
+    })
+
+    return res.status(200).end()
 }
