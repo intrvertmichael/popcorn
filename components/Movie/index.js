@@ -19,7 +19,7 @@ const Movie = ({movie}) => {
     async function liked_movie() {
         // const api_fb = await fetch('/api/crud',{method: 'GET', headers: { uid: firebaseUser.id}})
         console.log("liked button pressed")
-        const api_fb = await fetch('/api/movie_crud', {
+        const api_fb = await fetch('/api/firebase/movie_crud', {
             method: 'POST',
             headers: {
                 liked: true,
@@ -35,7 +35,7 @@ const Movie = ({movie}) => {
         // const api_fb = await fetch('/api/crud', {method: 'DELETE'})
         // console.log(firebaseUser.name, "DOES NOT like", movie.original_title)
         console.log("disliked button pressed")
-        await fetch('/api/movie_crud', {
+        await fetch('/api/firebase/movie_crud', {
             method: 'POST',
             headers: {
                 user_id: firebaseUser.id,
