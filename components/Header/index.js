@@ -11,8 +11,6 @@ const Header = () => {
     const router = useRouter()
     const onAuthPage = router.pathname === '/auth'
 
-    console.log(firebaseUser)
-
     let rightComp = (
         <Link href='/auth'>
             <a>
@@ -25,8 +23,8 @@ const Header = () => {
     if(firebaseUser) rightComp = (
         <div>
             <button onClick={ () => {
-                firebase_signout()
                 setFirebaseUser(null)
+                firebase_signout()
             }}>
                 Sign Out
             </button>

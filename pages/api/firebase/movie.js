@@ -17,11 +17,13 @@ export default async function handler(req, res) {
 }
 
 async function getHandler(req, res) {
-    console.log("inside GET request")
+    console.log("getting movies")
+    const { uid } = req.headers
+    const fb_res = await db.collection("movies").doc(uid).get()
+    const fb_data = fb_res.data()
 
-    const querySnapshot = await db.collection("users").doc(test2).get()
-    console.log(querySnapshot.data())
-    res.status(200).json({ ...querySnapshot })
+    if(fb_data) return res.status(200).json(fb_data)
+    return res.status(200).json({})
 }
 
 async function deleteHandler(req, res) {

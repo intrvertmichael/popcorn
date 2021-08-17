@@ -15,9 +15,11 @@ export default async function handler(req, res) {
 }
 
 async function getHandler(req, res) {
+    console.log("getting user info")
     const { uid } = req.headers
     const fb_res = await db.collection("users").doc(uid).get()
     const fb_data = fb_res.data()
+
     return res.status(200).json(fb_data)
 }
 
@@ -25,12 +27,13 @@ async function putHandler(req, res) {}
 async function deleteHandler(req, res) {}
 
 async function postHandler(req, res) {
+    console.log("inside post handler")
     const { uid, displayname, email } = req.headers
 
     const fb_res = await db.collection("users").doc(uid).get()
     const fb_data = fb_res.data()
 
-    if(fb_data) console.log(fb_data)
+    if(fb_data) console.log("user already exists in db")
     else await db.collection("users").doc(uid).set({uid, displayname, email})
 
     return res.status(200).end()
