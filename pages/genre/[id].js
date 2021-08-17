@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Layout from '../../components/Layout'
 import Movie from '../../components/Movie'
+import MovieGrid from '../../components/MovieGrid'
 import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
 import styles from '../../styles/Genre.module.css'
 
@@ -34,9 +35,10 @@ const GenreDetails = ({movies, genreLabel, page}) => {
         : <p> ← </p>
     )
 
+    const next_page_label = '/genre/' + genreLabel.id + '?page=' + nextPage
     const nextBtn = (
         movies.page < movies.total_pages ?
-        <Link href={'/genre/' + genreLabel.id + '?page=' + nextPage}>
+        <Link href={next_page_label}>
             <a>
                 →
             </a>
@@ -50,9 +52,7 @@ const GenreDetails = ({movies, genreLabel, page}) => {
                 <h1>{genreLabel.name} Movies</h1>
             </div>
 
-            <ul className={styles.genre_movies}>
-                { movies.results.map( movie => <Movie movie={movie} key={movie.id}/> ) }
-            </ul>
+            <MovieGrid movies={movies} next_page_label={next_page_label}/>
 
             <nav className={styles.genre_nav}>
                 {backBtn}
