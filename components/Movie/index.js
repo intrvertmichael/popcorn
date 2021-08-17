@@ -1,12 +1,17 @@
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {createMovieImageURL} from '../../requests/movie.api'
 import styles from '../../styles/Movie.module.css'
 import { useGetFirebaseUser } from '../../context/FirebaseContext'
 
-const Movie = ({movie}) => {
-
+const Movie = ({movie, fb_liked}) => {
     const firebaseUser = useGetFirebaseUser()
+    const [liked, setLiked] = useState()
+
+    useEffect(()=>{
+        if(fb_liked) setLiked(true)
+    }, [fb_liked])
 
     // title
     const titleLimit = 20
@@ -28,6 +33,9 @@ const Movie = ({movie}) => {
                 movie_id: movie.id,
             }
         })
+
+        if(liked) setLiked(null)
+        else setLiked(true)
     }
 
     async function disliked_movie() {
@@ -39,13 +47,22 @@ const Movie = ({movie}) => {
                 movie_id: movie.id,
             }
         })
+
+        if(liked===false) setLiked(null)
+        else setLiked(false)
+        // ToDo: figure out how to update the context everytime the button is pressed
     }
+
+
+    let classes = styles.movie_li
+    if(liked) classes = styles.liked
+    if(liked === false) classes = styles.disliked
 
     if(!movie.poster_path) return false
     return (
-        <li className={styles.movie_li} key={movie.id}>
+        <li className={classes} key={movie.id}>
 
-            <Image src={poster} alt={movie.original_title} width="288" height="432"/>
+            <Image src={poster} alt={movie.original_title} width="288" height="432" />
 
             <div
                 className={styles.movie_info}
