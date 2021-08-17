@@ -13,12 +13,22 @@ const Auth = () => {
         signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
         signInSuccessUrl: '/',
         callbacks: {
-            signInSuccessWithAuthResult: function(authResult) {
+            signInSuccessWithAuthResult: async function(authResult) {
 
-                const user = { id: authResult.user.uid }
+                const user = authResult.user
 
-                localStorage.setItem('user', JSON.stringify(user));
-                setFirebaseUser(user)
+                localStorage.setItem('user_id', user.uid);
+
+                const fb_user = await fetch('/api/firebase/user', {
+                    method: 'POST',
+                    headers: {
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        email: user.email
+                    }
+                })
+
+                if(fb_user) setFirebaseUser(user)
                 return false
             }
         }

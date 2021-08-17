@@ -10,13 +10,20 @@ const FirebaseContext = ({children}) => {
 
     const [firebaseUser, setFirebaseUser] = useState()
 
-    useEffect( () => {
-        let stored_user = localStorage.getItem('user')
 
-        if(stored_user && !firebaseUser) {
-            stored_user = JSON.parse(stored_user)
-            setFirebaseUser(stored_user)
+    useEffect( () => {
+
+        async function getFirebaseUser(uid){
+            const res = await fetch('/api/firebase/user', {
+                method: 'GET',
+                headers: {uid}
+            })
+            const data = await res.json()
+            setFirebaseUser(data)
         }
+
+        let user_id = localStorage.getItem('user_id')
+        if(user_id && !firebaseUser) getFirebaseUser(user_id)
 
     }, [firebaseUser])
 

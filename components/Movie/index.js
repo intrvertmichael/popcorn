@@ -20,11 +20,11 @@ const Movie = ({movie}) => {
     // const api_fb = await fetch('/api/crud', {method: 'PUT'})
     async function liked_movie() {
         console.log("Movie is liked")
-        await fetch('/api/firebase/movie_crud', {
+        await fetch('/api/firebase/movie', {
             method: 'POST',
             headers: {
                 liked: true,
-                user_id: firebaseUser.id,
+                user_id: firebaseUser.uid,
                 movie_id: movie.id,
             }
         })
@@ -32,10 +32,10 @@ const Movie = ({movie}) => {
 
     async function disliked_movie() {
         console.log("Movie is disliked")
-        await fetch('/api/firebase/movie_crud', {
+        await fetch('/api/firebase/movie', {
             method: 'POST',
             headers: {
-                user_id: firebaseUser.id,
+                user_id: firebaseUser.uid,
                 movie_id: movie.id,
             }
         })
