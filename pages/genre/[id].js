@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Layout from '../../components/Layout'
-import Movie from '../../components/Movie'
 import MovieGrid from '../../components/MovieGrid'
 import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
 import styles from '../../styles/Genre.module.css'

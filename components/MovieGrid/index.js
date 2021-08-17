@@ -19,7 +19,7 @@ const MovieGrid = ({movies, next_page_label}) => {
         firebaseUser.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
 
         const liked = fb_liked? true : null
-        // if movie is not disliked then show it on the bar
+        // if movie is not disliked then show it on the grid
         if(!fb_disliked) display_movies.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
     })
 
