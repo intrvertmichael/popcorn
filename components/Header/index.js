@@ -8,35 +8,36 @@ import {firebase_signout} from './../../requests/firebase/auth'
 const Header = () => {
     const firebaseUser = useGetFirebaseUser()
     const setFirebaseUser = useSetFirebaseUser()
-
     const router = useRouter()
-
     const onAuthPage = router.pathname === '/auth'
 
-    let rightComp
-    if( onAuthPage && firebaseUser) rightComp = (
-        <button onClick={ () => {
-            firebase_signout()
-            setFirebaseUser(null)
-        }}> Sign Out </button>
-    )
-    else if(firebaseUser) rightComp = (
-        <Link href='/auth'>
-            <a>
-                <h3>username: {firebaseUser.name}</h3>
-            </a>
-        </Link>
-    )
-
-    else if (onAuthPage) rightComp = (
-        <div></div>
-    )
-    else rightComp = (
+    let rightComp = (
         <Link href='/auth'>
             <a>
                 <h3>Sign Up | Log In</h3>
             </a>
         </Link>
+    )
+
+    if(onAuthPage) rightComp = (<div></div>)
+    if(firebaseUser) rightComp = (
+        <div>
+
+            <button onClick={ () => {
+                firebase_signout()
+                setFirebaseUser(null)
+            }}>
+                Sign Out
+            </button>
+
+            <Link href='/auth'>
+                <a>
+                    <h3>
+                        Profile
+                    </h3>
+                </a>
+            </Link>
+        </div>
     )
 
     return (

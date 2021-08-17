@@ -15,11 +15,7 @@ const Auth = () => {
         callbacks: {
             signInSuccessWithAuthResult: function(authResult) {
 
-                const user = {
-                    name: authResult.user.displayName,
-                    email: authResult.user.email,
-                    id: authResult.user.uid
-                }
+                const user = { id: authResult.user.uid }
 
                 localStorage.setItem('user', JSON.stringify(user));
                 setFirebaseUser(user)
@@ -46,8 +42,11 @@ const Auth = () => {
             <h3>Auth Page</h3>
 
             <div>
-                <p>{firebaseUser.name}</p>
-                <p>{firebaseUser.email}</p>
+                {/*
+                    <p>{firebaseUser.name}</p>
+                    <p>{firebaseUser.email}</p>
+                */}
+
                 <p>{firebaseUser.id}</p>
             </div>
         </div>
