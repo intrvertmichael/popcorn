@@ -9,8 +9,9 @@ const Movie = ({movie, fb_liked}) => {
     const firebaseUser = useGetFirebaseUser()
     const [liked, setLiked] = useState()
 
-    useEffect(()=>{
+    useEffect( () => {
         if(fb_liked) setLiked(true)
+        else setLiked(null)
     }, [fb_liked])
 
     // title
@@ -20,11 +21,7 @@ const Movie = ({movie, fb_liked}) => {
                     : movie.original_title
     const poster = createMovieImageURL(movie.poster_path)
 
-    // event handlers
-    // const api_fb = await fetch('/api/crud',{method: 'GET', headers: { uid: firebaseUser.id}})
-    // const api_fb = await fetch('/api/crud', {method: 'PUT'})
     async function liked_movie() {
-        console.log("Movie is liked")
         await fetch('/api/firebase/movie', {
             method: 'POST',
             headers: {
@@ -39,7 +36,6 @@ const Movie = ({movie, fb_liked}) => {
     }
 
     async function disliked_movie() {
-        console.log("Movie is disliked")
         await fetch('/api/firebase/movie', {
             method: 'POST',
             headers: {
@@ -47,16 +43,15 @@ const Movie = ({movie, fb_liked}) => {
                 movie_id: movie.id,
             }
         })
-
         if(liked===false) setLiked(null)
         else setLiked(false)
-        // ToDo: figure out how to update the context everytime the button is pressed
     }
 
 
     let classes = styles.movie_li
     if(liked) classes = styles.liked
     if(liked === false) classes = styles.disliked
+    // null has no style
 
     if(!movie.poster_path) return false
     return (
@@ -68,29 +63,29 @@ const Movie = ({movie, fb_liked}) => {
                 className={styles.movie_info}
                 style={firebaseUser? {} : {justifyContent:"center"}}
             >
-                    <div className={styles.movie_info_description}>
-                        <div>
-                            <h3>
-                                <Link href={'/movie/' + movie.id}>
-                                    <a>
-                                        {title}
-                                    </a>
-                                </Link>
-                            </h3>
+                <div className={styles.movie_info_description}>
+                    <div>
+                        <h3>
+                            <Link href={'/movie/' + movie.id}>
+                                <a>
+                                    {title}
+                                </a>
+                            </Link>
+                        </h3>
 
-                            <p>
-                                ★ {movie.vote_average}
-                            </p>
-                        </div>
+                        <p>
+                            ★ {movie.vote_average}
+                        </p>
                     </div>
+                </div>
 
-                    {
-                        firebaseUser &&
-                        <div className={styles.votes}>
-                            <button onClick={liked_movie}>👍</button>
-                            <button onClick={disliked_movie}>👎</button>
-                        </div>
-                    }
+                {
+                    firebaseUser &&
+                    <div className={styles.votes}>
+                        <button onClick={liked_movie}>👍</button>
+                        <button onClick={disliked_movie}>👎</button>
+                    </div>
+                }
             </div>
         </li>
     )

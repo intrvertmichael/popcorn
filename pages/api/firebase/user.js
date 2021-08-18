@@ -15,7 +15,6 @@ export default async function handler(req, res) {
 }
 
 async function getHandler(req, res) {
-    console.log("getting user info")
     const { uid } = req.headers
     const fb_res = await db.collection("users").doc(uid).get()
     const fb_data = fb_res.data()
@@ -27,7 +26,6 @@ async function putHandler(req, res) {}
 async function deleteHandler(req, res) {}
 
 async function postHandler(req, res) {
-    console.log("inside post handler")
     const { uid, displayname, email } = req.headers
 
     const fb_res = await db.collection("users").doc(uid).get()

@@ -72,8 +72,6 @@ export async function getGenreLabel(id) {
     return genreLabel
 }
 
-// get more pages = &page=2
-
 export async function getMoviesFromGenre(genreID, page) {
 
     let url

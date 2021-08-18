@@ -28,7 +28,6 @@ const FirebaseContext = ({children}) => {
         })
         const fb_movie_data = await fb_movie_res.json()
 
-
         const data = { ...fb_user_data, ...fb_movie_data }
         setFirebaseUser(data)
     }
@@ -44,7 +43,7 @@ const FirebaseContext = ({children}) => {
             setPrevPage(router.asPath)
         }
 
-    }, [firebaseUser, prevPage, router.asPath])
+    }, [firebaseUser, prevPage, router])
 
     return (
         <GetFirebaseUserContext.Provider value={firebaseUser}>

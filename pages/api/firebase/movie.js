@@ -2,8 +2,6 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 
 const db = firebase.firestore()
-const test = 'eJD52RAYwV5hLD0zz8uL'
-const test2 = 'thisisafakeid'
 
 export default async function handler(req, res) {
     const routes = {
@@ -17,7 +15,6 @@ export default async function handler(req, res) {
 }
 
 async function getHandler(req, res) {
-    console.log("getting movies")
     const { uid } = req.headers
     const fb_res = await db.collection("movies").doc(uid).get()
     const fb_data = fb_res.data()
@@ -27,16 +24,12 @@ async function getHandler(req, res) {
 }
 
 async function deleteHandler(req, res) {
-    console.log("inside DELETE request")
-
     const { user_id, movie_id } = req.headers
     const fb_data = await db.collection("users").doc(user_id).delete()
     res.status(200).json({ fb_data })
 }
 
 async function putHandler(req, res) {
-    console.log('inside the put rquest');
-
     const fb_data = await db.collection("users").doc(test2).update({ another_name: "Yafi" })
     res.status(200).json({ fb_data }).end()
 }
@@ -51,8 +44,6 @@ async function postHandler(req, res) {
 }
 
 async function handleLiked(req, res){
-    console.log("handling liked movie")
-
     const { user_id, movie_id } = req.headers
 
     const fb_res = await db.collection("movies").doc(user_id).get()
@@ -73,7 +64,7 @@ async function handleLiked(req, res){
     const exists_in_disliked = fb_data.disliked ? fb_data.disliked.find(disliked => disliked.movie_id === movie_id) : null
 
     if (exists_in_liked) {
-        // movie is exists in liked so it will remove it from the list
+        // movie exists in liked so it will remove it from the list
         const filtered = fb_data.liked.filter(liked => liked.movie_id !== movie_id)
         await db.collection("movies").doc(user_id).update({
             liked: filtered
@@ -98,8 +89,6 @@ async function handleLiked(req, res){
 }
 
 async function handleDisliked(req, res){
-    console.log("handling disliked movie")
-
     const { user_id, movie_id } = req.headers
 
     const fb_res = await db.collection("movies").doc(user_id).get()
