@@ -31,6 +31,9 @@ const Auth = () => {
         )
     }
 
+    const liked_movies = firebaseUser.liked.map((movie, key) => <li key={key}> {movie.movie_id} </li>)
+    const disliked_movies = firebaseUser.disliked.map((movie, key) => <li key={key}> {movie.movie_id} </li>)
+
     return (
         <div>
             <Header />
@@ -40,6 +43,13 @@ const Auth = () => {
                 <p>{firebaseUser.displayname}</p>
                 <p>{firebaseUser.email}</p>
                 <p>{firebaseUser.uid}</p>
+
+                <h4>Liked Movies</h4>
+                {liked_movies}
+
+                <h4>Disliked Movies</h4>
+                {disliked_movies}
+
             </div>
         </div>
     )
