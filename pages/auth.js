@@ -1,12 +1,18 @@
 
+import { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import Header from '../components/Header'
 
 import { useGetFirebaseUser } from "../context/FirebaseContext";
 import firebase from "../requests/firebase/config";
 
+import ProfileMovieGrid from '../components/ProfileMovieGrid'
+import styles from '../styles/Auth.module.css'
+
 const Auth = () => {
     const firebaseUser = useGetFirebaseUser()
+    const [likedMovies, setLikedMovies] = useState()
+    const [dislikedMovies, setDisLikedMovies] = useState()
 
     const uiConfig = {
         signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
@@ -18,6 +24,34 @@ const Auth = () => {
             }
         }
     }
+
+    async function fetch_movie(id){
+        const res = await fetch('/api/firebase/movie', {
+            method: 'GET',
+            headers: {
+                movie_id: id,
+            }
+        })
+        const data = await res.json()
+        return data
+    }
+
+    useEffect( ()=> {
+        // getting the liked movies
+        if(firebaseUser && firebaseUser.liked){
+            Promise.all(firebaseUser.liked.map( async (movie, key) => {
+                return await fetch_movie(movie.movie_id)
+            })).then( result => setLikedMovies(result))
+        }
+
+        // getting the disliked movies
+        if(firebaseUser && firebaseUser.disliked){
+            Promise.all(firebaseUser.disliked.map( async (movie, key) => {
+                return await fetch_movie(movie.movie_id)
+            })).then( result => setDisLikedMovies(result))
+        }
+
+    }, [firebaseUser])
 
     if(!firebaseUser) {
         return(
@@ -31,24 +65,25 @@ const Auth = () => {
         )
     }
 
-    const liked_movies = firebaseUser.liked.map((movie, key) => <li key={key}> {movie.movie_id} </li>)
-    const disliked_movies = firebaseUser.disliked.map((movie, key) => <li key={key}> {movie.movie_id} </li>)
-
     return (
         <div>
             <Header />
-            <h3>Auth Page</h3>
 
-            <div>
+            <div className={styles.auth}>
+                <h1>Profile</h1>
                 <p>{firebaseUser.displayname}</p>
                 <p>{firebaseUser.email}</p>
                 <p>{firebaseUser.uid}</p>
 
-                <h4>Liked Movies</h4>
-                {liked_movies}
+                {
+                    likedMovies &&
+                    <ProfileMovieGrid title='Liked Movies' movies={likedMovies} />
+                }
 
-                <h4>Disliked Movies</h4>
-                {disliked_movies}
+                {
+                    dislikedMovies &&
+                    <ProfileMovieGrid title='Disliked Movies' movies={dislikedMovies}/>
+                }
 
             </div>
         </div>

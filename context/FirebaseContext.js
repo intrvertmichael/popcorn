@@ -22,7 +22,7 @@ const FirebaseContext = ({children}) => {
         const fb_user_data = await fb_user_res.json()
 
         // getting movies
-        const fb_movie_res = await fetch('/api/firebase/movie', {
+        const fb_movie_res = await fetch('/api/firebase/movies', {
             method: 'GET',
             headers: {uid}
         })

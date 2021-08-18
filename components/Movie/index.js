@@ -22,7 +22,7 @@ const Movie = ({movie, fb_liked}) => {
     const poster = createMovieImageURL(movie.poster_path)
 
     async function liked_movie() {
-        await fetch('/api/firebase/movie', {
+        await fetch('/api/firebase/movies', {
             method: 'POST',
             headers: {
                 liked: true,
@@ -36,7 +36,7 @@ const Movie = ({movie, fb_liked}) => {
     }
 
     async function disliked_movie() {
-        await fetch('/api/firebase/movie', {
+        await fetch('/api/firebase/movies', {
             method: 'POST',
             headers: {
                 user_id: firebaseUser.uid,
