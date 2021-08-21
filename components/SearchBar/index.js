@@ -1,24 +1,56 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import styles from '../../styles/SeachBar.module.css'
 import Movie from '../Movie/index'
 import Results from './Results'
+import {useGetFirebaseUser} from '../../context/FirebaseContext'
 
 const SearchBar = () => {
+    const firebaseUser = useGetFirebaseUser()
 
     const [searchText, setSearchText] = useState()
     const [results, setResults] = useState()
     const [timer, setTimer] = useState()
 
-    async function fetchResults(requested_page){
-
+    async function api_request (requested_page) {
         let res
         if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
         else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
 
-        const data = await res.json()
+        const data  = await res.json()
+        return data
+    }
 
-        const movies = data.results.map( movie => <Movie movie={movie} key={movie.id}/> )
-        const page = data.page
+    function filter_movies(data) {
+        const movies = []
+        // data.results.map( movie => <Movie movie={movie} key={movie.id}/> )
+
+        data.results.map( movie => {
+            // check if movie is disliked
+            const fb_disliked = firebaseUser && firebaseUser.disliked?
+            firebaseUser.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
+
+            // check if movie is liked
+            const fb_liked = firebaseUser && firebaseUser.liked?
+            firebaseUser.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
+
+            const liked = fb_liked? true : null
+            // if movie is not disliked then show it on the grid
+            if(!fb_disliked) movies.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
+        })
+
+        return movies
+    }
+
+    async function fetchResults(requested_page){
+        console.log("fetching results...")
+
+        const data = await api_request(requested_page)
+        const movies = filter_movies(data)
+
+        console.log( movies.length, "results")
+        if(movies.length <= 1) fetchResults(requested_page + 1)
+
+        const page =  data.page
         const total_pages = data.total_pages
 
         setResults( {movies, page, total_pages} )
