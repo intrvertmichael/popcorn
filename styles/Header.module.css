@@ -54,3 +54,16 @@ Colors
 .header h2 {
     color: #9b9b9b;
 }
+
+
+.logout_btn {
+    background: none;
+    border: 1px solid rgb(255, 104, 104);
+    color: rgb(255, 104, 104);
+    border-radius: 5px;
+}
+
+.logout_btn:hover {
+    color: red;
+    border-color: red;
+}

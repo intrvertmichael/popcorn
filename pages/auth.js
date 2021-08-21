@@ -19,8 +19,9 @@ const Auth = () => {
         signInSuccessUrl: '/',
         callbacks: {
             signInSuccessWithAuthResult: authResult => {
+                console.log("signin was successful")
                 localStorage.setItem('user_id', authResult.user.uid)
-                return false
+                return true
             }
         }
     }
@@ -37,18 +38,23 @@ const Auth = () => {
     }
 
     useEffect( ()=> {
-        // getting the liked movies
-        if(firebaseUser && firebaseUser.liked){
-            Promise.all(firebaseUser.liked.map( async (movie, key) => {
-                return await fetch_movie(movie.movie_id)
-            })).then( result => setLikedMovies(result))
-        }
 
-        // getting the disliked movies
-        if(firebaseUser && firebaseUser.disliked){
-            Promise.all(firebaseUser.disliked.map( async (movie, key) => {
-                return await fetch_movie(movie.movie_id)
-            })).then( result => setDisLikedMovies(result))
+        if(firebaseUser){
+            console.log("there is a firebase user")
+
+            // getting the liked movies
+            if(firebaseUser.liked){
+                Promise.all(firebaseUser.liked.map( async (movie, key) => {
+                    return await fetch_movie(movie.movie_id)
+                })).then( result => setLikedMovies(result))
+            }
+
+            // getting the disliked movies
+            if(firebaseUser.disliked){
+                Promise.all(firebaseUser.disliked.map( async (movie, key) => {
+                    return await fetch_movie(movie.movie_id)
+                })).then( result => setDisLikedMovies(result))
+            }
         }
 
     }, [firebaseUser])

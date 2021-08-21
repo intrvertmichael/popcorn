@@ -22,7 +22,9 @@ const Header = () => {
     if(onAuthPage) rightComp = (<div></div>)
     if(firebaseUser) rightComp = (
         <div>
-            <button onClick={ () => {
+            <button
+                className={styles.logout_btn}
+                onClick={ () => {
                 setFirebaseUser(null)
                 firebase_signout()
             }}>

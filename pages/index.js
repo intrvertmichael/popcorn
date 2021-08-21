@@ -37,8 +37,6 @@ export default function Home({movies, genres, allFavMovies}) {
         <Header />
         <GenreList genres={genres} />
         <SearchBar />
-        <GenreVerbs />
-
         <MovieBar movieList = {allFavMovies[0]} />
       </div>
     </>

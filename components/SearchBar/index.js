@@ -11,14 +11,6 @@ const SearchBar = () => {
     const [results, setResults] = useState()
     const [timer, setTimer] = useState()
 
-    async function api_request (requested_page) {
-        let res
-        if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
-        else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
-
-        const data  = await res.json()
-        return data
-    }
 
     function filter_movies(data) {
         const movies = []
@@ -44,11 +36,17 @@ const SearchBar = () => {
     async function fetchResults(requested_page){
         console.log("fetching results...")
 
-        const data = await api_request(requested_page)
+        let res
+        if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
+        else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
+
+        const data  = await res.json()
         const movies = filter_movies(data)
 
         console.log( movies.length, "results")
-        if(movies.length <= 1) fetchResults(requested_page + 1)
+        if(searchText && movies.length <= 1) fetchResults(requested_page + 1)
+
+        console.log('after fetching results')
 
         const page =  data.page
         const total_pages = data.total_pages
@@ -57,8 +55,9 @@ const SearchBar = () => {
     }
 
     function searchSubmitted(){
+        clearTimeout(timer)
         if(!searchText || searchText.value === '') setResults(null)
-        else fetchResults()
+        else fetchResults(1)
     }
 
     function typing(e){

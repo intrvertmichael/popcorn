@@ -34,13 +34,16 @@ const FirebaseContext = ({children}) => {
 
     useEffect( () => {
         let user_id = localStorage.getItem('user_id')
+
         if(user_id && !firebaseUser) getFirebaseData(user_id)
 
-        // if current page is diff then previous page
-        // update context and set prev page
-        if(prevPage !== router.asPath) {
-            getFirebaseData(user_id)
-            setPrevPage(router.asPath)
+        if(user_id && firebaseUser) {
+            // if current page is diff then previous page
+            // update context and set prev page
+            if(prevPage !== router.asPath) {
+                getFirebaseData(user_id)
+                setPrevPage(router.asPath)
+            }
         }
 
     }, [firebaseUser, prevPage, router])
