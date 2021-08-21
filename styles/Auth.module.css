@@ -1,5 +1,19 @@
 .auth {
     padding: 30px;
     box-sizing: border-box;
-    border: 2px solid red;
+}
+
+.personal_info {
+    background: rgb(5, 5, 5);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.personal_info p {
+    margin: 0px;
+}
+
+.personal_info b {
+    color: gray;
+    font-weight: normal;
 }

@@ -71,9 +71,12 @@ const Auth = () => {
 
             <div className={styles.auth}>
                 <h1>Profile</h1>
-                <p>{firebaseUser.displayname}</p>
-                <p>{firebaseUser.email}</p>
-                <p>{firebaseUser.uid}</p>
+
+                <div className={styles.personal_info}>
+                    <p> <b>Display Name:</b> {firebaseUser.displayname}</p>
+                    <p> <b>Email:</b> {firebaseUser.email}</p>
+                    <p> <b>UserID:</b> {firebaseUser.uid}</p>
+                </div>
 
                 {
                     likedMovies &&

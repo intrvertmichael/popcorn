@@ -1,5 +1,5 @@
 import Movie from '../Movie'
-import styles from '../../styles/MovieGrid.module.css'
+import styles from '../../styles/ProfileMovieGrid.module.css'
 
 const ProfileMovieGrid = ({movies, title}) => {
     if(movies.length === 0) return false
