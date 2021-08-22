@@ -6,7 +6,6 @@ import Header from '../components/Header'
 import MovieBar from '../components/MovieBar'
 import SearchBar from '../components/SearchBar'
 import GenreList from '../components/Genre/List'
-import GenreVerbs from '../components/Genre/Verbs'
 
 export async function getStaticProps () {
 
