@@ -23,7 +23,7 @@ export async function getStaticProps () {
     return { title: genreTitle, genreID, movies: movies.results }
   }))
 
-  return { props: { movies, genres, allFavMovies } }
+  return { props: { movies, genres, allFavMovies, fallback: false } }
 }
 
 export default function Home({movies, genres, allFavMovies}) {
