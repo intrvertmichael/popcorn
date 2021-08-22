@@ -9,8 +9,11 @@ import GenreList from '../components/Genre/List'
 
 export async function getStaticProps () {
 
-  const movies = await getTrending()
-  const genres = await getGenres()
+  let movies = await getTrending()
+  if(!movies) movies = []
+
+  let genres = await getGenres()
+  if(!genres) genres = []
 
   // call firebase. use firebase response to choose what 3 genres to show as favorites
   const favGenre = [10402, 16, 878]
@@ -22,6 +25,8 @@ export async function getStaticProps () {
     const movies = await getMoviesFromGenre(genreID)
     return { title: genreTitle, genreID, movies: movies.results }
   }))
+  if(!allFavMovies) allFavMovies = []
+
 
   return { props: { movies, genres, allFavMovies, fallback: false } }
 }
