@@ -4,7 +4,7 @@ import styles from '../../styles/Home.module.css'
 
 const Trending = ({movies}) => {
 
-    if(!movies) return false
+    // if(!movies) return false
 
     return (
         <ul className={styles.movie_grid}>
@@ -23,4 +23,4 @@ const Trending = ({movies}) => {
     )
 }
 
-export default Trending;
+export default Trending
