@@ -7,7 +7,7 @@ import MovieBar from '../components/MovieBar'
 import SearchBar from '../components/SearchBar'
 import GenreList from '../components/Genre/List'
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 
   let movies = await getTrending()
   if(!movies) movies = []
