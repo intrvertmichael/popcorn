@@ -7,8 +7,9 @@ import MovieBar from '../components/MovieBar'
 import SearchBar from '../components/SearchBar'
 import GenreList from '../components/Genre/List'
 
-export async function getServerSideProps () {
+import { useGetFirebaseUser } from "../context/FirebaseContext";
 
+export async function getServerSideProps () {
   let movies = await getTrending()
   if(!movies) movies = []
 
@@ -31,7 +32,10 @@ export async function getServerSideProps () {
   return { props: { movies, genres, allFavMovies, fallback: false } }
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 export default function Home({movies, genres, allFavMovies}) {
+  const firebaseUser = useGetFirebaseUser()
 
   return (
     <>
@@ -41,7 +45,12 @@ export default function Home({movies, genres, allFavMovies}) {
         <Header />
         <GenreList genres={genres} />
         <SearchBar />
-        <MovieBar movieList = {allFavMovies[0]} />
+
+        {
+          firebaseUser?
+          <MovieBar movieList = {allFavMovies[0]} />
+          : "not logged in"
+        }
       </div>
     </>
   )
