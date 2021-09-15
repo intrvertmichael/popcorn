@@ -1,30 +1,19 @@
-
 import { useEffect, useState } from "react";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import Header from '../components/Header'
-
-import { useGetFirebaseUser } from "../context/FirebaseContext";
-import firebase from "../requests/firebase/config";
-
-import ProfileMovieGrid from '../components/ProfileMovieGrid'
 import styles from '../styles/Auth.module.css'
 
+import Header from '../components/Header'
+import AuthForm from "../components/AuthForm";
+import ProfileMovieGrid from '../components/ProfileMovieGrid'
+
+import { useGetFirebaseUser } from "../context/FirebaseContext";
+import { useRouter } from 'next/router'
+
 const Auth = () => {
+    const router = useRouter()
+
     const firebaseUser = useGetFirebaseUser()
     const [likedMovies, setLikedMovies] = useState()
     const [dislikedMovies, setDisLikedMovies] = useState()
-
-    const uiConfig = {
-        signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
-        signInSuccessUrl: '/',
-        callbacks: {
-            signInSuccessWithAuthResult: authResult => {
-                console.log("signin was successful")
-                localStorage.setItem('user_id', authResult.user.uid)
-                return true
-            }
-        }
-    }
 
     async function fetch_movie(id){
         const res = await fetch('/api/firebase/movie', {
@@ -38,7 +27,6 @@ const Auth = () => {
     }
 
     useEffect( ()=> {
-
         if(firebaseUser){
             console.log("there is a firebase user")
 
@@ -59,17 +47,7 @@ const Auth = () => {
 
     }, [firebaseUser])
 
-    if(!firebaseUser) {
-        return(
-            <div>
-                <Header />
-                <StyledFirebaseAuth
-                    uiConfig={uiConfig}
-                    firebaseAuth={firebase.auth()}
-                />
-            </div>
-        )
-    }
+    if(!firebaseUser) return <AuthForm router={router}/>
 
     return (
         <div>
