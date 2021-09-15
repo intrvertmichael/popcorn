@@ -39,7 +39,6 @@ const SearchBar = () => {
         let res
         if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
         else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
-
         const data  = await res.json()
         const movies = filter_movies(data)
 

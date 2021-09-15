@@ -19,6 +19,7 @@ const FirebaseContext = ({children}) => {
             method: 'GET',
             headers: {uid}
         })
+        console.log("fb_user_res", fb_user_res)
         const fb_user_data = await fb_user_res.json()
 
         // getting movies
@@ -26,6 +27,7 @@ const FirebaseContext = ({children}) => {
             method: 'GET',
             headers: {uid}
         })
+        console.log("fb_movie_res", fb_movie_res)
         const fb_movie_data = await fb_movie_res.json()
 
         const data = { ...fb_user_data, ...fb_movie_data }
