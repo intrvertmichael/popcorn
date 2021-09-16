@@ -1,11 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { useRouter } from 'next/router'
+import firebase from '../requests/firebase/config'
+import 'firebase/database'
+
+const db = firebase.firestore()
 
 export const GetFirebaseUserContext = React.createContext()
 export const SetFirebaseUserContext = React.createContext()
 
 export const useGetFirebaseUser = () => useContext(GetFirebaseUserContext)
 export const useSetFirebaseUser = () => useContext(SetFirebaseUserContext)
+
 
 const FirebaseContext = ({children}) => {
     const router = useRouter()
@@ -15,15 +20,26 @@ const FirebaseContext = ({children}) => {
 
     async function getFirebaseData(uid){
         // getting user data
-        const fb_user_res = await fetch('/api/firebase/user', {
-            method: 'GET',
-            headers: {uid}
-        })
 
-        console.log("fb_user_res", fb_user_res)
+        // const fb_user_res = await fetch('/api/firebase/user', {
+        //     method: 'GET',
+        //     headers: {uid}
+        // })
+
+        console.log("starting test . . .")
+        const fb_res = await db.collection("users").doc(uid).get()
+        console.log("successfully got firebase user data")
+        console.log("returning data to next front end")
+        const fb_data = fb_res.data()
+
+        console.log("fb_data", fb_data)
         console.log("this is the last place the bug goes to.")
 
-        const fb_user_data = await fb_user_res.json()
+        console.log("ending test . . .")
+
+
+        // const fb_user_data = await fb_user_res.json()
+        const fb_user_data = fb_data
 
         console.log("fb_user_data", fb_user_data)
 
