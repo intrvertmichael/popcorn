@@ -21,6 +21,7 @@ const FirebaseContext = ({children}) => {
         })
 
         console.log("fb_user_res", fb_user_res)
+        console.log("fb_user_res body", fb_user_res.body)
 
         const fb_user_data = await fb_user_res.json()
 
