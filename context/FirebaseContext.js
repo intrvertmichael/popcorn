@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react'
+import { useRouter } from 'next/router'
 
 export const GetFirebaseUserContext = React.createContext()
 export const SetFirebaseUserContext = React.createContext()
 
 export const useGetFirebaseUser = () => useContext(GetFirebaseUserContext)
 export const useSetFirebaseUser = () => useContext(SetFirebaseUserContext)
-import { useRouter } from 'next/router'
 
 const FirebaseContext = ({children}) => {
     const router = useRouter()
@@ -22,10 +22,6 @@ const FirebaseContext = ({children}) => {
 
         console.log("fb_user_res", fb_user_res)
         console.log("this is the last place the bug goes to.")
-
-        const fb_user_data_body = await fb_user_res.body.json()
-
-        console.log("fb_user_data_body", fb_user_data_body)
 
         const fb_user_data = await fb_user_res.json()
 
