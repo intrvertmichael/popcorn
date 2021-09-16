@@ -15,11 +15,11 @@ export default async function handler(req, res) {
 }
 
 async function getHandler(req, res) {
+    console.log("getting the user data from firebase")
     const { uid } = req.headers
     const fb_res = await db.collection("users").doc(uid).get()
-    console.log("fb_res", fb_res)
-    console.log("fb_res", fb_res.body)
-    console.log("fb_res", fb_res.data())
+    console.log("successfully got firebase user data")
+    console.log("returning data to next front end")
     const fb_data = fb_res.data()
 
     return res.status(200).json(fb_data)

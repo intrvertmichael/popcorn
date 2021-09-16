@@ -19,7 +19,9 @@ const FirebaseContext = ({children}) => {
             method: 'GET',
             headers: {uid}
         })
+
         console.log("fb_user_res", fb_user_res)
+
         const fb_user_data = await fb_user_res.json()
 
         // getting movies
