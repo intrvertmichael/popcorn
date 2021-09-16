@@ -21,9 +21,12 @@ const FirebaseContext = ({children}) => {
         })
 
         console.log("fb_user_res", fb_user_res)
-        console.log("fb_user_res body", fb_user_res.body)
 
         const fb_user_data = await fb_user_res.json()
+
+        console.log("fb_user_data", fb_user_data)
+
+        console.log("sucessfully got user data")
 
         // getting movies
         const fb_movie_res = await fetch('/api/firebase/movies', {
