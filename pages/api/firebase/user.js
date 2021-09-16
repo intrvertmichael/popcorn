@@ -17,6 +17,7 @@ export default async function handler(req, res) {
 async function getHandler(req, res) {
     const { uid } = req.headers
     const fb_res = await db.collection("users").doc(uid).get()
+    console.log("fb_res", fb_res)
     const fb_data = fb_res.data()
 
     return res.status(200).json(fb_data)
