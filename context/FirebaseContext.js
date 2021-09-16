@@ -21,6 +21,7 @@ const FirebaseContext = ({children}) => {
         })
 
         console.log("fb_user_res", fb_user_res)
+        console.log("this is the last place the bug goes to.")
 
         const fb_user_data_body = await fb_user_res.body.json()
 
