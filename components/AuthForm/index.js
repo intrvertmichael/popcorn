@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Header from '../Header'
 import styles from '../../styles/AuthForm.module.css'
 
-import firebase from "../../requests/firebase/config_server";
+import firebase from "../../requests/firebase/config";
 
 const AuthForm = ({router}) => {
 
