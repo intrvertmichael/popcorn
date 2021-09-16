@@ -46,12 +46,16 @@ const FirebaseContext = ({children}) => {
         console.log("sucessfully got user data")
 
         // getting movies
-        const fb_movie_res = await fetch('/api/firebase/movies', {
-            method: 'GET',
-            headers: {uid}
-        })
-        console.log("fb_movie_res", fb_movie_res)
-        const fb_movie_data = await fb_movie_res.json()
+        // const fb_movie_res = await fetch('/api/firebase/movies', {
+        //     method: 'GET',
+        //     headers: {uid}
+        // })
+        // console.log("fb_movie_res", fb_movie_res)
+
+        const fb_movie_res = await db.collection("movies").doc(uid).get()
+        const fb_movie_data = fb_movie_res.data()
+
+        // const fb_movie_data = await fb_movie_res.json()
 
         const data = { ...fb_user_data, ...fb_movie_data }
         setFirebaseUser(data)
