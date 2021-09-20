@@ -16,12 +16,12 @@ const Auth = () => {
     const [dislikedMovies, setDisLikedMovies] = useState()
 
     async function fetch_movie(id){
-        const res = await fetch('/api/firebase/movie', {
-            method: 'GET',
-            headers: {
-                movie_id: id,
-            }
-        })
+        // const res = await fetch('/api/firebase/movie', {
+        //     method: 'GET',
+        //     headers: {
+        //         movie_id: id,
+        //     }
+        // })
         console.log("res", res)
         const data = await res.json()
         return data

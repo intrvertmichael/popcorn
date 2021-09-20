@@ -20,32 +20,21 @@ const FirebaseContext = ({children}) => {
 
     async function getFirebaseData(uid){
         // getting user data
-        const fb_res = await db.collection("users").doc(uid).get()
-        const fb_data = fb_res.data()
-        const fb_user_data = fb_data
+        const fb_user_res = await db.collection("users").doc(uid).get()
+        const fb_user_data = fb_user_res.data()
 
         // getting movies
-        console.log("testing firebase in the backend")
-        const backend_firebase = await fetch('/api/firebase/movies', {
-            method: 'GET',
-            headers: {uid}
-        })
-        console.log("backend_firebase", backend_firebase)
-        console.log("finished testing firebase in the backend")
-
         const fb_movie_res = await db.collection("movies").doc(uid).get()
         const fb_movie_data = fb_movie_res.data()
 
-
-        const data = { ...fb_user_data, ...fb_movie_data }
+        const data = { ...fb_user_data, movies:fb_movie_data }
+        console.log("context: ", data)
         setFirebaseUser(data)
     }
 
     useEffect( () => {
         let user_id = localStorage.getItem('user_id')
-
         if(user_id && !firebaseUser) getFirebaseData(user_id)
-
         if(user_id && firebaseUser) {
             // if current page is diff then previous page
             // update context and set prev page
@@ -59,9 +48,9 @@ const FirebaseContext = ({children}) => {
 
     return (
         <GetFirebaseUserContext.Provider value={firebaseUser}>
-        <SetFirebaseUserContext.Provider value={setFirebaseUser}>
-            {children}
-        </SetFirebaseUserContext.Provider>
+            <SetFirebaseUserContext.Provider value={setFirebaseUser}>
+                {children}
+            </SetFirebaseUserContext.Provider>
         </GetFirebaseUserContext.Provider>
     )
 }

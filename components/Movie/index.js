@@ -22,27 +22,27 @@ const Movie = ({movie, fb_liked}) => {
     const poster = createMovieImageURL(movie.poster_path)
 
     async function liked_movie() {
-        await fetch('/api/firebase/movies', {
-            method: 'POST',
-            headers: {
-                liked: true,
-                user_id: firebaseUser.uid,
-                movie_id: movie.id,
-            }
-        })
+    //     await fetch('/api/firebase/movies', {
+    //         method: 'POST',
+    //         headers: {
+    //             liked: true,
+    //             user_id: firebaseUser.uid,
+    //             movie_id: movie.id,
+    //         }
+    //     })
 
         if(liked) setLiked(null)
         else setLiked(true)
     }
 
     async function disliked_movie() {
-        await fetch('/api/firebase/movies', {
-            method: 'POST',
-            headers: {
-                user_id: firebaseUser.uid,
-                movie_id: movie.id,
-            }
-        })
+        // await fetch('/api/firebase/movies', {
+        //     method: 'POST',
+        //     headers: {
+        //         user_id: firebaseUser.uid,
+        //         movie_id: movie.id,
+        //     }
+        // })
         if(liked===false) setLiked(null)
         else setLiked(false)
     }
@@ -54,6 +54,7 @@ const Movie = ({movie, fb_liked}) => {
     // null has no style
 
     if(!movie.poster_path) return false
+
     return (
         <li className={classes} key={movie.id}>
 
