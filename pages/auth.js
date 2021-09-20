@@ -20,15 +20,13 @@ const Auth = () => {
             method: 'GET',
             headers: { movie_id: id }
         })
-        console.log(movie_res)
+
         const movie_data = await movie_res.json()
         return movie_data
     }
 
     useEffect( ()=> {
         if(firebaseUser){
-            console.log("there is a firebase user")
-            console.log(firebaseUser)
 
             // getting the liked movies
             if(firebaseUser.movies.liked){
