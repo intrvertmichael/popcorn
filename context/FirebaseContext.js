@@ -53,6 +53,14 @@ const FirebaseContext = ({children}) => {
             // })
             // console.log("fb_movie_res", fb_movie_res)
 
+            console.log("testing firebase in the backend")
+            const backend_firebase = await fetch('/api/firebase/movies', {
+                method: 'GET',
+                headers: {uid}
+            })
+            console.log("backend_firebase", backend_firebase)
+            console.log("finished testing firebase in the backend")
+
             const fb_movie_res = await db.collection("movies").doc(uid).get()
             const fb_movie_data = fb_movie_res.data()
 

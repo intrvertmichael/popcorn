@@ -15,12 +15,13 @@ export default async function handler(req, res) {
 }
 
 async function getHandler(req, res) {
-    const { uid } = req.headers
-    const fb_res = await db.collection("movies").doc(uid).get()
-    const fb_data = fb_res.data()
+    // const { uid } = req.headers
+    // const fb_res = await db.collection("movies").doc(uid).get()
+    // const fb_data = fb_res.data()
 
-    if(fb_data) return res.status(200).json(fb_data)
-    return res.status(200).json({})
+    // if(fb_data) return res.status(200).json(fb_data)
+    console.log("going to get firebase here but from the backend and then send back the response")
+    return res.status(200).json({done: true})
 }
 
 async function deleteHandler(req, res) {
