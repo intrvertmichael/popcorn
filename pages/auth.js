@@ -16,31 +16,30 @@ const Auth = () => {
     const [dislikedMovies, setDisLikedMovies] = useState()
 
     async function fetch_movie(id){
-        // const res = await fetch('/api/firebase/movie', {
-        //     method: 'GET',
-        //     headers: {
-        //         movie_id: id,
-        //     }
-        // })
-        console.log("res", res)
-        const data = await res.json()
-        return data
+        const movie_res = await fetch('/api/movie', {
+            method: 'GET',
+            headers: { movie_id: id }
+        })
+        console.log(movie_res)
+        const movie_data = await movie_res.json()
+        return movie_data
     }
 
     useEffect( ()=> {
         if(firebaseUser){
             console.log("there is a firebase user")
+            console.log(firebaseUser)
 
             // getting the liked movies
-            if(firebaseUser.liked){
-                Promise.all(firebaseUser.liked.map( async (movie, key) => {
+            if(firebaseUser.movies.liked){
+                Promise.all(firebaseUser.movies.liked.map( async (movie, key) => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setLikedMovies(result))
             }
 
             // getting the disliked movies
-            if(firebaseUser.disliked){
-                Promise.all(firebaseUser.disliked.map( async (movie, key) => {
+            if(firebaseUser.movies.disliked){
+                Promise.all(firebaseUser.movies.disliked.map( async (movie, key) => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setDisLikedMovies(result))
             }
