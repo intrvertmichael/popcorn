@@ -1,4 +1,4 @@
-# 🍿Popcorn
+# 🍿 Popcorn
 ### Find what to watch
 
 Have you ever gone on your favorite movie streaming site and kept browsing trying to find what to watch?
