@@ -74,9 +74,13 @@
 }
 
 .liked {
-    border: 5px solid greenyellow;
+    padding: 15px 10px;
+    box-sizing: border-box;
+    background: linear-gradient(#ABFF00, #00FF26);
 }
 
 .disliked {
-    border: 3px solid red;
+    padding: 15px 10px;
+    box-sizing: border-box;
+    background: linear-gradient(#FF4900, red);
 }
