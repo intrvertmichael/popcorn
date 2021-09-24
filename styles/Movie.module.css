@@ -1,7 +1,7 @@
 .movie_li, .liked, .disliked {
     position: relative;
     list-style-type: none;
-    display: flex;
+    /* display: flex; */
 }
 
 .movie_info {
@@ -73,14 +73,28 @@
     border-bottom: 5px solid white;
 }
 
-.liked {
-    padding: 15px 10px;
-    box-sizing: border-box;
+
+/* .liked {
     background: linear-gradient(#ABFF00, #00FF26);
+} */
+
+.liked img {
+    border-top: 7px solid greenyellow !important;
+    border-bottom: 7px solid greenyellow !important;
+    border-left: 5px solid greenyellow !important;
+    border-right: 5px solid greenyellow !important;
+    box-sizing: border-box;
 }
 
+/*
 .disliked {
-    padding: 15px 10px;
-    box-sizing: border-box;
     background: linear-gradient(#FF4900, red);
+} */
+
+.disliked img {
+    border-top: 7px solid red !important;
+    border-bottom: 7px solid red !important;
+    border-left: 5px solid red !important;
+    border-right: 5px solid red !important;
+    box-sizing: border-box;
 }
