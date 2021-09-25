@@ -51,8 +51,9 @@ const Movie = ({movie, fb_liked}) => {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     async function liked_movie() {
         const {current_likes, current_dislikes} = await getCurrentFirebaseMovies()
+        const currently_liked = current_likes.find(m => m.movie_id === movie.id)
 
-        if(liked) {
+        if(currently_liked) {
             setLiked(null)
 
             const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
@@ -88,8 +89,9 @@ const Movie = ({movie, fb_liked}) => {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     async function disliked_movie() {
         const {current_likes, current_dislikes} = await getCurrentFirebaseMovies()
+        const currently_disliked = current_dislikes.find(m => m.movie_id === movie.id)
 
-        if(liked === false) {
+        if(currently_disliked) {
             setLiked(null)
 
             const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
