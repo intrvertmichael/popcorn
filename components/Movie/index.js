@@ -4,6 +4,10 @@ import Image from 'next/image'
 import {createMovieImageURL} from '../../requests/movie.api'
 import styles from '../../styles/Movie.module.css'
 import { useGetFirebaseUser } from '../../context/FirebaseContext'
+import firebase from '../../requests/firebase/config'
+
+const db = firebase.firestore()
+
 
 const Movie = ({movie, fb_liked}) => {
     const firebaseUser = useGetFirebaseUser()
@@ -21,18 +25,51 @@ const Movie = ({movie, fb_liked}) => {
                     : movie.original_title
     const poster = createMovieImageURL(movie.poster_path)
 
-    async function liked_movie() {
-    //     await fetch('/api/firebase/movies', {
-    //         method: 'POST',
-    //         headers: {
-    //             liked: true,
-    //             user_id: firebaseUser.uid,
-    //             movie_id: movie.id,
-    //         }
-    //     })
+    async function getCurrentFirebaseMovies(){
+        const fb_movie_res = await db.collection("movies").doc(firebaseUser.uid).get()
+        const fb_movie_data = fb_movie_res.data()
 
-        if(liked) setLiked(null)
-        else setLiked(true)
+        if(!fb_movie_data) db.collection("movies").doc(firebaseUser.uid).set({liked:[], disliked:[]});
+
+        const current_likes = fb_movie_data && fb_movie_data.liked? fb_movie_data.liked : []
+        const current_dislikes = fb_movie_data && fb_movie_data.disliked? fb_movie_data.disliked : []
+
+        return {current_likes, current_dislikes}
+    }
+
+    async function liked_movie() {
+        const {current_likes, current_dislikes} = await getCurrentFirebaseMovies()
+
+        if(liked) {
+            setLiked(null)
+            // remove from liked list
+            const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
+            await db.collection("movies").doc(firebaseUser.uid).update({
+                liked: updated_likes
+            })
+            console.log("removed from likes...")
+        }
+
+        else {
+            setLiked(true)
+
+            // add to like list on firebase
+            await db.collection("movies").doc(firebaseUser.uid).update({
+                liked: [ ...current_likes, {movie_id: movie.id} ]
+            })
+
+            console.log("added to likes...")
+
+            // remove from disliked list
+            const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
+            await db.collection("movies").doc(firebaseUser.uid).update({
+                disliked: updated_dislikes
+            })
+
+            console.log("removed from dislikes...")
+
+            // TODO: add genre counter
+        }
     }
 
     async function disliked_movie() {

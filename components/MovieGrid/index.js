@@ -11,11 +11,11 @@ const MovieGrid = ({movies, next_page_label}) => {
     const display_movies = []
     movies.results.map( movie =>{
         // check if movie is disliked
-        const fb_disliked = firebaseUser && firebaseUser.movies.disliked?
+        const fb_disliked = firebaseUser && firebaseUser.movies && firebaseUser.movies.disliked?
         firebaseUser.movies.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
 
         // check if movie is liked
-        const fb_liked = firebaseUser && firebaseUser.movies.liked?
+        const fb_liked = firebaseUser && firebaseUser.movies && firebaseUser.movies.liked?
         firebaseUser.movies.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
 
         const liked = fb_liked? true : null

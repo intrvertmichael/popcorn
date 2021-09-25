@@ -29,14 +29,14 @@ const Auth = () => {
         if(firebaseUser){
 
             // getting the liked movies
-            if(firebaseUser.movies.liked){
+            if(firebaseUser.movies && firebaseUser.movies && firebaseUser.movies.liked){
                 Promise.all(firebaseUser.movies.liked.map( async (movie, key) => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setLikedMovies(result))
             }
 
             // getting the disliked movies
-            if(firebaseUser.movies.disliked){
+            if(firebaseUser.movies && firebaseUser.movies.disliked){
                 Promise.all(firebaseUser.movies.disliked.map( async (movie, key) => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setDisLikedMovies(result))
