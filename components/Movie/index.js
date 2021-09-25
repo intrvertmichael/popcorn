@@ -72,17 +72,19 @@ const Movie = ({movie, fb_liked}) => {
 
             console.log("removed from likes...")
 
-            movie.genre_ids.map( async genre => {
-                const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-                const fb_genre_data = fb_genre_res.data()
-                const counter = parseInt(fb_genre_data[genre])
+            if(movie.genre_ids){
+                movie.genre_ids.map( async genre => {
+                    const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
+                    const fb_genre_data = fb_genre_res.data()
+                    const counter = parseInt(fb_genre_data[genre])
 
-                await db.collection("genres").doc(firebaseUser.uid).update({
-                    [genre]: counter - 1
+                    await db.collection("genres").doc(firebaseUser.uid).update({
+                        [genre]: counter - 1
+                    })
                 })
-            })
 
-            console.log("removed genre counters...")
+                console.log("removed genre counters...")
+            }
         }
 
         else {
@@ -102,21 +104,23 @@ const Movie = ({movie, fb_liked}) => {
 
             console.log("removed from dislikes...")
 
-            movie.genre_ids.map( async genre => {
-                const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-                const fb_genre_data = fb_genre_res.data()
-                const counter = parseInt(fb_genre_data[genre])
+            if(movie.genre_ids){
+                movie.genre_ids.map( async genre => {
+                    const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
+                    const fb_genre_data = fb_genre_res.data()
+                    const counter = parseInt(fb_genre_data[genre])
 
-                let total
-                if(!counter) total = 1
-                else total = counter + 1
+                    let total
+                    if(!counter) total = 1
+                    else total = counter + 1
 
-                await db.collection("genres").doc(firebaseUser.uid).update({
-                    [genre]: total
+                    await db.collection("genres").doc(firebaseUser.uid).update({
+                        [genre]: total
+                    })
                 })
-            })
 
-            console.log("+1 genre counters...")
+                console.log("+1 genre counters...")
+            }
         }
     }
 
@@ -135,18 +139,6 @@ const Movie = ({movie, fb_liked}) => {
             })
 
             console.log("removed from dislikes...")
-
-            movie.genre_ids.map( async genre => {
-                const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-                const fb_genre_data = fb_genre_res.data()
-                const counter = parseInt(fb_genre_data[genre])
-
-                await db.collection("genres").doc(firebaseUser.uid).update({
-                    [genre]: counter + 1
-                })
-            })
-
-            console.log("removed genre counters...")
         }
 
         else {
@@ -165,23 +157,6 @@ const Movie = ({movie, fb_liked}) => {
             })
 
             console.log("removed from likes...")
-
-
-            movie.genre_ids.map( async genre => {
-                const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-                const fb_genre_data = fb_genre_res.data()
-                const counter = parseInt(fb_genre_data[genre])
-
-                let total
-                if(!counter) total = -1
-                else total = counter - 1
-
-                await db.collection("genres").doc(firebaseUser.uid).update({
-                    [genre]: total
-                })
-            })
-
-            console.log("-1 genre counters...")
         }
     }
 
