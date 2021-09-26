@@ -1,8 +1,8 @@
 import firebase from '../../../requests/firebase/config'
-import {getCurrentFirebaseMovies} from './_get'
+import getCurrentFirebaseMovies from './_get'
 const db = firebase.firestore()
 
-export async function liked_movie(movie, setLiked, firebaseUser) {
+async function liked_movie(movie, setLiked, firebaseUser) {
     const {current_likes, current_dislikes} = await getCurrentFirebaseMovies(firebaseUser)
     const currently_liked = current_likes.find(m => m.movie_id === movie.id)
 
@@ -67,3 +67,5 @@ export async function liked_movie(movie, setLiked, firebaseUser) {
         }
     }
 }
+
+export default liked_movie

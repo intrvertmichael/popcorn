@@ -3,7 +3,7 @@ const db = firebase.firestore()
 
 // GETTING CURRENT FIREBASE MOVIES
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export async function getCurrentFirebaseMovies(firebaseUser){
+async function getCurrentFirebaseMovies(firebaseUser){
     console.log("getting firebase movies...")
 
     // genre
@@ -24,3 +24,5 @@ export async function getCurrentFirebaseMovies(firebaseUser){
     // return {current_likes, current_dislikes}
     return {current_likes, current_dislikes, current_genre}
 }
+
+export default getCurrentFirebaseMovies

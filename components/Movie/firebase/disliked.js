@@ -1,11 +1,11 @@
 import firebase from '../../../requests/firebase/config'
-import {getCurrentFirebaseMovies} from './_get'
+import getCurrentFirebaseMovies from './_get'
 
 const db = firebase.firestore()
 
 // DISLIKED BUTTON LISTENER
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export async function disliked_movie(movie, setLiked, firebaseUser) {
+async function disliked_movie(movie, setLiked, firebaseUser) {
     const {current_likes, current_dislikes} = await getCurrentFirebaseMovies(firebaseUser)
     const currently_disliked = current_dislikes.find(m => m.movie_id === movie.id)
 
@@ -38,3 +38,5 @@ export async function disliked_movie(movie, setLiked, firebaseUser) {
         console.log("removed from likes...")
     }
 }
+
+export default disliked_movie
