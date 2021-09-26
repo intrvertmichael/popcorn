@@ -4,9 +4,9 @@ import Image from 'next/image'
 import {createMovieImageURL} from '../../requests/movie.api'
 import styles from '../../styles/Movie.module.css'
 import { useGetFirebaseUser } from '../../context/FirebaseContext'
-import firebase from '../../requests/firebase/config'
 
-const db = firebase.firestore()
+import {liked_movie} from './firebase/liked'
+import {disliked_movie} from './firebase/disliked'
 
 const Movie = ({movie, fb_liked}) => {
     const firebaseUser = useGetFirebaseUser()
@@ -30,135 +30,6 @@ const Movie = ({movie, fb_liked}) => {
     if(liked) classes = styles.liked
     if(liked === false) classes = styles.disliked
     // null has no style
-
-
-    // GETTING CURRENT FIREBASE MOVIES
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    async function getCurrentFirebaseMovies(){
-        console.log("getting firebase info...")
-
-        // genre
-        const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-        const fb_genre_data = fb_genre_res.data()
-        if(!fb_genre_data) db.collection("genres").doc(firebaseUser.uid).set({});
-
-        const current_genre = fb_genre_data? fb_genre_data : {}
-
-        // movies
-        const fb_movie_res = await db.collection("movies").doc(firebaseUser.uid).get()
-        const fb_movie_data = fb_movie_res.data()
-        if(!fb_movie_data) db.collection("movies").doc(firebaseUser.uid).set({liked:[], disliked:[]});
-
-        const current_likes = fb_movie_data && fb_movie_data.liked? fb_movie_data.liked : []
-        const current_dislikes = fb_movie_data && fb_movie_data.disliked? fb_movie_data.disliked : []
-
-        // return {current_likes, current_dislikes}
-        return {current_likes, current_dislikes, current_genre}
-    }
-
-    // LIKED BUTTON LISTENER
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    async function liked_movie() {
-        const {current_likes, current_dislikes} = await getCurrentFirebaseMovies()
-        const currently_liked = current_likes.find(m => m.movie_id === movie.id)
-
-        if(currently_liked) {
-            setLiked(null)
-
-            const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
-            await db.collection("movies").doc(firebaseUser.uid).update({
-                liked: updated_likes
-            })
-
-            console.log("removed from likes...")
-
-            if(movie.genre_ids){
-                movie.genre_ids.map( async genre => {
-                    const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-                    const fb_genre_data = fb_genre_res.data()
-                    const counter = parseInt(fb_genre_data[genre])
-
-                    await db.collection("genres").doc(firebaseUser.uid).update({
-                        [genre]: counter - 1
-                    })
-                })
-
-                console.log("removed genre counters...")
-            }
-        }
-
-        else {
-            setLiked(true)
-
-            await db.collection("movies").doc(firebaseUser.uid).update({
-                liked: [ ...current_likes, {movie_id: movie.id} ]
-            })
-
-            console.log("added to likes...")
-
-
-            const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
-            await db.collection("movies").doc(firebaseUser.uid).update({
-                disliked: updated_dislikes
-            })
-
-            console.log("removed from dislikes...")
-
-            if(movie.genre_ids){
-                movie.genre_ids.map( async genre => {
-                    const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-                    const fb_genre_data = fb_genre_res.data()
-                    const counter = parseInt(fb_genre_data[genre])
-
-                    let total
-                    if(!counter) total = 1
-                    else total = counter + 1
-
-                    await db.collection("genres").doc(firebaseUser.uid).update({
-                        [genre]: total
-                    })
-                })
-
-                console.log("+1 genre counters...")
-            }
-        }
-    }
-
-    // DISLIKED BUTTON LISTENER
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    async function disliked_movie() {
-        const {current_likes, current_dislikes} = await getCurrentFirebaseMovies()
-        const currently_disliked = current_dislikes.find(m => m.movie_id === movie.id)
-
-        if(currently_disliked) {
-            setLiked(null)
-
-            const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
-            await db.collection("movies").doc(firebaseUser.uid).update({
-                disliked: updated_dislikes
-            })
-
-            console.log("removed from dislikes...")
-        }
-
-        else {
-            setLiked(false)
-
-            await db.collection("movies").doc(firebaseUser.uid).update({
-                disliked: [ ...current_dislikes, {movie_id: movie.id} ]
-            })
-
-            console.log("added to dislikes...")
-
-
-            const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
-            await db.collection("movies").doc(firebaseUser.uid).update({
-                liked: updated_likes
-            })
-
-            console.log("removed from likes...")
-        }
-    }
 
 
     // RENDERING MOVIE
@@ -194,8 +65,13 @@ const Movie = ({movie, fb_liked}) => {
                 {
                     firebaseUser &&
                     <div className={styles.votes}>
-                        <button onClick={liked_movie}>👍</button>
-                        <button onClick={disliked_movie}>👎</button>
+                        <button
+                            onClick={ ()=> liked_movie(movie, setLiked, firebaseUser)}
+                        > 👍 </button>
+
+                        <button
+                            onClick={()=> disliked_movie(movie, setLiked, firebaseUser)}
+                        >👎</button>
                     </div>
                 }
             </div>
