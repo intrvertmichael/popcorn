@@ -1,5 +1,5 @@
 import firebase from '../../../requests/firebase/config'
-import {getCurrentFirebaseMovies} from './fb_movies'
+import {getCurrentFirebaseMovies} from './_get'
 const db = firebase.firestore()
 
 export async function liked_movie(movie, setLiked, firebaseUser) {
