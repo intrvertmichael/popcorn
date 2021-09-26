@@ -9,13 +9,9 @@ const GenreList = ({genres}) => {
         <ul className={styles.genre_list}>
         {
             genres.map( (genre, key) =>(
-            <li key={key}>
-                <Link href={'/genre/'+ genre.id}>
-                    <a>
-                        {genre.name}
-                    </a>
+                <Link key={key} href={'/genre/'+ genre.id} passHref>
+                    <li> <a> {genre.name} </a> </li>
                 </Link>
-            </li>
             ))
         }
         </ul>

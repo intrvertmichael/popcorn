@@ -69,21 +69,18 @@ Genre Verbs
 }
 
 .genre_list {
-  display: flex;
-  flex-wrap: wrap;
-  width: 80%;
-  margin: 150px auto;
+  margin: 100px auto;
   padding: 0px;
 }
 
 .genre_list li {
+  display: inline-block;
   list-style-type: none;
-  width: fit-content;
   width: 160px;
   padding: 0px 20px;
   margin: 0px 10px;
-  text-align: right;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .genre_list a {

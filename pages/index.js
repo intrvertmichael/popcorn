@@ -3,7 +3,7 @@ import { getTrending, getGenres, getMoviesFromGenre } from '../requests/movie.ap
 
 import Trending from '../components/Trending'
 import Header from '../components/Header'
-// import MovieBar from '../components/MovieBar'
+import MovieBar from '../components/MovieBar'
 import SearchBar from '../components/SearchBar'
 import GenreList from '../components/Genre/List'
 
@@ -38,35 +38,45 @@ export default function Home({movies, genres}) {
 
     const genre_data = await genre_res.json()
     return genre_data
-}
-
-
-
-useEffect( () => {
-  async function getFavs(){
-    console.log("calling getFavs...")
-    // getting favs from firebase
-    const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
-    const fb_genre_data = fb_genre_res.data()
-
-    // sorting the entries
-    const keysValues = Object.entries(fb_genre_data)
-    const sorted_list = keysValues.sort( (a,b) => a[1] < b[1])
-    const limited_list = sorted_list.slice(0,3)
-
-    // getting the moves from each sorted entry
-    limited_list.map( async entry => {
-      const genreID = entry[0]
-      const genre_movies = await fetch_genre_movies(genreID)
-      console.log(genre_movies)
-      setFavMovies( curr => {return {...curr , [genreID]: genre_movies}})
-    })
   }
 
-  if(firebaseUser && !favMovies) getFavs()
-}, [favMovies, firebaseUser])
+  useEffect( () => {
+    async function getFavs(){
+      console.log("calling getFavs...")
+      // getting favs from firebase
+      const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
+      const fb_genre_data = fb_genre_res.data()
 
-console.log("favMovies", favMovies)
+      // sorting the entries
+      const keysValues = fb_genre_data? Object.entries(fb_genre_data) : []
+      const sorted_list = keysValues.sort( (a,b) => a[1] < b[1])
+      const limited_list = sorted_list.slice(0,3)
+
+      // getting the moves from each sorted entry
+      limited_list.map( async entry => {
+        const genreID = entry[0]
+        const genre_movies = await fetch_genre_movies(genreID)
+        setFavMovies( curr => {return {...curr , [genreID]: genre_movies}})
+      })
+    }
+
+    if(firebaseUser && !favMovies) getFavs()
+  }, [favMovies, firebaseUser])
+
+  // creating favorite movie bars
+  if(firebaseUser && favMovies){
+    const fav_genre_movies = favMovies? Object.entries(favMovies) : null
+    var fav_movies_list = fav_genre_movies?
+    fav_genre_movies.map( movieList => {
+      const genre_info = genres.find( genre => String(genre.id) === movieList[0])
+      return <MovieBar key={movieList[0]} movieList={{
+          genreID: genre_info.id,
+          title: genre_info.name,
+          movies: movieList[1].results
+      }} />
+    })
+    : []
+  }
 
   return (
     <>
@@ -78,11 +88,11 @@ console.log("favMovies", favMovies)
         <SearchBar />
 
         {
-          firebaseUser?
-          // <MovieBar movieList = {allFavMovies[0]} />
-          "logged in"
+          firebaseUser && favMovies?
+          fav_movies_list
           : "not logged in"
         }
+
       </div>
     </>
   )
