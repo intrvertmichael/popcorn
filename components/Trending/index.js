@@ -9,15 +9,22 @@ const Trending = ({movies}) => {
     return (
         <ul className={styles.movie_grid}>
             {
-                movies.map( movie => (
-                    <li key={movie.id}>
-                        <Link href={'/movie/' + movie.id}>
+                movies.map( movie => {
+
+                    console.log(movie.image)
+                    const styles = {
+                        background: `linear-gradient(transparent ,black 100%), url(${movie.image})`,
+                        backgroundSize: "cover"
+                    }
+
+                    return (
+                        <Link href={'/movie/' + movie.id} key={movie.id} >
                             <a>
-                            <Image src={movie.image} alt={movie.title} width="185" height="278"/>
+                                <li style={styles}> </li>
                             </a>
                         </Link>
-                    </li>
-                ))
+                    )
+                })
             }
         </ul>
     )

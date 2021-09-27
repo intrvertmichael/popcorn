@@ -63,7 +63,7 @@ async function liked_movie(movie, setLiked, firebaseUser) {
                 })
             })
 
-            console.log("+1 genre counters...")
+            console.log("added genre counters...")
         }
     }
 }

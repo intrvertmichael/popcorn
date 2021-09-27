@@ -1,8 +1,5 @@
 
 .container {
-  background: linear-gradient( transparent 0%, black 75px);
-  margin-top: -75px;
-  padding-top: 75px;
   position: relative;
 }
 
@@ -20,11 +17,11 @@ Movie Grid @ Top
 }
 
 .movie_grid li {
-  width: 10%;
+  padding-top: 150%;
 }
 
 .movie_grid a {
-  display: flex;
+  width: 10%;
 }
 
 
