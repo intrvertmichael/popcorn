@@ -33,7 +33,7 @@ function getURL(type, id, page) {
         return baseURL + "/movie/" + id + "/recommendations" + keyPath
 
         case "bestThisYear":
-        return baseURL + "/discover/movie" + keyPath + "&primary_release_year=" + year + "&certification_country=US&certification=R&vote_count.gte=100&sort_by=vote_average.desc"
+        return baseURL + "/discover/movie" + keyPath + "&primary_release_year=" + year + "&certification_country=US&certification=R&vote_count.gte=500&sort_by=vote_average.desc"
     }
 
 }

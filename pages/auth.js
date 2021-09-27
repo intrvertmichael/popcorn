@@ -55,7 +55,6 @@ const Auth = () => {
                 <h1>Profile</h1>
 
                 <div className={styles.personal_info}>
-                    <p> <b>Display Name:</b> {firebaseUser.displayname}</p>
                     <p> <b>Email:</b> {firebaseUser.email}</p>
                     <p> <b>UserID:</b> {firebaseUser.uid}</p>
                 </div>
