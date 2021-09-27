@@ -36,13 +36,19 @@ const MovieBar = ({movieList}) => {
     const movie_image_size = 20
 
     if(movies.length === 0) return false
+
     return (
         <div className={styles.movie_bar}>
-            <Link href={`/genre/${movieList.genreID}`}>
-                <a>
-                    <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
-                </a>
-            </Link>
+            {
+                movieList.genreID?
+                <Link href={`/genre/${movieList.genreID}`}>
+                    <a>
+                        <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+                    </a>
+                </Link>
+                :
+                <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+            }
 
             <div className={styles.genre_movies_wrapper}>
                 <ul className={styles.genre_movies} style={{width: `${ movies.length * movie_image_size }%`}}>

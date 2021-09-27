@@ -5,6 +5,8 @@ function getURL(type, id, page) {
     const key = process.env.MOVIE_KEY
     const keyPath = "?api_key=" + key
 
+    const year = new Date().getFullYear()
+
     switch(type){
         case "trending":
         return baseURL +"/trending/movie/week" + keyPath
@@ -29,6 +31,9 @@ function getURL(type, id, page) {
 
         case "recommendedMovies":
         return baseURL + "/movie/" + id + "/recommendations" + keyPath
+
+        case "bestThisYear":
+        return baseURL + "/discover/movie" + keyPath + "&primary_release_year=" + year + "&certification_country=US&certification=R&vote_count.gte=100&sort_by=vote_average.desc"
     }
 
 }
@@ -106,6 +111,13 @@ export async function searchForMovie(query, page = 1){
 
 export async function getRecommendedMovies(id){
     const url = getURL("recommendedMovies", id)
+    const res = await fetch(url)
+    const data = await res.json()
+    return data;
+}
+
+export async function getBestThisYear(){
+    const url = getURL("bestThisYear")
     const res = await fetch(url)
     const data = await res.json()
     return data;

@@ -35,7 +35,7 @@ const Movie = ({movie, fb_liked}) => {
     // RENDERING MOVIE
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    if(!movie && !movie.poster_path) return false
+    if(!movie || !movie.poster_path) return false
 
     return (
         <li className={classes} key={movie.id}>

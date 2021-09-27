@@ -1,5 +1,5 @@
 import styles from '../styles/Home.module.css'
-import { getTrending, getGenres, getMoviesFromGenre } from '../requests/movie.api'
+import { getTrending, getGenres, getBestThisYear } from '../requests/movie.api'
 
 import Trending from '../components/Trending'
 import Header from '../components/Header'
@@ -15,18 +15,21 @@ const db = firebase.firestore()
 
 export async function getServerSideProps () {
 
-  let movies = await getTrending()
-  if(!movies) movies = []
+  let trending = await getTrending()
+  if(!trending) trending = []
 
   let genres = await getGenres()
   if(!genres) genres = []
 
-  return { props: { movies, genres, fallback: false } }
+  let best = await getBestThisYear()
+  if(!best) best = []
+
+  return { props: { trending, best, genres, fallback: false } }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-export default function Home({movies, genres}) {
+export default function Home({trending, best, genres}) {
   const firebaseUser = useGetFirebaseUser()
   const [favMovies, setFavMovies] = useState()
 
@@ -80,7 +83,7 @@ export default function Home({movies, genres}) {
 
   return (
     <>
-      <Trending movies={movies} />
+      <Trending movies={trending} />
 
       <div className={styles.container}>
         <Header />
@@ -90,7 +93,11 @@ export default function Home({movies, genres}) {
         {
           firebaseUser && favMovies?
           fav_movies_list
-          : "not logged in"
+          :
+          <MovieBar movieList={{
+              title: "Best of the Year",
+              movies: best?.results
+          }} />
         }
 
       </div>
