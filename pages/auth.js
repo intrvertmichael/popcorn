@@ -61,7 +61,7 @@ const Auth = () => {
 
                 {
                     likedMovies &&
-                    <ProfileMovieGrid title='Liked Movies' movies={likedMovies} />
+                    <ProfileMovieGrid likes={true} movies={likedMovies} />
                 }
 
                 {

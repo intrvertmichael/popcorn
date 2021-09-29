@@ -4,16 +4,25 @@
     margin: 0px;
     padding: 0px;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 
-.genre_movies, .genre_movies li {
+.genre_movies li {
     display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin: 10px 0px;
+    background: rgb(10, 10, 10);
 }
 
-.genre_movies li {
-    flex-direction: column;
-    width: 20%;
-    position: relative;
+.movie_caption {
+    width: fit-content;
+    text-align: left;
+    padding: 20px;
     box-sizing: border-box;
+}
+
+.genre_movies li h4, .genre_movies li h5 {
+    margin: 0px;
 }
