@@ -45,7 +45,7 @@ export default function Home({trending, best, genres}) {
 
   useEffect( () => {
     async function getFavs(){
-      console.log("calling getFavs...")
+
       // getting favs from firebase
       const fb_genre_res = await db.collection("genres").doc(firebaseUser.uid).get()
       const fb_genre_data = fb_genre_res.data()
