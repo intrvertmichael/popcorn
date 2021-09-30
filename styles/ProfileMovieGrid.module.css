@@ -75,3 +75,8 @@
 .tag_btn:hover {
     background: rgb(29, 29, 29);
 }
+
+.tag_input {
+    background: none;
+    color: white;
+}
