@@ -12,12 +12,17 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
 
     if(movies.length === 0) return false
 
+    async function tagClicked(){
+        console.log("tag button was clicked")
+    }
+
 
     return (
         <ul className={styles.genre_movies}>
             {
                 movies.map( movie => {
                     const poster = createMovieImageURL(movie.poster_path)
+                    console.log(movie)
                     const list = likes? "Likes" : "Dislikes"
                     const message = `Are you sure you want to remove ${movie.original_title} from ${list} ?`
 
@@ -60,6 +65,45 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
                                         <h4>{movie.original_title}</h4>
                                     </a>
                                 </Link>
+
+                                {
+                                    likes?
+                                    <ul className={styles.tags}>
+                                        <li>tag 1</li>
+                                        <li>tag 2</li>
+                                        <li>tag 3</li>
+                                        <li>tag 4</li>
+                                        <li>tag 5</li>
+                                        <li>tag 6</li>
+                                        <li>tag 7</li>
+                                        <li>tag 8</li>
+                                        <li>tag 9</li>
+                                        <li>tag 10</li>
+                                        <li>tag 11</li>
+                                        <li>tag 12</li>
+                                        <li>tag 13</li>
+                                        <li>tag 14</li>
+                                        <li>tag 15</li>
+                                        <li>tag 16</li>
+                                        <li>tag 17</li>
+                                        <li>tag 18</li>
+                                        <li>tag 19</li>
+                                        <li>tag 20</li>
+                                        <li>tag 21</li>
+
+                                        {
+                                            // show button to add tag if there's less than 20 tags
+                                        }
+                                        <li
+                                            className={styles.tag_btn}
+                                            onClick={tagClicked}
+                                        >
+                                            add tag
+                                        </li>
+                                    </ul>
+                                    :
+                                    movie.tagline
+                                }
                             </div>
                         </li>
                     )

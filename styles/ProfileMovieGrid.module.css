@@ -4,7 +4,7 @@
     margin: 0px;
     padding: 0px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     flex-wrap: wrap;
 }
 
@@ -17,10 +17,14 @@
     position: relative;
 }
 
+.genre_movies li a {
+    display: flex;
+}
+
 .movie_caption {
     width: fit-content;
     text-align: left;
-    padding: 20px;
+    padding: 0px 20px;
     box-sizing: border-box;
 }
 
@@ -29,7 +33,7 @@
 }
 
 .genre_movies li h4, .genre_movies li h5 {
-    margin: 0px;
+    margin-bottom: 15px;
 }
 
 .remove {
@@ -45,4 +49,29 @@
 .remove:hover {
     color: red;
     border: 1px solid red;
+}
+
+.tags, .tags li {
+    padding: 0px;
+    margin: 0px;
+}
+
+.tags li {
+    border: 1px solid rgb(30, 30, 30);
+    border-radius: 2px;
+    width: fit-content;
+    padding: 0px 10px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.8em;
+}
+
+.tag_btn {
+    border: 1px solid white !important;
+    cursor: pointer;
+}
+
+.tag_btn:hover {
+    background: rgb(29, 29, 29);
 }
