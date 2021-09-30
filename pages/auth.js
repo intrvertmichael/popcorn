@@ -12,6 +12,7 @@ const Auth = () => {
     const router = useRouter()
 
     const firebaseUser = useGetFirebaseUser()
+    const [viewingLikes, setViewingLikes] = useState(true)
     const [likedMovies, setLikedMovies] = useState()
     const [dislikedMovies, setDisLikedMovies] = useState()
 
@@ -60,13 +61,32 @@ const Auth = () => {
                 </div>
 
                 {
-                    likedMovies &&
-                    <ProfileMovieGrid likes={true} movies={likedMovies} />
+                    viewingLikes && likedMovies?
+                    <h3>Liked Movies ({likedMovies?.length})</h3>
+                    :
+                    <>
+                        <a onClick={()=> setViewingLikes(true)}>
+                            <h3>Liked Movies</h3>
+                        </a>
+                    </>
                 }
 
                 {
-                    dislikedMovies &&
-                    <ProfileMovieGrid title='Disliked Movies' movies={dislikedMovies}/>
+                    viewingLikes && dislikedMovies?
+                    <>
+                        <a onClick={()=> setViewingLikes(false)}>
+                            <h3>Disliked Movies</h3>
+                        </a>
+                    </>
+                    :
+                    <h3>Disliked Movies ({dislikedMovies?.length})</h3>
+                }
+
+                {
+                    viewingLikes?
+                    likedMovies? <ProfileMovieGrid likes={true} movies={likedMovies} /> : ''
+                    :
+                    dislikedMovies? <ProfileMovieGrid title='Disliked Movies' movies={dislikedMovies}/> : ''
                 }
 
             </div>

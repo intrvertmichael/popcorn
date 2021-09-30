@@ -17,3 +17,17 @@
     color: gray;
     font-weight: normal;
 }
+
+.auth h3, .auth a {
+    width: fit-content;
+    display: inline-block;
+}
+
+.auth h3 {
+    padding-right: 50px;
+}
+
+.auth a {
+    color: gray;
+    cursor: pointer;
+}
