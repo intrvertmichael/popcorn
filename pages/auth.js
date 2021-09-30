@@ -84,9 +84,19 @@ const Auth = () => {
 
                 {
                     viewingLikes?
-                    likedMovies? <ProfileMovieGrid likes={true} movies={likedMovies} /> : ''
+                    likedMovies?
+                        <ProfileMovieGrid
+                            likes={true}
+                            movies={likedMovies}
+                            set={setLikedMovies}
+                        /> : ''
                     :
-                    dislikedMovies? <ProfileMovieGrid title='Disliked Movies' movies={dislikedMovies}/> : ''
+                    dislikedMovies?
+                        <ProfileMovieGrid
+                            likes={false}
+                            movies={dislikedMovies}
+                            set={setDisLikedMovies}
+                        /> : ''
                 }
 
             </div>

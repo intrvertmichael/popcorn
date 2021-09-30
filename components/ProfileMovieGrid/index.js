@@ -6,12 +6,10 @@ import { useGetFirebaseUser } from "../../context/FirebaseContext";
 import removeLiked from './firebase/liked'
 import removeDisliked from './firebase/disliked'
 
-const ProfileMovieGrid = ({movies, likes}) => {
+const ProfileMovieGrid = ({movies, set, likes}) => {
     const firebaseUser = useGetFirebaseUser()
 
     if(movies.length === 0) return false
-
-    const title = likes? "Liked Movies" : "Disliked Movies"
 
     return (
         <ul className={styles.genre_movies}>
@@ -25,13 +23,17 @@ const ProfileMovieGrid = ({movies, likes}) => {
                                 <h4>{movie.original_title}</h4>
                                 {
                                     likes?
-                                    <button onClick={() => removeLiked(movie, firebaseUser)}>
-                                        Remove from Likes
-                                    </button>
+                                    <button onClick={() =>{
+                                        removeLiked(movie, firebaseUser)
+                                        const filtered = movies.filter( m => m.id !== movie.id)
+                                        set(filtered)
+                                    }}> Remove from Likes </button>
                                     :
-                                    <button onClick={() => removeDisliked(movie, firebaseUser)}>
-                                        Remove from Dislikes
-                                    </button>
+                                    <button onClick={() => {
+                                        removeDisliked(movie, firebaseUser)
+                                        const filtered = movies.filter( m => m.id !== movie.id)
+                                        set(filtered)
+                                    }}> Remove from Dislikes </button>
                                 }
                             </div>
                         </li>
