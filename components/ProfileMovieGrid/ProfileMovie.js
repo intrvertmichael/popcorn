@@ -103,8 +103,8 @@ const ProfileMovie = ({movie, set, likes}) => {
                                             className={styles.tag_input}
                                             onChange={e => setTagText(e.target.value)}
                                         />
-                                        <button onClick={()=>setTagInput(false)}>x</button>
                                     </form>
+                                    <button onClick={()=>setTagInput(false)}>x</button>
                                 </li>
                                 :
                                 <li
