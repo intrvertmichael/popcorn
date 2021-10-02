@@ -9,11 +9,13 @@ import { useEffect, useState } from 'react';
 const ProfileMovieGrid = ({movies, set, likes}) => {
     const firebaseUser = useGetFirebaseUser()
     const [tags, setTags] = useState()
+    const [tagNames, setTagNames] = useState([])
 
     useEffect( () => {
         async function getTags(){
             const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
             setTags(current_tags)
+            setTagNames(Object.keys(current_tags))
         }
 
         getTags()
@@ -22,12 +24,26 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
 
     if(movies.length === 0) return false
 
+    function doTagsNeedUpdate(tag, added){
+        if(added){
+            const exists = tagNames.find( name => name === tag)
+            if(!exists) setTagNames( oldNames => [...oldNames, tag])
+        }
+        else {
+            const tagObj = tags[tag]
+            if(!tagObj.length || tagObj.length === 1){
+                const filtered = tagNames.filter( name => name !== tag)
+                setTagNames(filtered)
+            }
+        }
+    }
+
     return (
         <>
             <ul>
                 {
-                    likes && tags?
-                    Object.keys(tags).map(tag => <li key={tag}> {tag} </li>)
+                    likes && tagNames?
+                    tagNames.map(tag => <li key={tag}> {tag} </li>)
                     : ''
                 }
             </ul>
@@ -42,6 +58,8 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
                                 set={set}
                                 likes={likes}
                                 tags={tags}
+                                setTags={setTags}
+                                doTagsNeedUpdate={doTagsNeedUpdate}
                             />
                         )
                     })

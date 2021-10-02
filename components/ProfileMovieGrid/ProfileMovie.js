@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../../styles/ProfileMovieGrid.module.css'
@@ -11,36 +11,45 @@ import {addTag, removeTag} from './firebase/tags';
 import removeLiked from './firebase/liked'
 import removeDisliked from './firebase/disliked'
 
-const ProfileMovie = ({movie, set, likes, tags}) => {
+const ProfileMovie = ({movie, set, likes, tags, doTagsNeedUpdate}) => {
         const firebaseUser = useGetFirebaseUser()
         const [tagInput, setTagInput] = useState(false)
         const [tagText, setTagText] = useState(false)
+        const [tagsUsed, setTagsUsed] = useState()
 
-        const tagArr = tags? Object.entries(tags) : []
+        useEffect( () => {
+            const tagArr = tags? Object.entries(tags) : []
+            const containsTag = tagArr.filter( tag => {
+                let hasTag
+                tag[1].length?
+                hasTag = tag[1].find( movie_id => movie_id === movie.id)
+                : hasTag = tag[1] === movie.id
 
-        const tags_used = tagArr.filter( tag => {
-            let hasTag
-            tag[1].length?
-            hasTag = tag[1].find( movie_id => movie_id === movie.id)
-            : hasTag = tag[1] === movie.id
+                return hasTag
+            })
 
-            return hasTag
-        })
+            const tagNames = containsTag.map( tagArr => tagArr[0])
+            setTagsUsed(tagNames)
+        }, [movie.id, tags])
 
-        async function tagSubmitted(e){
+        async function addingTag(e){
             e.preventDefault()
-            console.log("tag input has a value of", tagText, "for movie ", movie.original_title)
             setTagInput(false)
             addTag(tagText, movie.id, firebaseUser)
+            setTagsUsed( current => current.concat(tagText))
+            doTagsNeedUpdate(tagText, true)
         }
 
-        async function tagClicked(e){
+        async function removingTag(e){
             e.preventDefault()
             const tag = e.target.innerHTML
-            const confirmed = confirm(`Are you sure you want to remove ${tag} from ${movie.original_title}?`)
+            const message = `Are you sure you want to remove ${tag} tag from ${movie.original_title}?`
 
-            if(confirmed){
+            if(confirm(message)){
                 removeTag(tag, movie.id, firebaseUser)
+                const filtered = tagsUsed.filter( objtag => objtag !== tag)
+                setTagsUsed(filtered)
+                doTagsNeedUpdate(tag, false)
             }
         }
 
@@ -92,8 +101,8 @@ const ProfileMovie = ({movie, set, likes, tags}) => {
                         likes?
                         <ul className={styles.tags}>
                             {
-                                tags_used.map( tag => {
-                                    return <li key={tag[0]} onClick={tagClicked}>{tag[0]}</li>
+                                tagsUsed?.map( tag => {
+                                    return <li key={tag} onClick={removingTag}>{tag}</li>
                                 })
                             }
 
@@ -104,7 +113,7 @@ const ProfileMovie = ({movie, set, likes, tags}) => {
                             {
                                 tagInput?
                                 <li className={styles.tag_input_li}>
-                                    <form onSubmit={tagSubmitted}>
+                                    <form onSubmit={addingTag}>
                                         <input
                                             type='text'
                                             autoFocus

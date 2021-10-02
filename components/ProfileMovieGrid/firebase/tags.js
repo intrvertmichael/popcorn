@@ -39,12 +39,16 @@ async function removeTag(tagText, movie_id, firebaseUser){
         await db.collection("tags").doc(firebaseUser.uid).update({
             [tagText]: updatedList
         })
+
+        console.log('tag has other items | removing tag from list...')
     }
     else {
         delete current_tags[tagText]
         await db.collection("tags").doc(firebaseUser.uid).update({
             [tagText]: firebase.firestore.FieldValue.delete()
         })
+
+        console.log('tag is empty now | deleting list...')
     }
 
 }

@@ -91,6 +91,11 @@
 
 .tag_input_li {
     padding: 0px !important;
+    border-color: white !important;
+}
+
+.tag_input_li:hover {
+    border-color: white !important;
 }
 
 .tag_input_li button {
