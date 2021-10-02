@@ -24,13 +24,15 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
 
     if(movies.length === 0) return false
 
-    function doTagsNeedUpdate(tag, added){
+    async function doTagsNeedUpdate(tag, added){
+        const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
+        const tagObj = current_tags[tag]
+
         if(added){
             const exists = tagNames.find( name => name === tag)
             if(!exists) setTagNames( oldNames => [...oldNames, tag])
         }
         else {
-            const tagObj = tags[tag]
             if(!tagObj.length || tagObj.length === 1){
                 const filtered = tagNames.filter( name => name !== tag)
                 setTagNames(filtered)
