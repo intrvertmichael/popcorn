@@ -1,3 +1,4 @@
+import { getClientBuildManifest } from 'next/dist/client/route-loader'
 import firebase from '../../../requests/firebase/config'
 import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 const db = firebase.firestore()
@@ -28,4 +29,27 @@ async function addTag(tagText, movie_id, firebaseUser){
     }
 }
 
-export default addTag
+async function removeTag(tagText, movie_id, firebaseUser){
+    const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
+    const fb_item = current_tags[tagText]
+
+    console.log('movie_id', movie_id)
+    console.log('fb_item', fb_item)
+
+    let updatedList
+    fb_item.length?
+    updatedList = fb_item.filter( id => id !== movie_id)
+    :
+    updatedList = []
+
+    console.log('updatedList', updatedList)
+    await db.collection("tags").doc(firebaseUser.uid).update({
+        [tagText]: updatedList
+    })
+
+    // figue out how to completely remove key
+    // if it has no movies
+
+}
+
+export {addTag, removeTag}

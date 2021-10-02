@@ -6,7 +6,7 @@ import styles from '../../styles/ProfileMovieGrid.module.css'
 import {createMovieImageURL} from '../../requests/movie.api'
 import { useGetFirebaseUser } from "../../context/FirebaseContext";
 
-import addTag from './firebase/tags';
+import {addTag, removeTag} from './firebase/tags';
 
 import removeLiked from './firebase/liked'
 import removeDisliked from './firebase/disliked'
@@ -32,6 +32,16 @@ const ProfileMovie = ({movie, set, likes, tags}) => {
             console.log("tag input has a value of", tagText, "for movie ", movie.original_title)
             setTagInput(false)
             addTag(tagText, movie.id, firebaseUser)
+        }
+
+        async function tagClicked(e){
+            e.preventDefault()
+            const tag = e.target.innerHTML
+            const confirmed = confirm(`Are you sure you want to remove ${tag} from ${movie.original_title}?`)
+
+            if(confirmed){
+                removeTag(tag, movie.id, firebaseUser)
+            }
         }
 
         const poster = createMovieImageURL(movie.poster_path)
@@ -82,7 +92,9 @@ const ProfileMovie = ({movie, set, likes, tags}) => {
                         likes?
                         <ul className={styles.tags}>
                             {
-                                tags_used.map( tag => <li key={tag[0]}> {tag[0]} </li>)
+                                tags_used.map( tag => {
+                                    return <li key={tag[0]} onClick={tagClicked}>{tag[0]}</li>
+                                })
                             }
 
                             {

@@ -26,7 +26,7 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
         <>
             <ul>
                 {
-                    tags?
+                    likes && tags?
                     Object.keys(tags).map(tag => <li key={tag}> {tag} </li>)
                     : ''
                 }

@@ -69,11 +69,15 @@
     margin-right: 5px;
     margin-bottom: 5px;
     font-size: 0.8em;
+    cursor: pointer;
+}
+
+.tags li:hover {
+    border-color: red;
 }
 
 .tag_btn {
-    border: 1px solid white !important;
-    cursor: pointer;
+    border-color: white !important;
 }
 
 .tag_btn:hover {
