@@ -1,12 +1,13 @@
 
-import styles from '../../styles/ProfileMovieGrid.module.css'
-import { useGetFirebaseUser } from "../../context/FirebaseContext";
-import getCurrentFirebaseMovies from '../Movie/firebase/_get'
-
-import ProfileMovie from './ProfileMovie'
 import { useEffect, useState } from 'react';
+import styles from '../../../styles/ProfileMovieGrid.module.css'
 
-const ProfileMovieGrid = ({movies, set, likes}) => {
+import { useGetFirebaseUser } from "../../../context/FirebaseContext";
+import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
+
+import LikedMovie from './LikedMovie';
+
+const LikedProfileMovies = ({movies, set}) => {
     const firebaseUser = useGetFirebaseUser()
     const [tags, setTags] = useState()
     const [tagNames, setTagNames] = useState([])
@@ -22,7 +23,7 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
 
     }, [firebaseUser])
 
-    if(movies.length === 0) return false
+    if(movies?.length === 0) return false
 
     async function doTagsNeedUpdate(tag, added){
         const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
@@ -43,22 +44,18 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
     return (
         <>
             <ul>
-                {
-                    likes && tagNames?
-                    tagNames.map(tag => <li key={tag}> {tag} </li>)
-                    : ''
-                }
+                { tagNames?.map(tag => <li key={tag}> {tag} </li>) }
             </ul>
 
             <ul className={styles.genre_movies}>
                 {
-                    movies.map( movie => {
+                    movies?.map( movie => {
                         return (
-                            <ProfileMovie
+                            <LikedMovie
                                 key={movie.id}
                                 movie={movie}
+                                movies={movies}
                                 set={set}
-                                likes={likes}
                                 tags={tags}
                                 setTags={setTags}
                                 doTagsNeedUpdate={doTagsNeedUpdate}
@@ -71,4 +68,4 @@ const ProfileMovieGrid = ({movies, set, likes}) => {
     )
 }
 
-export default ProfileMovieGrid
+export default LikedProfileMovies

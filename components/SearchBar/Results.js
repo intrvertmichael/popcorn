@@ -9,7 +9,7 @@ const Results = ({results, setSearchText, setResults, fetchResults}) => {
         setResults(null)
     }
 
-    if (results.movies.length < 1 ) {
+    if (results.movies?.length < 1 ) {
         return (
             <div
                 className={styles.clear_search}

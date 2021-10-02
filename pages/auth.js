@@ -3,10 +3,12 @@ import styles from '../styles/Auth.module.css'
 
 import Header from '../components/Header'
 import AuthForm from "../components/AuthForm";
-import ProfileMovieGrid from '../components/ProfileMovieGrid'
 
 import { useGetFirebaseUser } from "../context/FirebaseContext";
 import { useRouter } from 'next/router'
+
+import LikedProfileMovies from "../components/ProfileMovieGrid/LikedProfileMovies";
+import DislikedProfileMovies from "../components/ProfileMovieGrid/DislikedProfileMovies";
 
 const Auth = () => {
     const router = useRouter()
@@ -74,19 +76,17 @@ const Auth = () => {
 
                 {
                     viewingLikes?
-                    likedMovies?
-                        <ProfileMovieGrid
-                            likes={true}
-                            movies={likedMovies}
-                            set={setLikedMovies}
-                        /> : ''
+                    <LikedProfileMovies
+                        likes={true}
+                        movies={likedMovies}
+                        set={setLikedMovies}
+                    />
                     :
-                    dislikedMovies?
-                        <ProfileMovieGrid
-                            likes={false}
-                            movies={dislikedMovies}
-                            set={setDisLikedMovies}
-                        /> : ''
+                    <DislikedProfileMovies
+                        likes={false}
+                        movies={dislikedMovies}
+                        set={setDisLikedMovies}
+                    />
                 }
 
             </div>

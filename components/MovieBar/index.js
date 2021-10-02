@@ -11,7 +11,7 @@ const MovieBar = ({movieList}) => {
 
     useEffect( () => {
         const movie_array = []
-        movieList.movies.map( movie => {
+        movieList.movies?.map( movie => {
             // check if movie is disliked
             const fb_disliked = firebaseUser && firebaseUser.movies && firebaseUser.movies.disliked?
             firebaseUser.movies.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
@@ -31,11 +31,11 @@ const MovieBar = ({movieList}) => {
     }, [firebaseUser, movieList.movies])
 
 
-    if(!movieList || movieList.movies.length === 0) return false
+    if(!movieList || movieList.movies?.length === 0) return false
 
     const movie_image_size = 20
 
-    if(movies.length === 0) return false
+    if(movies?.length === 0) return false
 
     return (
         <div className={styles.movie_bar}>
@@ -51,7 +51,7 @@ const MovieBar = ({movieList}) => {
             }
 
             <div className={styles.genre_movies_wrapper}>
-                <ul className={styles.genre_movies} style={{width: `${ movies.length * movie_image_size }%`}}>
+                <ul className={styles.genre_movies} style={{width: `${ movies?.length * movie_image_size }%`}}>
                     {movies}
                 </ul>
             </div>

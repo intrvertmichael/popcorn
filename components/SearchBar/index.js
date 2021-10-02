@@ -42,8 +42,8 @@ const SearchBar = () => {
         const data  = await res.json()
         const movies = filter_movies(data)
 
-        console.log( movies.length, "results")
-        if(searchText && movies.length <= 1) fetchResults(requested_page + 1)
+        console.log( movies?.length, "results")
+        if(searchText && movies?.length <= 1) fetchResults(requested_page + 1)
 
         console.log('after fetching results')
 

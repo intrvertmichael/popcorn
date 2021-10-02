@@ -70,7 +70,7 @@ export default function Home({trending, best, genres}) {
   if(firebaseUser && favMovies){
     const fav_genre_movies = favMovies? Object.entries(favMovies) : null
     var fav_movies_list = fav_genre_movies?
-    fav_genre_movies.map( movieList => {
+    fav_genre_movies?.map( movieList => {
       const genre_info = genres.find( genre => String(genre.id) === movieList[0])
       return <MovieBar key={movieList[0]} movieList={{
           genreID: genre_info.id,

@@ -23,7 +23,7 @@ const MovieGrid = ({movies, next_page_label}) => {
         if(!fb_disliked) display_movies.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
     })
 
-    if(display_movies.length === 0) router.push(next_page_label)
+    if(display_movies?.length === 0) router.push(next_page_label)
 
     return (
         <ul className={styles.genre_movies}>

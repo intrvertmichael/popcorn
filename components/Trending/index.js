@@ -8,7 +8,7 @@ const Trending = ({movies}) => {
     return (
         <ul className={styles.movie_grid}>
             {
-                movies.map( movie => {
+                movies?.map( movie => {
 
                     const styles = {
                         background: `linear-gradient(transparent ,black 100%), url(${movie.image})`,
