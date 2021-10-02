@@ -56,25 +56,20 @@ const Auth = () => {
                 <h1>Profile</h1>
 
                 {
-                    viewingLikes && likedMovies?
-                    <h3>Liked Movies ({likedMovies?.length})</h3>
-                    :
+                    viewingLikes?
                     <>
-                        <a onClick={()=> setViewingLikes(true)}>
-                            <h3>Liked Movies</h3>
-                        </a>
-                    </>
-                }
-
-                {
-                    viewingLikes && dislikedMovies?
-                    <>
+                        <h3>Liked Movies ({likedMovies?.length})</h3>
                         <a onClick={()=> setViewingLikes(false)}>
                             <h3>Disliked Movies</h3>
                         </a>
                     </>
                     :
-                    <h3>Disliked Movies ({dislikedMovies?.length})</h3>
+                    <>
+                        <a onClick={()=> setViewingLikes(true)}>
+                            <h3>Liked Movies</h3>
+                        </a>
+                        <h3>Disliked Movies ({dislikedMovies?.length})</h3>
+                    </>
                 }
 
                 {

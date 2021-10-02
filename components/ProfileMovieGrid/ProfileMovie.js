@@ -6,18 +6,32 @@ import styles from '../../styles/ProfileMovieGrid.module.css'
 import {createMovieImageURL} from '../../requests/movie.api'
 import { useGetFirebaseUser } from "../../context/FirebaseContext";
 
+import addTag from './firebase/tags';
+
 import removeLiked from './firebase/liked'
 import removeDisliked from './firebase/disliked'
 
-const ProfileMovie = ({movie, set, likes}) => {
+const ProfileMovie = ({movie, set, likes, tags}) => {
         const firebaseUser = useGetFirebaseUser()
         const [tagInput, setTagInput] = useState(false)
         const [tagText, setTagText] = useState(false)
 
+        const tagArr = tags? Object.entries(tags) : []
+
+        const tags_used = tagArr.filter( tag => {
+            let hasTag
+            tag[1].length?
+            hasTag = tag[1].find( movie_id => movie_id === movie.id)
+            : hasTag = tag[1] === movie.id
+
+            return hasTag
+        })
+
         async function tagSubmitted(e){
             e.preventDefault()
-            console.log("tag input has a value of", tagText)
+            console.log("tag input has a value of", tagText, "for movie ", movie.original_title)
             setTagInput(false)
+            addTag(tagText, movie.id, firebaseUser)
         }
 
         const poster = createMovieImageURL(movie.poster_path)
@@ -67,30 +81,12 @@ const ProfileMovie = ({movie, set, likes}) => {
                     {
                         likes?
                         <ul className={styles.tags}>
-                            <li>tag 1</li>
-                            <li>tag 2</li>
-                            <li>tag 3</li>
-                            <li>tag 4</li>
-                            <li>tag 5</li>
-                            <li>tag 6</li>
-                            <li>tag 7</li>
-                            <li>tag 8</li>
-                            <li>tag 9</li>
-                            <li>tag 10</li>
-                            <li>tag 11</li>
-                            <li>tag 12</li>
-                            <li>tag 13</li>
-                            <li>tag 14</li>
-                            <li>tag 15</li>
-                            <li>tag 16</li>
-                            <li>tag 17</li>
-                            <li>tag 18</li>
-                            <li>tag 19</li>
-                            <li>tag 20</li>
-                            <li>tag 21</li>
+                            {
+                                tags_used.map( tag => <li key={tag[0]}> {tag[0]} </li>)
+                            }
 
                             {
-                                // show button to add tag if there's less than 20 tags
+                                // TODO: show button to add tag if there's less than 20 tags
                             }
 
                             {
