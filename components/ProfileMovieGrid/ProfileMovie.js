@@ -35,9 +35,12 @@ const ProfileMovie = ({movie, set, likes, tags, doTagsNeedUpdate}) => {
         async function addingTag(e){
             e.preventDefault()
             setTagInput(false)
-            addTag(tagText, movie.id, firebaseUser)
-            setTagsUsed( current => current.concat(tagText))
-            doTagsNeedUpdate(tagText, true)
+            const exists = tagsUsed?.find(tag => tag === tagText)
+            if(!exists){
+                addTag(tagText, movie.id, firebaseUser)
+                setTagsUsed( current => current.concat(tagText))
+                doTagsNeedUpdate(tagText, true)
+            }
         }
 
         async function removingTag(e){
