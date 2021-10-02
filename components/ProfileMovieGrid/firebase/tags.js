@@ -33,22 +33,19 @@ async function removeTag(tagText, movie_id, firebaseUser){
     const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
     const fb_item = current_tags[tagText]
 
-    console.log('movie_id', movie_id)
-    console.log('fb_item', fb_item)
-
     let updatedList
-    fb_item.length?
-    updatedList = fb_item.filter( id => id !== movie_id)
-    :
-    updatedList = []
-
-    console.log('updatedList', updatedList)
-    await db.collection("tags").doc(firebaseUser.uid).update({
-        [tagText]: updatedList
-    })
-
-    // figue out how to completely remove key
-    // if it has no movies
+    if(fb_item.length){
+        updatedList = fb_item.filter( id => id !== movie_id)
+        await db.collection("tags").doc(firebaseUser.uid).update({
+            [tagText]: updatedList
+        })
+    }
+    else {
+        delete current_tags[tagText]
+        await db.collection("tags").doc(firebaseUser.uid).update({
+            [tagText]: firebase.firestore.FieldValue.delete()
+        })
+    }
 
 }
 
