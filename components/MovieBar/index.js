@@ -3,33 +3,28 @@ import Link from 'next/link'
 import styles from '../../styles/MovieBar.module.css'
 import Movie from '../Movie'
 
-import {useGetFirebaseUser} from '../../context/FirebaseContext'
-
-const MovieBar = ({movieList}) => {
-    const firebaseUser = useGetFirebaseUser()
+const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies}) => {
     const [movies, setMovies] = useState([])
 
     useEffect( () => {
         const movie_array = []
         movieList.movies?.map( movie => {
-            // check if movie is disliked
-            const fb_disliked = firebaseUser && firebaseUser.movies && firebaseUser.movies.disliked?
-            firebaseUser.movies.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
+            const liked = FBLikedMovies?.find( liked => liked.movie_id === movie.id)
+            const disliked = FBDisLikedMovies?.find( liked => liked.movie_id === movie.id)
 
-            // check if movie is liked
-            const fb_liked = firebaseUser && firebaseUser.movies && firebaseUser.movies.liked?
-            firebaseUser.movies.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
-
-            const liked = fb_liked? true : null
-
-            // if movie is not disliked then show it on the bar
-            if(!fb_disliked) movie_array.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
+            if(!disliked) movie_array.push(
+                <Movie
+                    movie = {movie}
+                    key = {movie.id}
+                    fb_liked = { liked? true : null}
+                    setFBLikedMovies = {setFBLikedMovies}
+                />
+            )
         })
 
         setMovies(movie_array)
 
-    }, [firebaseUser, movieList.movies])
-
+    }, [movieList, FBLikedMovies, FBDisLikedMovies])
 
     if(!movieList || movieList.movies?.length === 0) return false
 

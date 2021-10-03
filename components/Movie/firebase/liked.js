@@ -2,12 +2,16 @@ import firebase from '../../../requests/firebase/config'
 import getCurrentFirebaseMovies from './_get'
 const db = firebase.firestore()
 
-async function liked_movie(movie, setLiked, firebaseUser) {
+async function liked_movie(movie, setLiked, firebaseUser, setFBLikedMovies) {
     const {current_likes, current_dislikes} = await getCurrentFirebaseMovies(firebaseUser)
     const currently_liked = current_likes.find(m => m.movie_id === movie.id)
 
     if(currently_liked) {
         setLiked(null)
+        setFBLikedMovies( current => {
+            const newLikes = current.filter( id => id.movie_id !== movie.id)
+            return newLikes
+        })
 
         const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
         await db.collection("movies").doc(firebaseUser.uid).update({
@@ -33,6 +37,7 @@ async function liked_movie(movie, setLiked, firebaseUser) {
 
     else {
         setLiked(true)
+        setFBLikedMovies( current => [...current, {movie_id: movie.id}])
 
         await db.collection("movies").doc(firebaseUser.uid).update({
             liked: [ ...current_likes, {movie_id: movie.id} ]

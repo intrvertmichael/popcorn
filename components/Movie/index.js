@@ -8,7 +8,7 @@ import { useGetFirebaseUser } from '../../context/FirebaseContext'
 import liked_movie from './firebase/liked'
 import disliked_movie from './firebase/disliked'
 
-const Movie = ({movie, fb_liked}) => {
+const Movie = ({movie, fb_liked, setFBLikedMovies}) => {
     const firebaseUser = useGetFirebaseUser()
     const [liked, setLiked] = useState()
 
@@ -66,11 +66,15 @@ const Movie = ({movie, fb_liked}) => {
                     firebaseUser &&
                     <div className={styles.votes}>
                         <button
-                            onClick={ ()=> liked_movie(movie, setLiked, firebaseUser)}
+                            onClick={ () =>{
+                                liked_movie(movie, setLiked, firebaseUser, setFBLikedMovies)
+                            }}
                         > 👍 </button>
 
                         <button
-                            onClick={()=> disliked_movie(movie, setLiked, firebaseUser)}
+                            onClick={ () =>{
+                                disliked_movie(movie, setLiked, firebaseUser)
+                            }}
                         >👎</button>
                     </div>
                 }
