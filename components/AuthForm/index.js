@@ -9,29 +9,49 @@ const AuthForm = ({router}) => {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [passwordConfirm, setPasswordConfirm] = useState()
+    const [error, setError] = useState()
 
     async function loginSubmitted(e){
         e.preventDefault()
 
-        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password)
-        var user = userCredential.user
-        localStorage.setItem('user_id', user.uid)
-        router.push('/')
+        try {
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password)
+            var user = userCredential.user
+            localStorage.setItem('user_id', user.uid)
+            router.push('/')
+        }
+        catch(error) {
+            setError(error.message)
+        }
     }
 
     async function registerSubmitted(e){
         e.preventDefault()
-        if(password !== passwordConfirm) return console.log("passwords don't match")
+        if(password !== passwordConfirm) return setError("The passwords don't match")
 
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password)
-        var user = userCredential.user;
-        localStorage.setItem('user_id', user.uid)
-        router.push('/')
+        try {
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password)
+            var user = userCredential.user;
+            localStorage.setItem('user_id', user.uid)
+            router.push('/')
+        }
+        catch(error) {
+            setError(error.message)
+        }
     }
 
     return (
         <>
             <Header />
+
+            {
+                error?
+                <div className={styles.error}>
+                    <button onClick={()=>setError(null)}>X</button>
+                    <p>{error}</p>
+                </div>
+                : ''
+            }
 
             <div className={styles.forms}>
                 <form className={styles.login} onSubmit={loginSubmitted}>
