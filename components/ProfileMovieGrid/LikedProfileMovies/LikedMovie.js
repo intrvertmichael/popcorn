@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../../../styles/ProfileMovieGrid.module.css'
+import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 
 import {createMovieImageURL} from '../../../requests/movie.api'
 import { useGetFirebaseUser } from "../../../context/FirebaseContext";
@@ -12,12 +13,19 @@ const LikedMovie = ({movie, set, tags, doTagsNeedUpdate, movies}) => {
         const firebaseUser = useGetFirebaseUser()
         const poster = createMovieImageURL(movie.poster_path)
 
-        function removingLikedMovie(){
+        async function removingLikedMovie(){
             const message = `Are you sure you want to remove ${movie.original_title} from Likes?`
             if(confirm(message)){
-                removeLiked(movie, firebaseUser)
+                // remove move from Firebase Liked Movies
+                await removeLiked(movie, firebaseUser)
+
+                // filter movies shown under Liked Movies
                 const filtered = movies.filter( m => m.id !== movie.id)
                 set(filtered)
+
+                // updating tag list
+                doTagsNeedUpdate("tag", false)
+
             }
         }
 

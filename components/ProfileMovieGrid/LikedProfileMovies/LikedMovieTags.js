@@ -39,7 +39,7 @@ const LikedMovieTags = ({movie, tags, doTagsNeedUpdate, firebaseUser}) => {
         const message = `Are you sure you want to remove ${tag} tag from ${movie.original_title}?`
 
         if(confirm(message)){
-            removeTag(tag, movie.id, firebaseUser)
+            await removeTag(tag, movie.id, firebaseUser)
             const filtered = tagsUsed.filter( objtag => objtag !== tag)
             setTagsUsed(filtered)
             doTagsNeedUpdate(tag, false)

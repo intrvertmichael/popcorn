@@ -43,19 +43,20 @@ const LikedProfileMovies = ({movies, set}) => {
 
     async function doTagsNeedUpdate(tag, added){
         const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
-        const tagObj = current_tags[tag]
+        const movie_tags = Object.entries(current_tags)
 
         if(added){
             const exists = tagNames.find( name => name === tag)
             if(!exists) setTagNames( oldNames => [...oldNames, tag])
         }
         else {
-            if(!tagObj.length || tagObj.length === 1){
-                const filtered = tagNames.filter( name => name !== tag)
-                setTagNames(filtered)
-            }
+            const fb_tag_names = movie_tags.map( tag => tag[0])
+            setTagNames(fb_tag_names)
         }
     }
+
+
+
 
     return (
         <>
