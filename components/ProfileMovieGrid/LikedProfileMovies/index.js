@@ -6,11 +6,14 @@ import { useGetFirebaseUser } from "../../../context/FirebaseContext";
 import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 
 import LikedMovie from './LikedMovie';
+import TagFilter from './TagFilter';
 
 const LikedProfileMovies = ({movies, set}) => {
     const firebaseUser = useGetFirebaseUser()
     const [tags, setTags] = useState()
     const [tagNames, setTagNames] = useState([])
+    const [filter, setFilter] = useState()
+    const [filteredMovies, setFilteredMovies] = useState()
 
     useEffect( () => {
         async function getTags(){
@@ -22,6 +25,23 @@ const LikedProfileMovies = ({movies, set}) => {
         getTags()
 
     }, [firebaseUser])
+
+    useEffect( () => {
+        if(filter){
+            const tagArr = tags[filter]
+            console.log("a filter exists so going to filter movies")
+
+            setFilteredMovies(movies.filter( movie => {
+                console.log('tagArr', tagArr)
+                console.log('movie.id', movie.id)
+                const exists = tagArr.length? tagArr.find( id => id === movie.id)  : tagArr === movie.id
+                console.log('exists', exists)
+                return exists? true : false
+            }))
+        } else {
+            setFilteredMovies(movies)
+        }
+    }, [filter, movies, tags])
 
     if(movies?.length === 0) return false
 
@@ -43,18 +63,16 @@ const LikedProfileMovies = ({movies, set}) => {
 
     return (
         <>
-            <ul>
-                { tagNames?.map(tag => <li key={tag}> {tag} </li>) }
-            </ul>
+            <TagFilter tagNames={tagNames} filter={filter} setFilter={setFilter}/>
 
             <ul className={styles.genre_movies}>
                 {
-                    movies?.map( movie => {
+                    filteredMovies?.map( movie => {
                         return (
                             <LikedMovie
                                 key={movie.id}
                                 movie={movie}
-                                movies={movies}
+                                movies={filteredMovies}
                                 set={set}
                                 tags={tags}
                                 setTags={setTags}
