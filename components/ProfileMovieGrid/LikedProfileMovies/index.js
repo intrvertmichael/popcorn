@@ -29,15 +29,11 @@ const LikedProfileMovies = ({movies, set}) => {
     useEffect( () => {
         if(filter){
             const tagArr = tags[filter]
-            console.log("a filter exists so going to filter movies")
-
-            setFilteredMovies(movies.filter( movie => {
-                console.log('tagArr', tagArr)
-                console.log('movie.id', movie.id)
+            const filtered = movies.filter( movie => {
                 const exists = tagArr.length? tagArr.find( id => id === movie.id)  : tagArr === movie.id
-                console.log('exists', exists)
                 return exists? true : false
-            }))
+            })
+            setFilteredMovies(filtered)
         } else {
             setFilteredMovies(movies)
         }

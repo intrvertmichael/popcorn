@@ -3,7 +3,7 @@ import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 const db = firebase.firestore()
 
 async function removeLiked(movie, firebaseUser){
-    const {current_likes, current_dislikes} = await getCurrentFirebaseMovies(firebaseUser)
+    const {current_likes, current_tags} = await getCurrentFirebaseMovies(firebaseUser)
     const genre_ids = movie.genres.map( g => g.id)
 
     const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
@@ -26,6 +26,33 @@ async function removeLiked(movie, firebaseUser){
 
         console.log("removed genre counters...")
     }
+
+    const entries = Object.entries(current_tags)
+
+    entries.forEach( async tag => {
+        const name = tag[0]
+        const taggedIds = tag[1]
+        const hasLength = taggedIds.length
+        const exists = hasLength? taggedIds.find( tag => tag === movie.id) : taggedIds === movie.id
+
+        if(exists && hasLength > 1) {
+            const filtered = taggedIds.filter( id => id !== movie.id )
+            await db.collection("tags").doc(firebaseUser.uid).update({
+                [name]: filtered
+            })
+
+            console.log("removed id from tag list...")
+        }
+        else if(exists) {
+            await db.collection("tags").doc(firebaseUser.uid).update({
+                [name]: firebase.firestore.FieldValue.delete()
+            })
+
+            console.log("deleted tag from fb...")
+        }
+    })
+
+
 }
 
 export default removeLiked

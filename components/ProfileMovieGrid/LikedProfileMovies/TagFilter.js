@@ -17,9 +17,6 @@ const TagFilter = ({tagNames, filter, setFilter}) => {
         <ul className={styles.filtered_list}>
             {
                 sorted.map( tag => {
-
-                    if(filter === tag) console.log(filter, tag)
-
                     return (
                         <li
                             key={tag}
