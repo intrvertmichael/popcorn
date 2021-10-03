@@ -95,6 +95,7 @@ export default function Home({trending, best, genres}) {
           FBLikedMovies={FBLikedMovies}
           FBDisLikedMovies={FBDisLikedMovies}
           setFBLikedMovies={setFBLikedMovies}
+          setFBDisLikedMovies={setFBDisLikedMovies}
           movieList={{
               genreID: genre_info.id,
               title: genre_info.name,

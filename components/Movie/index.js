@@ -8,10 +8,9 @@ import { useGetFirebaseUser } from '../../context/FirebaseContext'
 import liked_movie from './firebase/liked'
 import disliked_movie from './firebase/disliked'
 
-const Movie = ({movie, fb_liked, setFBLikedMovies}) => {
+const Movie = ({movie, fb_liked, setFBLikedMovies, setFBDisLikedMovies}) => {
     const firebaseUser = useGetFirebaseUser()
     const [liked, setLiked] = useState()
-
 
     // SETTING DEFAULT MOVIE VIEW
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,6 +73,7 @@ const Movie = ({movie, fb_liked, setFBLikedMovies}) => {
                         <button
                             onClick={ () =>{
                                 disliked_movie(movie, setLiked, firebaseUser)
+                                setFBDisLikedMovies( current => [...current, {movie_id: movie.id}])
                             }}
                         >👎</button>
                     </div>

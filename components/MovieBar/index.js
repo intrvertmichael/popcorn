@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styles from '../../styles/MovieBar.module.css'
 import Movie from '../Movie'
 
-const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies}) => {
+const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies, setFBDisLikedMovies}) => {
     const [movies, setMovies] = useState([])
 
     useEffect( () => {
@@ -18,13 +18,14 @@ const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies}
                     key = {movie.id}
                     fb_liked = { liked? true : null}
                     setFBLikedMovies = {setFBLikedMovies}
+                    setFBDisLikedMovies = {setFBDisLikedMovies}
                 />
             )
         })
 
         setMovies(movie_array)
 
-    }, [movieList, FBLikedMovies, FBDisLikedMovies])
+    }, [movieList, FBLikedMovies, FBDisLikedMovies, setFBLikedMovies, setFBDisLikedMovies])
 
     if(!movieList || movieList.movies?.length === 0) return false
 
