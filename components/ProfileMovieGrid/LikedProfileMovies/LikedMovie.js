@@ -31,7 +31,7 @@ const LikedMovie = ({movie, set, tags, doTagsNeedUpdate, movies}) => {
 
                 <div className={styles.movie_caption}>
                     <button className={styles.remove} onClick={removingLikedMovie}>
-                        Remove from Likes
+                        X
                     </button>
 
                     <Link href={'/movie/' + movie.id}>

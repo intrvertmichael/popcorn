@@ -30,7 +30,7 @@ const DislikedMovie = ({movies, movie, set}) => {
 
                 <div className={styles.movie_caption}>
                     <button className={styles.remove} onClick={removeFromDislikes}>
-                        Remove from Dislikes
+                        X
                     </button>
 
                     <Link href={'/movie/' + movie.id}>

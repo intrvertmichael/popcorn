@@ -31,3 +31,7 @@
     color: gray;
     cursor: pointer;
 }
+
+.auth a:hover {
+    color: white;
+}

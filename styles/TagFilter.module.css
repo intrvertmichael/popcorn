@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.filtered_list li:hover {
+    background: rgb(29, 29, 29);
+}
+
 .active_genre {
     background: white !important;
     color: black !important;
