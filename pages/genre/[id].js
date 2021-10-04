@@ -1,8 +1,14 @@
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Layout from '../../components/Layout'
-import MovieGrid from '../../components/MovieGrid'
-import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
 import styles from '../../styles/Genre.module.css'
+
+import { getMoviesFromGenre, getGenreLabel } from '../../requests/movie.api'
+import MovieCollection from '../../components/MovieCollection'
+
+import { useGetFirebaseUser } from "../../context/FirebaseContext";
+import firebase from '../../requests/firebase/config'
+const db = firebase.firestore()
 
 export const getServerSideProps = async (context) => {
     const id= context.params.id
@@ -18,6 +24,23 @@ export const getServerSideProps = async (context) => {
 }
 
 const GenreDetails = ({movies, genreLabel, page}) => {
+    const firebaseUser = useGetFirebaseUser()
+    // const [favGenreMovies, setfavGenreMovies] = useState()
+    const [FBLikedMovies, setFBLikedMovies] = useState()
+    const [FBDisLikedMovies, setFBDisLikedMovies] = useState()
+
+    useEffect( () => {
+        async function getFBMovies(){
+            // getting liked Movies
+            const fb_movies_res = await db.collection("movies").doc(firebaseUser.uid).get()
+            const fb_movies_data = fb_movies_res.data()
+
+            setFBLikedMovies(fb_movies_data.liked)
+            setFBDisLikedMovies(fb_movies_data.disliked)
+        }
+
+        if(firebaseUser) getFBMovies()
+    }, [firebaseUser])
 
     if(!movies && !genreLabel && !page) return false
 
@@ -51,7 +74,20 @@ const GenreDetails = ({movies, genreLabel, page}) => {
                 <h1>{genreLabel.name} Movies</h1>
             </div>
 
-            <MovieGrid movies={movies} next_page_label={next_page_label}/>
+            {/* <MovieGrid movies={movies} next_page_label={next_page_label}/> */}
+            <MovieCollection
+                key={movies[0]}
+                view='grid'
+                FBLikedMovies={FBLikedMovies}
+                FBDisLikedMovies={FBDisLikedMovies}
+                setFBLikedMovies={setFBLikedMovies}
+                setFBDisLikedMovies={setFBDisLikedMovies}
+                movieList={{
+                    // genreID: genre_info.id,
+                    // title: genre_info.name,
+                    movies: movies.results
+                }
+            } />
 
             <nav className={styles.genre_nav}>
                 {backBtn}

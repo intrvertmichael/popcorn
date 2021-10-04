@@ -3,7 +3,7 @@ import { getTrending, getGenres, getBestThisYear } from '../requests/movie.api'
 
 import Trending from '../components/Trending'
 import Header from '../components/Header'
-import MovieBar from '../components/MovieBar'
+import MovieCollection from '../components/MovieCollection'
 import SearchBar from '../components/SearchBar'
 import GenreList from '../components/Genre/List'
 
@@ -90,8 +90,9 @@ export default function Home({trending, best, genres}) {
     fav_genre_movies?.map( movieList => {
       const genre_info = genres.find( genre => String(genre.id) === movieList[0])
       return (
-        <MovieBar
+        <MovieCollection
           key={movieList[0]}
+          view='bar'
           FBLikedMovies={FBLikedMovies}
           FBDisLikedMovies={FBDisLikedMovies}
           setFBLikedMovies={setFBLikedMovies}
@@ -100,8 +101,8 @@ export default function Home({trending, best, genres}) {
               genreID: genre_info.id,
               title: genre_info.name,
               movies: movieList[1].results
-          }
-        } />
+          }}
+        />
       )
     })
     : []
@@ -120,7 +121,7 @@ export default function Home({trending, best, genres}) {
           firebaseUser && favGenreMovies?
           fav_movies_list
           :
-          <MovieBar
+          <MovieCollection
             movieList = {{
                 title: "Best of the Year",
                 movies: best?.results,

@@ -11,14 +11,27 @@
     font-size: 1.5em;
 }
 
-.genre_movies {
+.genre_movies_bar {
     display: flex;
     margin: 0px;
     padding: 0px;
 }
 
-.genre_movies li {
+.genre_movies_grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100% !important;
+    margin: 0px;
+    padding: 0px;
+}
+
+.genre_movies_bar li {
     scroll-snap-align: start;
+}
+
+.genre_movies_grid li {
+    width: 20%;
+    display: flex;
 }
 
 .movie_bar a {

@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import styles from '../../styles/MovieBar.module.css'
+import styles from '../../styles/MovieCollection.module.css'
 import Movie from '../Movie'
 
-const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies, setFBDisLikedMovies}) => {
+const MovieCollection = ({
+    view,
+    movieList,
+    FBLikedMovies,
+    setFBLikedMovies,
+    FBDisLikedMovies,
+    setFBDisLikedMovies
+}) => {
     const [movies, setMovies] = useState([])
+
+    console.log(view)
 
     useEffect( () => {
         const movie_array = []
@@ -33,6 +42,16 @@ const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies,
 
     if(movies?.length === 0) return false
 
+    let ul_classes
+    let ul_style
+    if(view === 'bar'){
+        ul_classes = styles.genre_movies_bar
+        ul_style = { width: `${ movies?.length * movie_image_size }%` }
+    }
+    if(view === 'grid'){
+        ul_classes = styles.genre_movies_grid
+    }
+
     return (
         <div className={styles.movie_bar}>
             {
@@ -47,7 +66,7 @@ const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies,
             }
 
             <div className={styles.genre_movies_wrapper}>
-                <ul className={styles.genre_movies} style={{width: `${ movies?.length * movie_image_size }%`}}>
+                <ul className={ul_classes} style={ul_style}>
                     {movies}
                 </ul>
             </div>
@@ -55,4 +74,4 @@ const MovieBar = ({movieList, FBLikedMovies, setFBLikedMovies, FBDisLikedMovies,
     )
 }
 
-export default MovieBar;
+export default MovieCollection;

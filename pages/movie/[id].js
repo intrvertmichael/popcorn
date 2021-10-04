@@ -6,7 +6,7 @@ import Layout from '../../components/Layout'
 import { getSingleMovie, getImageList, createMovieImageURL, getRecommendedMovies } from '../../requests/movie.api'
 import Link from 'next/link'
 import Carousel from '../../components/Carousel'
-import MovieBar from '../../components/MovieBar'
+import MovieCollection from '../../components/MovieCollection'
 
 export const getStaticPaths = async () => {
     return { paths: [], fallback: true }
@@ -69,7 +69,7 @@ const MovieDetails = ({movie, images, recommended}) => {
                     <ul className={styles.genres}>{genres}</ul>
                 </div>
 
-                <MovieBar movieList={{ movies: recommended.results, title:"Recommended Movies"}}/>
+                <MovieCollection movieList={{ movies: recommended.results, title:"Recommended Movies"}}/>
 
             </div>
         </Layout>
