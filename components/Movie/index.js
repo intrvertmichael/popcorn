@@ -72,7 +72,7 @@ const Movie = ({movie, fb_liked, setFBLikedMovies, setFBDisLikedMovies}) => {
 
                         <button
                             onClick={ () =>{
-                                disliked_movie(movie, setLiked, firebaseUser)
+                                disliked_movie(movie, firebaseUser)
                                 setFBDisLikedMovies( current => [...current, {movie_id: movie.id}])
                             }}
                         >👎</button>
