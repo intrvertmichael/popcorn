@@ -6,7 +6,6 @@ import AuthForm from "../components/AuthForm";
 
 import { useGetFirebaseUser } from "../context/FirebaseContext";
 import { useRouter } from 'next/router'
-
 import LikedProfileMovies from "../components/ProfileMovieGrid/LikedProfileMovies";
 import DislikedProfileMovies from "../components/ProfileMovieGrid/DislikedProfileMovies";
 
@@ -62,13 +61,13 @@ const Auth = () => {
                     <>
                         <h3>Liked Movies ({likedMovies?.length})</h3>
                         <a onClick={()=> setViewingLikes(false)}>
-                            <h3>Disliked Movies ({dislikedMovies?.length})</h3>
+                            <h3>Disliked Movies</h3>
                         </a>
                     </>
                     :
                     <>
                         <a onClick={()=> setViewingLikes(true)}>
-                            <h3>Liked Movies ({likedMovies?.length})</h3>
+                            <h3>Liked Movies</h3>
                         </a>
                         <h3>Disliked Movies ({dislikedMovies?.length})</h3>
                     </>

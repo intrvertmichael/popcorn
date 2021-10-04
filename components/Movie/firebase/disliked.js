@@ -10,7 +10,7 @@ async function disliked_movie(movie, setLiked, firebaseUser) {
     const currently_disliked = current_dislikes.find(m => m.movie_id === movie.id)
 
     if(currently_disliked) {
-        setLiked(null)
+        // setLiked(null)
 
         const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
         await db.collection("movies").doc(firebaseUser.uid).update({
@@ -21,7 +21,7 @@ async function disliked_movie(movie, setLiked, firebaseUser) {
     }
 
     else {
-        setLiked(false)
+        // setLiked(false)
 
         await db.collection("movies").doc(firebaseUser.uid).update({
             disliked: [ ...current_dislikes, {movie_id: movie.id} ]
