@@ -25,7 +25,6 @@ export const getServerSideProps = async (context) => {
 
 const GenreDetails = ({movies, genreLabel, page}) => {
     const firebaseUser = useGetFirebaseUser()
-    // const [favGenreMovies, setfavGenreMovies] = useState()
     const [FBLikedMovies, setFBLikedMovies] = useState()
     const [FBDisLikedMovies, setFBDisLikedMovies] = useState()
 
@@ -82,12 +81,8 @@ const GenreDetails = ({movies, genreLabel, page}) => {
                 FBDisLikedMovies={FBDisLikedMovies}
                 setFBLikedMovies={setFBLikedMovies}
                 setFBDisLikedMovies={setFBDisLikedMovies}
-                movieList={{
-                    // genreID: genre_info.id,
-                    // title: genre_info.name,
-                    movies: movies.results
-                }
-            } />
+                movieList={{ movies: movies.results }}
+            />
 
             <nav className={styles.genre_nav}>
                 {backBtn}

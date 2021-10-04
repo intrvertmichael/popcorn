@@ -29,7 +29,6 @@ export const getStaticProps = async (context) => {
 const MovieDetails = ({movie, images, recommended}) => {
 
     const firebaseUser = useGetFirebaseUser()
-    // const [favGenreMovies, setfavGenreMovies] = useState()
     const [FBLikedMovies, setFBLikedMovies] = useState()
     const [FBDisLikedMovies, setFBDisLikedMovies] = useState()
 

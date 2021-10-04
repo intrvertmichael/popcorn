@@ -14,7 +14,6 @@ const SearchBar = () => {
 
     function filter_movies(data) {
         const movies = []
-        // data.results.map( movie => <Movie movie={movie} key={movie.id}/> )
 
         data.results.map( movie => {
             // check if movie is disliked

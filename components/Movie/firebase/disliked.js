@@ -5,13 +5,11 @@ const db = firebase.firestore()
 
 // DISLIKED BUTTON LISTENER
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-async function disliked_movie(movie, setLiked, firebaseUser) {
+async function disliked_movie(movie, firebaseUser) {
     const {current_likes, current_dislikes} = await getCurrentFirebaseMovies(firebaseUser)
     const currently_disliked = current_dislikes.find(m => m.movie_id === movie.id)
 
     if(currently_disliked) {
-        // setLiked(null)
-
         const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
         await db.collection("movies").doc(firebaseUser.uid).update({
             disliked: updated_dislikes
@@ -21,8 +19,6 @@ async function disliked_movie(movie, setLiked, firebaseUser) {
     }
 
     else {
-        // setLiked(false)
-
         await db.collection("movies").doc(firebaseUser.uid).update({
             disliked: [ ...current_dislikes, {movie_id: movie.id} ]
         })
