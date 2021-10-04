@@ -9,7 +9,7 @@ async function liked_movie(movie, setLiked, firebaseUser, setFBLikedMovies) {
     if(currently_liked) {
         setLiked(null)
         setFBLikedMovies( current => {
-            const newLikes = current.filter( id => id.movie_id !== movie.id)
+            const newLikes = current?.filter( id => id.movie_id !== movie.id)
             return newLikes
         })
 

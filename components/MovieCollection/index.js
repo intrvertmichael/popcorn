@@ -13,8 +13,6 @@ const MovieCollection = ({
 }) => {
     const [movies, setMovies] = useState([])
 
-    console.log(view)
-
     useEffect( () => {
         const movie_array = []
         movieList.movies?.map( movie => {

@@ -2,11 +2,16 @@ import Image from 'next/image'
 import styles from '../../styles/MovieDetails.module.css'
 import Rating from '../../components/Rating'
 import Layout from '../../components/Layout'
+import { useEffect, useState } from 'react'
 
 import { getSingleMovie, getImageList, createMovieImageURL, getRecommendedMovies } from '../../requests/movie.api'
 import Link from 'next/link'
 import Carousel from '../../components/Carousel'
 import MovieCollection from '../../components/MovieCollection'
+
+import { useGetFirebaseUser } from "../../context/FirebaseContext";
+import firebase from '../../requests/firebase/config'
+const db = firebase.firestore()
 
 export const getStaticPaths = async () => {
     return { paths: [], fallback: true }
@@ -22,6 +27,25 @@ export const getStaticProps = async (context) => {
 }
 
 const MovieDetails = ({movie, images, recommended}) => {
+
+    const firebaseUser = useGetFirebaseUser()
+    // const [favGenreMovies, setfavGenreMovies] = useState()
+    const [FBLikedMovies, setFBLikedMovies] = useState()
+    const [FBDisLikedMovies, setFBDisLikedMovies] = useState()
+
+
+    useEffect( () => {
+        async function getFBMovies(){
+        // getting liked Movies
+        const fb_movies_res = await db.collection("movies").doc(firebaseUser.uid).get()
+        const fb_movies_data = fb_movies_res.data()
+
+        setFBLikedMovies(fb_movies_data.liked)
+        setFBDisLikedMovies(fb_movies_data.disliked)
+        }
+
+        if(firebaseUser) getFBMovies()
+    }, [firebaseUser])
 
     if(!movie || !images || !recommended) return false
 
@@ -69,7 +93,17 @@ const MovieDetails = ({movie, images, recommended}) => {
                     <ul className={styles.genres}>{genres}</ul>
                 </div>
 
-                <MovieCollection movieList={{ movies: recommended.results, title:"Recommended Movies"}}/>
+                <MovieCollection
+                    view = "bar"
+                    FBLikedMovies={FBLikedMovies}
+                    FBDisLikedMovies={FBDisLikedMovies}
+                    setFBLikedMovies={setFBLikedMovies}
+                    setFBDisLikedMovies={setFBDisLikedMovies}
+                    movieList = {{
+                        movies: recommended.results,
+                        title:"Recommended Movies"
+                    }}
+                />
 
             </div>
         </Layout>
