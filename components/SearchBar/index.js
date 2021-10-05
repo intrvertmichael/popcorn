@@ -33,23 +33,16 @@ const SearchBar = () => {
     }
 
     async function fetchResults(requested_page){
-        console.log("fetching results...")
 
         let res
         if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
         else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
         const data  = await res.json()
         const movies = filter_movies(data)
-
-        console.log( movies?.length, "results")
-        if(searchText && movies?.length <= 1) fetchResults(requested_page + 1)
-
-        console.log('after fetching results')
-
         const page =  data.page
         const total_pages = data.total_pages
 
-        setResults( {movies, page, total_pages} )
+        setResults({movies, page, total_pages})
     }
 
     function searchSubmitted(){
