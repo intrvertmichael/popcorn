@@ -12,9 +12,11 @@ const TagFilter = ({tagNames, filter, setFilter}) => {
         else setFilter(clickedTag)
     }
 
+    if(!sorted.length > 0) return false
     return (
         <ul className={styles.filtered_list}>
             <h4>Filters:</h4>
+
             {
                 sorted.map( tag => {
                     return (

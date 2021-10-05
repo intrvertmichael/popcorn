@@ -9,6 +9,7 @@
 .filtered_list h4 {
     margin: 5px;
     margin-bottom: 10px;
+    display: inline-block;
 }
 
 .filtered_list li {

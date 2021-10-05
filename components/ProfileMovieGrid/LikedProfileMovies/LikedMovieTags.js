@@ -26,6 +26,7 @@ const LikedMovieTags = ({movie, tags, doTagsNeedUpdate, firebaseUser}) => {
         e.preventDefault()
         setTagInput(false)
         const exists = tagsUsed?.find(tag => tag === tagText)
+        // the error first shows up here
         if(!exists){
             addTag(tagText, movie.id, firebaseUser)
             setTagsUsed( current => current.concat(tagText))
