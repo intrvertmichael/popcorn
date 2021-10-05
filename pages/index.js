@@ -122,6 +122,7 @@ export default function Home({trending, best, genres}) {
           fav_movies_list
           :
           <MovieCollection
+            view='bar'
             movieList = {{
                 title: "Best of the Year",
                 movies: best?.results,
