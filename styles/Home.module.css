@@ -87,3 +87,11 @@ Genre Verbs
 .genre_list li:hover {
   background: rgba( 255, 255, 255, 0.08 );
 }
+
+.intro {
+  width: 500px;
+  margin: 100px auto;
+  padding: 30px;
+  border: 1px solid white;
+  border-radius: 2px;
+}

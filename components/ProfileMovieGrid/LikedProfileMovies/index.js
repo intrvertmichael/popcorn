@@ -30,7 +30,7 @@ const LikedProfileMovies = ({movies, set}) => {
         if(filter){
             const tagArr = tags[filter]
             const filtered = movies.filter( movie => {
-                const exists = tagArr.length? tagArr.find( id => id === movie.id)  : tagArr === movie.id
+                const exists = tagArr?.length? tagArr.find( id => id === movie.id)  : tagArr === movie.id
                 return exists? true : false
             })
             setFilteredMovies(filtered)

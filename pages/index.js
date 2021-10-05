@@ -114,20 +114,33 @@ export default function Home({trending, best, genres}) {
 
       <div className={styles.container}>
         <Header />
+
+        {
+          !firebaseUser?
+          <div className={styles.intro}>
+              🍿  Use Popcorn to <br/>
+              🔎  Discover new and old movies <br/>
+              👍  Create an account to save likes and dislikes <br/>
+              🏷  Add tags to find the movies that you like faster <br/>
+              👎  Movies you dislike like will be vanished into the abyss <br/>
+          </div>
+          : ''
+        }
+
         <GenreList genres={genres} />
         <SearchBar />
 
         {
-          firebaseUser && favGenreMovies?
-          fav_movies_list
-          :
+        firebaseUser && favGenreMovies?
+        fav_movies_list
+        :
           <MovieCollection
-            view='bar'
-            movieList = {{
-                title: "Best of the Year",
-                movies: best?.results,
-            }}
-          />
+          view='bar'
+          movieList = {{
+            title: "Best of the Year",
+            movies: best?.results,
+          }}
+        />
         }
 
       </div>
