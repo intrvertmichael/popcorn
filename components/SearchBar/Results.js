@@ -1,6 +1,30 @@
 import styles from '../../styles/SeachBar.module.css'
+import MovieCollection from '../MovieCollection'
 
-const Results = ({results, setSearchText, setResults, fetchResults}) => {
+import { useState, useEffect } from 'react'
+import { useGetFirebaseUser } from "../../context/FirebaseContext";
+import firebase from '../../requests/firebase/config'
+const db = firebase.firestore()
+
+const Results = ({results, searchText, setSearchText, setResults, fetchResults}) => {
+    const firebaseUser = useGetFirebaseUser()
+    const [FBLikedMovies, setFBLikedMovies] = useState()
+    const [FBDisLikedMovies, setFBDisLikedMovies] = useState()
+
+
+    useEffect( () => {
+        async function getFBMovies(){
+        // getting liked Movies
+        const fb_movies_res = await db.collection("movies").doc(firebaseUser.uid).get()
+        const fb_movies_data = fb_movies_res.data()
+
+        setFBLikedMovies(fb_movies_data.liked)
+        setFBDisLikedMovies(fb_movies_data.disliked)
+        }
+
+        if(firebaseUser) getFBMovies()
+    }, [firebaseUser])
+
 
     if(!results) return false
 
@@ -38,14 +62,25 @@ const Results = ({results, setSearchText, setResults, fetchResults}) => {
         : <p>→</p>
     )
 
-
     return (
         <div className={styles.results_wrapper}>
             <button className={styles.clear_search} onClick={clearResults}> Clear Search </button>
 
-            <ul className={styles.results}>
+            {/* <ul className={styles.results}>
                 {results.movies}
-            </ul>
+            </ul> */}
+
+            <MovieCollection
+                view = "grid"
+                FBLikedMovies={FBLikedMovies}
+                FBDisLikedMovies={FBDisLikedMovies}
+                setFBLikedMovies={setFBLikedMovies}
+                setFBDisLikedMovies={setFBDisLikedMovies}
+                movieList = {{
+                    movies: results.movies,
+                    title: `Results for ${searchText.value}`
+                }}
+            />
 
             {
                 results.total_pages > 1?

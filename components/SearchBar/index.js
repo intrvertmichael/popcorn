@@ -5,32 +5,31 @@ import Results from './Results'
 import {useGetFirebaseUser} from '../../context/FirebaseContext'
 
 const SearchBar = () => {
-    const firebaseUser = useGetFirebaseUser()
-
+    // const firebaseUser = useGetFirebaseUser()
     const [searchText, setSearchText] = useState()
     const [results, setResults] = useState()
     const [timer, setTimer] = useState()
 
 
-    function filter_movies(data) {
-        const movies = []
+    // function filter_movies(data) {
+    //     const movies = []
 
-        data.results.map( movie => {
-            // check if movie is disliked
-            const fb_disliked = firebaseUser && firebaseUser.movies && firebaseUser.movies.disliked?
-            firebaseUser.movies.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
+    //     data.results.map( movie => {
+    //         // check if movie is disliked
+    //         const fb_disliked = firebaseUser && firebaseUser.movies && firebaseUser.movies.disliked?
+    //         firebaseUser.movies.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
 
-            // check if movie is liked
-            const fb_liked = firebaseUser && firebaseUser.movies && firebaseUser.movies.liked?
-            firebaseUser.movies.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
+    //         // check if movie is liked
+    //         const fb_liked = firebaseUser && firebaseUser.movies && firebaseUser.movies.liked?
+    //         firebaseUser.movies.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
 
-            const liked = fb_liked? true : null
-            // if movie is not disliked then show it on the grid
-            if(!fb_disliked) movies.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
-        })
+    //         const liked = fb_liked? true : null
+    //         // if movie is not disliked then show it on the grid
+    //         if(!fb_disliked) movies.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
+    //     })
 
-        return movies
-    }
+    //     return movies
+    // }
 
     async function fetchResults(requested_page){
 
@@ -38,11 +37,12 @@ const SearchBar = () => {
         if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
         else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
         const data  = await res.json()
-        const movies = filter_movies(data)
+        // const movies = filter_movies(data)
         const page =  data.page
         const total_pages = data.total_pages
 
-        setResults({movies, page, total_pages})
+        // setResults({movies, page, total_pages})
+        setResults({movies: data.results, page, total_pages})
     }
 
     function searchSubmitted(){
@@ -74,7 +74,13 @@ const SearchBar = () => {
                 <button> 🔎 </button>
             </form>
 
-            <Results {...{results, setSearchText, setResults, fetchResults}} />
+            <Results {...{
+                results,
+                searchText,
+                setSearchText,
+                setResults,
+                fetchResults
+            }} />
         </div>
     )
 }
