@@ -4,7 +4,7 @@ import styles from '../../../styles/ProfileMovieGrid.module.css'
 
 import {createMovieImageURL} from '../../../requests/movie.api'
 import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
-import disliked_movie from '../../Movie/firebase/disliked'
+import disliked_movie from '../../../requests/firebase/disliked'
 
 const DislikedMovie = ({movie}) => {
         const firebaseUser = useGetFirebaseUser()

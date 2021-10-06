@@ -1,9 +1,13 @@
 import styles from '../../../styles/TagFilter.module.css'
+import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
 
-const TagFilter = ({tagNames, filter, setFilter}) => {
+const TagFilter = ({filter, setFilter}) => {
+    const firebaseUser = useGetFirebaseUser()
 
-    if(!tagNames) return false
-    const sorted = tagNames.sort()
+    if(!firebaseUser.tags || Object.entries(firebaseUser.tags).length === 0) return false
+
+    const tagLabels = Object.keys(firebaseUser.tags)
+    const sorted = tagLabels.sort()
 
     function handleFilter(e){
         const clickedTag = e.target.innerHTML.trim()

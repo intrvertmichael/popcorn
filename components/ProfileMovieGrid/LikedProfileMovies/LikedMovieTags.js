@@ -1,14 +1,18 @@
 import styles from '../../../styles/ProfileMovieGrid.module.css'
 import { useEffect, useState } from 'react';
-import {addTag, removeTag} from '../firebase/profiletags';
+import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
+import {addTag, removeTag} from '../../../requests/firebase/tags';
 
-const LikedMovieTags = ({movie, tags, doTagsNeedUpdate, firebaseUser}) => {
+const LikedMovieTags = ({movie}) => {
+    const firebaseUser = useGetFirebaseUser()
+    const setFirebaseUser = useSetFirebaseUser()
+
     const [tagInput, setTagInput] = useState(false)
     const [tagText, setTagText] = useState(false)
     const [tagsUsed, setTagsUsed] = useState()
 
     useEffect( () => {
-        const tagArr = tags? Object.entries(tags) : []
+        const tagArr = firebaseUser.tags? Object.entries(firebaseUser.tags) : []
         const containsTag = tagArr.filter( tag => {
             let hasTag
             tag[1].length?
@@ -20,17 +24,20 @@ const LikedMovieTags = ({movie, tags, doTagsNeedUpdate, firebaseUser}) => {
 
         const tagNames = containsTag.map( tagArr => tagArr[0])
         setTagsUsed(tagNames)
-    }, [movie.id, tags])
+    }, [firebaseUser.tags, movie.id])
 
     async function addingTag(e){
         e.preventDefault()
         setTagInput(false)
-        const exists = tagsUsed?.find(tag => tag === tagText)
-        // the error first shows up here
+        const tagArr = firebaseUser.tags? Object.entries(firebaseUser.tags) : []
+        const exists = tagArr?.find(tag => tag === tagText)
+
         if(!exists){
             addTag(tagText, movie.id, firebaseUser)
             setTagsUsed( current => current.concat(tagText))
-            doTagsNeedUpdate(tagText, true)
+            setFirebaseUser( current => {
+                console.log( '-> current', current )
+            })
         }
     }
 
@@ -43,7 +50,6 @@ const LikedMovieTags = ({movie, tags, doTagsNeedUpdate, firebaseUser}) => {
             await removeTag(tag, movie.id, firebaseUser)
             const filtered = tagsUsed.filter( objtag => objtag !== tag)
             setTagsUsed(filtered)
-            doTagsNeedUpdate(tag, false)
         }
     }
 

@@ -1,7 +1,8 @@
-import firebase from '../../../requests/firebase/config'
+import firebase from './config'
 const db = firebase.firestore()
 
 async function liked_movie(movie, uid, liked, disliked, currently_liked) {
+    console.log('movie', movie)
 
     if(currently_liked) {
         // remove movie from liked list
@@ -11,15 +12,27 @@ async function liked_movie(movie, uid, liked, disliked, currently_liked) {
         })
 
         // removing the counter for each movie genre
-        movie.genre_ids?.map( async genre => {
-            const fb_genre_res = await db.collection("genres").doc(uid).get()
-            const fb_genre_data = fb_genre_res.data()
-            const counter = parseInt(fb_genre_data[genre])
+        const fb_genre_res = await db.collection("genres").doc(uid).get()
+        const fb_genre_data = fb_genre_res.data()
 
-            await db.collection("genres").doc(uid).update({
-                [genre]: counter > 1? counter - 1 : firebase.firestore.FieldValue.delete()
+        if(movie.genre_ids){
+            movie.genre_ids?.map( async genre => {
+                const counter = parseInt(fb_genre_data[genre])
+
+                await db.collection("genres").doc(uid).update({
+                    [genre]: counter > 1? counter - 1 : firebase.firestore.FieldValue.delete()
+                })
             })
-        })
+        }
+        else if(movie.genres){
+            movie.genres?.map( async genre => {
+                const counter = parseInt(fb_genre_data[genre.id])
+
+                await db.collection("genres").doc(uid).update({
+                    [genre.id]: counter > 1? counter - 1 : firebase.firestore.FieldValue.delete()
+                })
+            })
+        }
     }
 
     else {

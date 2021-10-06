@@ -5,12 +5,14 @@ import styles from '../../../styles/ProfileMovieGrid.module.css'
 import {createMovieImageURL} from '../../../requests/movie.api'
 import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
 
-import liked_movie from '../../Movie/firebase/liked'
+import liked_movie from '../../../requests/firebase/liked'
 import LikedMovieTags from './LikedMovieTags';
 
-const LikedMovie = ({movie, tags, doTagsNeedUpdate, movies}) => {
+const LikedMovie = ({movie, tags, movies}) => {
         const firebaseUser = useGetFirebaseUser()
         const setFirebaseUser = useSetFirebaseUser()
+
+        console.log('@#$# movie', movie)
 
         const poster = createMovieImageURL(movie.poster_path)
 
@@ -25,11 +27,13 @@ const LikedMovie = ({movie, tags, doTagsNeedUpdate, movies}) => {
                 })
 
                 // remove move from Firebase Liked Movies
-                await liked_movie(movie, firebaseUser.uid, firebaseUser.liked, firebaseUser.disliked, true)
-
-                // updating tag list
-                doTagsNeedUpdate("tag", false)
-
+                await liked_movie(
+                    movie,
+                    firebaseUser.uid,
+                    firebaseUser.liked,
+                    firebaseUser.disliked,
+                    true
+                    )
             }
         }
 
@@ -52,12 +56,7 @@ const LikedMovie = ({movie, tags, doTagsNeedUpdate, movies}) => {
                         </a>
                     </Link>
 
-                    <LikedMovieTags
-                        movie={movie}
-                        tags={tags}
-                        doTagsNeedUpdate={doTagsNeedUpdate}
-                        firebaseUser={firebaseUser}
-                    />
+                    <LikedMovieTags movie={movie} />
                 </div>
             </li>
         )

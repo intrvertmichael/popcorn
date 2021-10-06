@@ -33,14 +33,14 @@ const Auth = () => {
 
             // getting the liked movies
             if(firebaseUser.liked){
-                Promise.all(firebaseUser.liked.map( async (movie, key) => {
+                Promise.all(firebaseUser.liked.map( async movie => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setLikedMovies(result))
             }
 
             // getting the disliked movies
             if(firebaseUser.disliked){
-                Promise.all(firebaseUser.disliked.map( async (movie, key) => {
+                Promise.all(firebaseUser.disliked.map( async movie => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setDisLikedMovies(result))
             }

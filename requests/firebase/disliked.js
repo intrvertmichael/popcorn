@@ -1,4 +1,4 @@
-import firebase from '../../../requests/firebase/config'
+import firebase from './config'
 const db = firebase.firestore()
 
 async function disliked_movie(movie, uid, likedMovies, dislikedMovies, currently_disliked) {

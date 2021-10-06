@@ -5,8 +5,8 @@ import {createMovieImageURL} from '../../requests/movie.api'
 import styles from '../../styles/Movie.module.css'
 import { useGetFirebaseUser, useSetFirebaseUser } from '../../context/FirebaseContext'
 
-import liked_movie from './firebase/liked'
-import disliked_movie from './firebase/disliked'
+import liked_movie from '../../requests/firebase/liked'
+import disliked_movie from '../../requests/firebase/disliked'
 
 const Movie = ({ movie, fb_liked }) => {
     const firebaseUser = useGetFirebaseUser()
