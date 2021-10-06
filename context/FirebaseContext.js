@@ -19,12 +19,24 @@ const FirebaseContext = ({children}) => {
     const [prevPage, setPrevPage] = useState()
 
     async function getFirebaseData(uid){
+
         // getting movies
         const fb_movie_res = await db.collection("movies").doc(uid).get()
         const fb_movie_data = fb_movie_res.data()
 
-        const data = { uid: uid , movies:fb_movie_data }
+        // getting tags
+        const fb_tags_res = await db.collection("tags").doc(uid).get()
+        const fb_tags_data = fb_tags_res.data()
+
+        const data = {
+            uid: uid,
+            disliked: fb_movie_data.disliked,
+            liked: fb_movie_data.liked,
+            tags: fb_tags_data
+        }
+
         console.log("context: ", data)
+
         setFirebaseUser(data)
     }
 

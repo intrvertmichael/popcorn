@@ -1,12 +1,9 @@
-import { getClientBuildManifest } from 'next/dist/client/route-loader'
 import firebase from '../../../requests/firebase/config'
-import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 const db = firebase.firestore()
 
 async function addTag(tagText, movie_id, firebaseUser){
-    const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
 
-    const usedTags = Object.keys(current_tags)
+    const usedTags = Object.keys(firebaseUser.tags)
     const exists = usedTags.find( tag => tag === tagText)
 
     if(exists){
@@ -30,8 +27,8 @@ async function addTag(tagText, movie_id, firebaseUser){
 }
 
 async function removeTag(tagText, movie_id, firebaseUser){
-    const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
-    const fb_item = current_tags[tagText]
+
+    const fb_item = firebaseUser.tags[tagText]
 
     let updatedList
     if(fb_item.length > 1){

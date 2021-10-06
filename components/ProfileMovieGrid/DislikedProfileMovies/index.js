@@ -1,7 +1,7 @@
 import styles from '../../../styles/ProfileMovieGrid.module.css'
 import DislikedMovie from './DislikedMovie';
 
-const DislikedProfileMovies = ({movies, set}) => {
+const DislikedProfileMovies = ({movies}) => {
 
     if(movies?.length === 0) return false
 
@@ -13,9 +13,7 @@ const DislikedProfileMovies = ({movies, set}) => {
                         return (
                             <DislikedMovie
                                 key={movie.id}
-                                movies={movies}
                                 movie={movie}
-                                set={set}
                             />
                         )
                     })

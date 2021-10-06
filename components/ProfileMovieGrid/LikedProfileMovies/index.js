@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styles from '../../../styles/ProfileMovieGrid.module.css'
 
 import { useGetFirebaseUser } from "../../../context/FirebaseContext";
-import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 
 import LikedMovie from './LikedMovie';
 import TagFilter from './TagFilter';
@@ -17,9 +16,8 @@ const LikedProfileMovies = ({movies, set}) => {
 
     useEffect( () => {
         async function getTags(){
-            const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
-            setTags(current_tags)
-            setTagNames(Object.keys(current_tags))
+            setTags(firebaseUser.tags)
+            setTagNames(Object.keys(firebaseUser.tags))
         }
 
         getTags()
@@ -42,8 +40,7 @@ const LikedProfileMovies = ({movies, set}) => {
     if(movies?.length === 0) return false
 
     async function doTagsNeedUpdate(tag, added){
-        const {current_tags} = await getCurrentFirebaseMovies(firebaseUser)
-        const movie_tags = Object.entries(current_tags)
+        const movie_tags = Object.entries(firebaseUser.tags)
 
         if(added){
             const exists = tagNames.find( name => name === tag)
@@ -70,7 +67,6 @@ const LikedProfileMovies = ({movies, set}) => {
                                 key={movie.id}
                                 movie={movie}
                                 movies={filteredMovies}
-                                set={set}
                                 tags={tags}
                                 setTags={setTags}
                                 doTagsNeedUpdate={doTagsNeedUpdate}

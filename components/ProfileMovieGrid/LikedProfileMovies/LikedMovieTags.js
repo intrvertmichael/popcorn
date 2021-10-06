@@ -1,6 +1,6 @@
 import styles from '../../../styles/ProfileMovieGrid.module.css'
 import { useEffect, useState } from 'react';
-import {addTag, removeTag} from '../firebase/tags';
+import {addTag, removeTag} from '../firebase/profiletags';
 
 const LikedMovieTags = ({movie, tags, doTagsNeedUpdate, firebaseUser}) => {
     const [tagInput, setTagInput] = useState(false)

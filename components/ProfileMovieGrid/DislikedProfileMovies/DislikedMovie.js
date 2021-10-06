@@ -3,20 +3,31 @@ import Image from 'next/image'
 import styles from '../../../styles/ProfileMovieGrid.module.css'
 
 import {createMovieImageURL} from '../../../requests/movie.api'
-import { useGetFirebaseUser } from "../../../context/FirebaseContext";
+import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
+import disliked_movie from '../../Movie/firebase/disliked'
 
-import removeDisliked from '../firebase/disliked'
-
-const DislikedMovie = ({movies, movie, set}) => {
+const DislikedMovie = ({movie}) => {
         const firebaseUser = useGetFirebaseUser()
+        const setFirebaseUser = useSetFirebaseUser()
+
         const poster = createMovieImageURL(movie.poster_path)
 
         function removeFromDislikes(){
             const message = `Are you sure you want to remove ${movie.original_title} from Dislikes?`
             if(confirm(message)){
-                removeDisliked(movie, firebaseUser)
-                const filtered = movies?.filter( m => m.id !== movie.id)
-                set(filtered)
+                setFirebaseUser(current => {
+                    const filtered = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
+                    const updatedLikes = {...current, disliked: filtered}
+                    return updatedLikes
+                })
+
+                disliked_movie(
+                    movie,
+                    firebaseUser.uid,
+                    firebaseUser.liked,
+                    firebaseUser.disliked,
+                    true
+                )
             }
         }
 

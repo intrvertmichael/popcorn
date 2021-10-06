@@ -3,13 +3,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {createMovieImageURL} from '../../requests/movie.api'
 import styles from '../../styles/Movie.module.css'
-import { useGetFirebaseUser } from '../../context/FirebaseContext'
+import { useGetFirebaseUser, useSetFirebaseUser } from '../../context/FirebaseContext'
 
 import liked_movie from './firebase/liked'
 import disliked_movie from './firebase/disliked'
 
-const Movie = ({movie, fb_liked, setFBLikedMovies, setFBDisLikedMovies}) => {
+const Movie = ({ movie, fb_liked }) => {
     const firebaseUser = useGetFirebaseUser()
+    const setFirebaseUser = useSetFirebaseUser()
+
     const [liked, setLiked] = useState()
 
     // SETTING DEFAULT MOVIE VIEW
@@ -20,7 +22,7 @@ const Movie = ({movie, fb_liked, setFBLikedMovies, setFBDisLikedMovies}) => {
     }, [fb_liked])
 
     const titleLimit = 20
-    const title = movie.original_title.length > titleLimit ?
+    const title = movie?.original_title?.length > titleLimit ?
                     movie.original_title.substring(0, titleLimit) + '...'
                     : movie.original_title
     const poster = createMovieImageURL(movie.poster_path)
@@ -28,8 +30,76 @@ const Movie = ({movie, fb_liked, setFBLikedMovies, setFBDisLikedMovies}) => {
     let classes = styles.movie_li
     if(liked) classes = styles.liked
     if(liked === false) classes = styles.disliked
-    // null has no style
 
+    async function handleLikedButton(){
+        const currently_liked = firebaseUser.liked.find(m => m.movie_id === movie.id)
+
+        if(currently_liked) {
+            await liked_movie(
+                movie,
+                firebaseUser.uid,
+                firebaseUser.liked,
+                firebaseUser.disliked,
+                true
+            )
+            setFirebaseUser(current => {
+                const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
+                const updatedLikes = {...current, liked: filtered}
+                return updatedLikes
+            })
+        }
+
+        else {
+            await liked_movie(
+                movie,
+                firebaseUser.uid,
+                firebaseUser.liked,
+                firebaseUser.disliked,
+                false
+            )
+            setFirebaseUser(current => {
+                const updatedLikes = {...current, liked: [...current.liked, {movie_id:movie.id}]}
+                return updatedLikes
+            })
+        }
+    }
+
+    async function handleDisikedButton(){
+
+        const currently_disliked = firebaseUser.disliked.find(m => m.movie_id === movie.id)
+
+        if(currently_disliked) {
+            await disliked_movie(
+                movie,
+                firebaseUser.uid,
+                firebaseUser.liked,
+                firebaseUser.disliked,
+                true
+            )
+
+            setFirebaseUser(current => {
+                const filtered = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
+                const updatedDisikes = {...current, disliked: filtered}
+                return updatedDisikes
+            })
+        }
+
+        else {
+
+            await disliked_movie(
+                movie,
+                firebaseUser.uid,
+                firebaseUser.liked,
+                firebaseUser.disliked,
+                false
+            )
+
+            setFirebaseUser(current => {
+                const updatedDisikes = {...current, disliked: [...current.disliked, {movie_id:movie.id}]}
+                return updatedDisikes
+            })
+        }
+    }
 
     // RENDERING MOVIE
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -64,18 +134,13 @@ const Movie = ({movie, fb_liked, setFBLikedMovies, setFBDisLikedMovies}) => {
                 {
                     firebaseUser &&
                     <div className={styles.votes}>
-                        <button
-                            onClick={ () =>{
-                                liked_movie(movie, setLiked, firebaseUser, setFBLikedMovies)
-                            }}
-                        > 👍 </button>
+                        <button onClick={handleLikedButton}>
+                            👍
+                        </button>
 
-                        <button
-                            onClick={ () =>{
-                                disliked_movie(movie, firebaseUser)
-                                setFBDisLikedMovies( current => [...current, {movie_id: movie.id}])
-                            }}
-                        >👎</button>
+                        <button onClick={handleDisikedButton}>
+                            👎
+                        </button>
                     </div>
                 }
             </div>

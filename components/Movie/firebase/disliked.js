@@ -1,37 +1,32 @@
 import firebase from '../../../requests/firebase/config'
-import getCurrentFirebaseMovies from './_get'
-
 const db = firebase.firestore()
 
-// DISLIKED BUTTON LISTENER
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-async function disliked_movie(movie, firebaseUser) {
-    const {current_likes, current_dislikes} = await getCurrentFirebaseMovies(firebaseUser)
-    const currently_disliked = current_dislikes.find(m => m.movie_id === movie.id)
+async function disliked_movie(movie, uid, likedMovies, dislikedMovies, currently_disliked) {
 
     if(currently_disliked) {
-        const updated_dislikes = current_dislikes.filter( m => m.movie_id !== movie.id )
-        await db.collection("movies").doc(firebaseUser.uid).update({
+        console.log("currently disliked")
+        console.log(dislikedMovies)
+
+        const updated_dislikes = dislikedMovies? dislikedMovies.filter( m => m.movie_id !== movie.id ) : []
+
+        console.log('updated_dislikes', updated_dislikes)
+
+        await db.collection("movies").doc(uid).update({
             disliked: updated_dislikes
         })
 
-        console.log("removed from dislikes...")
     }
-
     else {
-        await db.collection("movies").doc(firebaseUser.uid).update({
-            disliked: [ ...current_dislikes, {movie_id: movie.id} ]
+        console.log("not currently disliked")
+        const updateDislikes = dislikedMovies? [...dislikedMovies, {movie_id: movie.id}] : [{movie_id: movie.id}]
+        console.log("updateDislikes", updateDislikes)
+        const updatedLikes = likedMovies? likedMovies.filter( m => m.movie_id !== movie.id ) : []
+        console.log("updatedLikes", updatedLikes)
+
+        await db.collection("movies").doc(uid).update({
+            disliked: updateDislikes,
+            liked: updatedLikes
         })
-
-        console.log("added to dislikes...")
-
-
-        const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
-        await db.collection("movies").doc(firebaseUser.uid).update({
-            liked: updated_likes
-        })
-
-        console.log("removed from likes...")
     }
 }
 

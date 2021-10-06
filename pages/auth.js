@@ -13,6 +13,7 @@ const Auth = () => {
     const router = useRouter()
 
     const firebaseUser = useGetFirebaseUser()
+
     const [viewingLikes, setViewingLikes] = useState(true)
     const [likedMovies, setLikedMovies] = useState()
     const [dislikedMovies, setDisLikedMovies] = useState()
@@ -31,15 +32,15 @@ const Auth = () => {
         if(firebaseUser){
 
             // getting the liked movies
-            if(firebaseUser.movies && firebaseUser.movies && firebaseUser.movies.liked){
-                Promise.all(firebaseUser.movies.liked.map( async (movie, key) => {
+            if(firebaseUser.liked){
+                Promise.all(firebaseUser.liked.map( async (movie, key) => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setLikedMovies(result))
             }
 
             // getting the disliked movies
-            if(firebaseUser.movies && firebaseUser.movies.disliked){
-                Promise.all(firebaseUser.movies.disliked.map( async (movie, key) => {
+            if(firebaseUser.disliked){
+                Promise.all(firebaseUser.disliked.map( async (movie, key) => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setDisLikedMovies(result))
             }
@@ -78,13 +79,11 @@ const Auth = () => {
                     <LikedProfileMovies
                         likes={true}
                         movies={likedMovies}
-                        set={setLikedMovies}
                     />
                     :
                     <DislikedProfileMovies
                         likes={false}
                         movies={dislikedMovies}
-                        set={setDisLikedMovies}
                     />
                 }
 

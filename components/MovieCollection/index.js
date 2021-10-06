@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '../../styles/MovieCollection.module.css'
 import Movie from '../Movie'
+import { useGetFirebaseUser } from "../../context/FirebaseContext";
 
-const MovieCollection = ({
-    view,
-    movieList,
-    FBLikedMovies,
-    setFBLikedMovies,
-    FBDisLikedMovies,
-    setFBDisLikedMovies
-}) => {
+
+const MovieCollection = ({ view, movieList }) => {
+    const firebaseUser = useGetFirebaseUser()
+    const FBLikedMovies = firebaseUser?.liked
+    const FBDisLikedMovies = firebaseUser?.disliked
+
+    // console.log('FBLikedMovies', FBLikedMovies)
+    // console.log('FBDisLikedMovies', FBDisLikedMovies)
+
     const [movies, setMovies] = useState([])
 
     useEffect( () => {
@@ -24,15 +26,13 @@ const MovieCollection = ({
                     movie = {movie}
                     key = {movie.id}
                     fb_liked = { liked? true : null}
-                    setFBLikedMovies = {setFBLikedMovies}
-                    setFBDisLikedMovies = {setFBDisLikedMovies}
                 />
             )
         })
 
         setMovies(movie_array)
 
-    }, [movieList, FBLikedMovies, FBDisLikedMovies, setFBLikedMovies, setFBDisLikedMovies])
+    }, [FBDisLikedMovies, FBLikedMovies, movieList])
 
     if(!movieList || movieList.movies?.length === 0) return false
 

@@ -1,12 +1,10 @@
 import firebase from '../../../requests/firebase/config'
-import getCurrentFirebaseMovies from '../../Movie/firebase/_get'
 const db = firebase.firestore()
 
 async function removeLiked(movie, firebaseUser){
-    const {current_likes, current_tags} = await getCurrentFirebaseMovies(firebaseUser)
     const genre_ids = movie.genres.map( g => g.id)
 
-    const updated_likes = current_likes.filter( m => m.movie_id !== movie.id )
+    const updated_likes = firebaseUser.liked.filter( m => m.movie_id !== movie.id )
     await db.collection("movies").doc(firebaseUser.uid).update({
         liked: updated_likes
     })
@@ -27,7 +25,7 @@ async function removeLiked(movie, firebaseUser){
         console.log("removed genre counters...")
     }
 
-    const entries = Object.entries(current_tags)
+    const entries = Object.entries(firebaseUser.tags)
 
     entries.forEach( async tag => {
         const name = tag[0]
