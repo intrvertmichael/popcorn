@@ -65,8 +65,24 @@ const Movie = ({ movie, fb_liked }) => {
     }
 
     async function handleDisikedButton(){
-
+        const currently_liked = firebaseUser.liked.find(m => m.movie_id === movie.id)
         const currently_disliked = firebaseUser.disliked.find(m => m.movie_id === movie.id)
+
+        if(currently_liked) {
+            await liked_movie(
+                movie,
+                firebaseUser.uid,
+                firebaseUser.liked,
+                firebaseUser.disliked,
+                true
+            )
+
+            setFirebaseUser(current => {
+                const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
+                const updatedLikes = {...current, liked: filtered}
+                return updatedLikes
+            })
+        }
 
         if(currently_disliked) {
             await disliked_movie(

@@ -6,6 +6,7 @@ import AuthForm from "../components/AuthForm";
 
 import { useGetFirebaseUser } from "../context/FirebaseContext";
 import { useRouter } from 'next/router'
+
 import LikedProfileMovies from "../components/ProfileMovieGrid/LikedProfileMovies";
 import DislikedProfileMovies from "../components/ProfileMovieGrid/DislikedProfileMovies";
 
