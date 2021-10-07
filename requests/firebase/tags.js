@@ -3,7 +3,7 @@ const db = firebase.firestore()
 
 async function addTag(tagText, movie_id, firebaseUser){
     const usedTags = Object.keys(firebaseUser.tags)
-    const exists = usedTags.find( tag => tag === tagText)
+    const exists = usedTags?.find( tag => tag === tagText)
 
     if(exists){
         const updatedTags = firebaseUser.tags[tagText].length ?

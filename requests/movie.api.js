@@ -73,7 +73,7 @@ export async function getGenreLabel(id) {
     const url = getURL("genres")
     const res = await fetch(url)
     const data = await res.json()
-    const genreLabel = data.genres.find( genre => genre.id.toString() === id.toString())
+    const genreLabel = data.genres?.find( genre => genre.id.toString() === id.toString())
     return genreLabel
 }
 

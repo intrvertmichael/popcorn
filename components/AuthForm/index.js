@@ -3,6 +3,7 @@ import Header from '../Header'
 import styles from '../../styles/AuthForm.module.css'
 
 import firebase from "../../requests/firebase/config";
+const db = firebase.firestore()
 
 const AuthForm = ({router}) => {
 
@@ -33,6 +34,9 @@ const AuthForm = ({router}) => {
             const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password)
             var user = userCredential.user;
             localStorage.setItem('user_id', user.uid)
+            await db.collection("genres").doc(user.uid).set({})
+            await db.collection("movies").doc(user.uid).set({liked:[], disliked:[]})
+            await db.collection("tags").doc(user.uid).set({})
             router.push('/')
         }
         catch(error) {

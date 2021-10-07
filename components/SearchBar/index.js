@@ -10,27 +10,6 @@ const SearchBar = () => {
     const [results, setResults] = useState()
     const [timer, setTimer] = useState()
 
-
-    // function filter_movies(data) {
-    //     const movies = []
-
-    //     data.results.map( movie => {
-    //         // check if movie is disliked
-    //         const fb_disliked = firebaseUser && firebaseUser.movies && firebaseUser.movies.disliked?
-    //         firebaseUser.movies.disliked.find(m => m.movie_id.toString() === movie.id.toString()) : null
-
-    //         // check if movie is liked
-    //         const fb_liked = firebaseUser && firebaseUser.movies && firebaseUser.movies.liked?
-    //         firebaseUser.movies.liked.find(m => m.movie_id.toString() === movie.id.toString()) : null
-
-    //         const liked = fb_liked? true : null
-    //         // if movie is not disliked then show it on the grid
-    //         if(!fb_disliked) movies.push(<Movie movie={movie} key={movie.id} fb_liked={liked}/>)
-    //     })
-
-    //     return movies
-    // }
-
     async function fetchResults(requested_page){
 
         let res

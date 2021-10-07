@@ -88,7 +88,7 @@ export default function Home({trending, best, genres}) {
     const fav_genre_movies = favGenreMovies? Object.entries(favGenreMovies) : null
     var fav_movies_list = fav_genre_movies?
     fav_genre_movies?.map( movieList => {
-      const genre_info = genres.find( genre => String(genre.id) === movieList[0])
+      const genre_info = genres?.find( genre => String(genre.id) === movieList[0])
       return (
         <MovieCollection
           key={movieList[0]}
