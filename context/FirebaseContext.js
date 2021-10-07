@@ -28,11 +28,16 @@ const FirebaseContext = ({children}) => {
         const fb_tags_res = await db.collection("tags").doc(uid).get()
         const fb_tags_data = fb_tags_res.data()
 
+        // getting tags
+        const fb_genre_res = await db.collection("genres").doc(uid).get()
+        const fb_genre_data = fb_genre_res.data()
+
         const data = {
             uid: uid,
             disliked: fb_movie_data? fb_movie_data.disliked : [],
             liked: fb_movie_data? fb_movie_data.liked : [],
-            tags: fb_tags_data? fb_tags_data : []
+            tags: fb_tags_data? fb_tags_data : [],
+            genres: fb_genre_data? fb_genre_data : []
         }
 
         console.log("context: ", data)
