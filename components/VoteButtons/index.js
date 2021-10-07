@@ -9,6 +9,23 @@ const VoteButtons = ({movie}) => {
 
     async function handleLikedButton(){
         const currently_liked = firebaseUser.liked.find(m => m.movie_id === movie.id)
+        const currently_disliked = firebaseUser.disliked.find(m => m.movie_id === movie.id)
+
+        if(currently_disliked){
+            await disliked_movie(
+                movie,
+                firebaseUser.uid,
+                firebaseUser.liked,
+                firebaseUser.disliked,
+                true
+            )
+
+            setFirebaseUser(current => {
+                const filtered = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
+                const updatedDisikes = {...current, disliked: filtered}
+                return updatedDisikes
+            })
+        }
 
         if(currently_liked) {
             await liked_movie(
