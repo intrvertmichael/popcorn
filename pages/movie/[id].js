@@ -86,9 +86,12 @@ const MovieDetails = ({movie, images, recommended}) => {
             <div className={styles.movie_info}>
                 <Rating score={movie.vote_average} count={movie.vote_count} />
 
-                <div className={styles.vote_btns} style={style}>
-                    <VoteButtons movie={movie} />
-                </div>
+                {
+                    firebaseUser &&
+                    <div className={styles.vote_btns} style={style}>
+                        <VoteButtons movie={movie} />
+                    </div>
+                }
 
                 <div className={styles.movie_description}>
                     <h1>{movie.title}</h1>
