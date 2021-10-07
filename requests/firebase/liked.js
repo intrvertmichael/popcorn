@@ -2,7 +2,6 @@ import firebase from './config'
 const db = firebase.firestore()
 
 async function liked_movie(movie, uid, liked, disliked, currently_liked) {
-    console.log('movie', movie)
 
     if(currently_liked) {
         // remove movie from liked list
@@ -34,7 +33,6 @@ async function liked_movie(movie, uid, liked, disliked, currently_liked) {
             })
         }
     }
-
     else {
         // add to "liked" and remove from "disliked"
         const updated_dislikes = disliked?.filter( m => m.movie_id !== movie.id )

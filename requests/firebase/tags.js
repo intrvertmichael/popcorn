@@ -6,7 +6,6 @@ async function addTag(tagText, movie_id, firebaseUser){
     const exists = usedTags.find( tag => tag === tagText)
 
     if(exists){
-        // tag exists so adding to list
         const updatedTags = firebaseUser.tags[tagText].length ?
         [...firebaseUser.tags[tagText], movie_id]
         : [firebaseUser.tags[tagText], movie_id]
@@ -16,9 +15,8 @@ async function addTag(tagText, movie_id, firebaseUser){
         })
     }
     else {
-        // adding first tag to firebase
         await db.collection("tags").doc(firebaseUser.uid).update({
-            [tagText]: movie_id
+            [tagText]: [movie_id]
         })
     }
 }
@@ -31,14 +29,13 @@ async function removeTag(tagText, movie_id, firebaseUser){
     const fb_item = firebaseUser.tags[tagText]
 
     let updatedList
-    if(fb_item.length > 1){
+    if(fb_item){
         updatedList = fb_item.filter( id => id !== movie_id)
         await db.collection("tags").doc(firebaseUser.uid).update({
             [tagText]: updatedList
         })
     }
     else {
-        delete firebaseUser.tags[tagText]
         await db.collection("tags").doc(firebaseUser.uid).update({
             [tagText]: firebase.firestore.FieldValue.delete()
         })

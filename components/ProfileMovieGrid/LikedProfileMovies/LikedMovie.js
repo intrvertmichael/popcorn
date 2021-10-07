@@ -12,8 +12,6 @@ const LikedMovie = ({movie, tags, movies}) => {
         const firebaseUser = useGetFirebaseUser()
         const setFirebaseUser = useSetFirebaseUser()
 
-        console.log('@#$# movie', movie)
-
         const poster = createMovieImageURL(movie.poster_path)
 
         async function removingLikedMovie(){

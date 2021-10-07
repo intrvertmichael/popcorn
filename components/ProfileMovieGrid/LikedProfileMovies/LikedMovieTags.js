@@ -1,5 +1,5 @@
 import styles from '../../../styles/ProfileMovieGrid.module.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
 import {addTag, removeTag} from '../../../requests/firebase/tags';
 
@@ -9,35 +9,34 @@ const LikedMovieTags = ({movie}) => {
 
     const [tagInput, setTagInput] = useState(false)
     const [tagText, setTagText] = useState(false)
-    const [tagsUsed, setTagsUsed] = useState()
 
-    useEffect( () => {
-        const tagArr = firebaseUser.tags? Object.entries(firebaseUser.tags) : []
-        const containsTag = tagArr.filter( tag => {
-            let hasTag
-            tag[1].length?
-            hasTag = tag[1].find( movie_id => movie_id === movie.id)
-            : hasTag = tag[1] === movie.id
+    const tagsArr = Object.entries(firebaseUser.tags).filter( tag => {
+        const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
+        if(exists) return true
+    })
 
-            return hasTag
-        })
-
-        const tagNames = containsTag.map( tagArr => tagArr[0])
-        setTagsUsed(tagNames)
-    }, [firebaseUser.tags, movie.id])
+    const tagsUsed = tagsArr.map( tag => tag[0])
 
     async function addingTag(e){
         e.preventDefault()
         setTagInput(false)
-        const tagArr = firebaseUser.tags? Object.entries(firebaseUser.tags) : []
+        const tagArr = firebaseUser.tags? Object.keys(firebaseUser.tags) : []
         const exists = tagArr?.find(tag => tag === tagText)
 
         if(!exists){
-            addTag(tagText, movie.id, firebaseUser)
-            setTagsUsed( current => current.concat(tagText))
             setFirebaseUser( current => {
-                console.log( '-> current', current )
+                const newObj = {...current, tags: { ...current.tags, [tagText]: [movie.id]}}
+                return newObj
             })
+
+            await addTag(tagText, movie.id, firebaseUser)
+        } else {
+            setFirebaseUser( current => {
+                const newObj = {...current, tags: { ...current.tags, [tagText]: [...current.tags[tagText], movie.id]}}
+                return newObj
+            })
+
+            await addTag(tagText, movie.id, firebaseUser)
         }
     }
 
@@ -47,9 +46,22 @@ const LikedMovieTags = ({movie}) => {
         const message = `Are you sure you want to remove ${tag} tag from ${movie.original_title}?`
 
         if(confirm(message)){
+            setFirebaseUser( current => {
+                const filtered = current.tags[tag].filter( objtag => objtag !== movie.id)
+
+                let newObj
+                if(filtered.length > 0) {
+                    newObj = {...current, tags: { ...current.tags, [tag]: filtered}}
+                    return newObj
+                }
+                else {
+                    delete current.tags[tag]
+                    newObj = {...current, tags: { ...current.tags }}
+                    return newObj
+                }
+            })
+
             await removeTag(tag, movie.id, firebaseUser)
-            const filtered = tagsUsed.filter( objtag => objtag !== tag)
-            setTagsUsed(filtered)
         }
     }
 
