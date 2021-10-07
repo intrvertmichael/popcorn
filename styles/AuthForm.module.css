@@ -24,8 +24,17 @@
 
 .forms form input[type=submit]{
     padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
+    margin-top: 20px;
+    background: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.forms form input[type=submit]:hover {
+    background: white;
+    color: black;
 }
 
 .login {
