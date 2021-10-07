@@ -30,9 +30,9 @@ const FirebaseContext = ({children}) => {
 
         const data = {
             uid: uid,
-            disliked: fb_movie_data.disliked,
-            liked: fb_movie_data.liked,
-            tags: fb_tags_data
+            disliked: fb_movie_data? fb_movie_data.disliked : [],
+            liked: fb_movie_data? fb_movie_data.liked : [],
+            tags: fb_tags_data? fb_tags_data : []
         }
 
         console.log("context: ", data)

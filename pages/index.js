@@ -76,8 +76,8 @@ export default function Home({trending, best, genres}) {
       const fb_movies_res = await db.collection("movies").doc(firebaseUser.uid).get()
       const fb_movies_data = fb_movies_res.data()
 
-      setFBLikedMovies(fb_movies_data.liked)
-      setFBDisLikedMovies(fb_movies_data.disliked)
+      setFBLikedMovies(fb_movies_data?.liked)
+      setFBDisLikedMovies(fb_movies_data?.disliked)
     }
 
     if(firebaseUser) getFBMovies()
