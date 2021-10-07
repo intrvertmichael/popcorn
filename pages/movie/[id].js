@@ -8,6 +8,7 @@ import { getSingleMovie, getImageList, createMovieImageURL, getRecommendedMovies
 import Link from 'next/link'
 import Carousel from '../../components/Carousel'
 import MovieCollection from '../../components/MovieCollection'
+import VoteButtons from '../../components/VoteButtons'
 
 import { useGetFirebaseUser } from "../../context/FirebaseContext";
 import firebase from '../../requests/firebase/config'
@@ -65,6 +66,14 @@ const MovieDetails = ({movie, images, recommended}) => {
     const fullDate = createFullDate(movie.release_date)
     const fullLength = createFullLength(movie.runtime)
 
+    let style = {}
+    const isLiked = firebaseUser?.liked?.find( like => like.movie_id === movie.id)
+    const isDisliked = firebaseUser?.disliked?.find( like => like.movie_id === movie.id)
+
+    if(isLiked) style = {borderBottom: "green 5px solid"}
+    if(isDisliked) style = {borderBottom: "red 5px solid"}
+
+
     return (
         <Layout>
             <Carousel images={altPics} />
@@ -76,6 +85,10 @@ const MovieDetails = ({movie, images, recommended}) => {
 
             <div className={styles.movie_info}>
                 <Rating score={movie.vote_average} count={movie.vote_count} />
+
+                <div className={styles.vote_btns} style={style}>
+                    <VoteButtons movie={movie} />
+                </div>
 
                 <div className={styles.movie_description}>
                     <h1>{movie.title}</h1>
