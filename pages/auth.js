@@ -15,7 +15,7 @@ const Auth = () => {
 
     const firebaseUser = useGetFirebaseUser()
 
-    const [viewingLikes, setViewingLikes] = useState(true)
+    const [page, setPage] = useState('saved')
     const [likedMovies, setLikedMovies] = useState()
     const [dislikedMovies, setDisLikedMovies] = useState()
 
@@ -59,33 +59,50 @@ const Auth = () => {
                 <h1>Profile</h1>
 
                 {
-                    viewingLikes?
-                    <>
-                        <h3>Liked Movies ({likedMovies?.length})</h3>
-                        <a onClick={()=> setViewingLikes(false)}>
-                            <h3>Disliked Movies ({dislikedMovies?.length})</h3>
-                        </a>
-                    </>
+                    page === 'saved'?
+                    <h3>Saved ({firebaseUser.saved?.length})</h3>
                     :
-                    <>
-                        <a onClick={()=> setViewingLikes(true)}>
-                            <h3>Liked Movies ({likedMovies?.length})</h3>
-                        </a>
-                        <h3>Disliked Movies ({dislikedMovies?.length})</h3>
-                    </>
+                    <a onClick={()=> setPage('saved')}>
+                        <h3>Saved ({firebaseUser.saved?.length})</h3>
+                    </a>
+                }
+                {
+                    page === 'liked'?
+                    <h3>Liked ({firebaseUser.liked?.length})</h3>
+                    :
+                    <a onClick={()=> setPage('liked')}>
+                        <h3>Liked ({firebaseUser.liked?.length})</h3>
+                    </a>
+                }
+                {
+                    page === 'disliked'?
+                    <h3>Disliked ({firebaseUser.disliked?.length})</h3>
+                    :
+                    <a onClick={()=> setPage('disliked')}>
+                        <h3>Disliked ({firebaseUser.disliked?.length})</h3>
+                    </a>
                 }
 
                 {
-                    viewingLikes?
+                    page === 'liked' &&
                     <LikedProfileMovies
                         likes={true}
                         movies={likedMovies}
                     />
-                    :
+                }
+                {
+                    page === 'disliked' &&
                     <DislikedProfileMovies
                         likes={false}
                         movies={dislikedMovies}
                     />
+                }
+                {
+                    page === 'saved' &&
+                    <div>
+                        need to make a component similar to disliked with limited information.
+                        or maybe more like likes? this is what i need to figure out
+                    </div>
                 }
 
             </div>
