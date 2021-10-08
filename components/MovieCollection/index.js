@@ -10,8 +10,6 @@ const MovieCollection = ({ view, movieList }) => {
     const FBLikedMovies = firebaseUser?.liked
     const FBDisLikedMovies = firebaseUser?.disliked
 
-    // console.log('FBLikedMovies', FBLikedMovies)
-    // console.log('FBDisLikedMovies', FBDisLikedMovies)
 
     const [movies, setMovies] = useState([])
 

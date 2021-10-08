@@ -27,6 +27,7 @@
 
 .genre_movies_bar li {
     scroll-snap-align: start;
+    display: flex;
 }
 
 .genre_movies_grid li {

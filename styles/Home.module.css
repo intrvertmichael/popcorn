@@ -98,7 +98,8 @@ Genre Verbs
 
 .genre_intro {
   text-align: center;
-  padding: 75px 0px;
+  padding: 50px 0px;
+  margin: 0px;
   background: linear-gradient(rgb(10, 10, 10), black);
   border-top: 1px solid rgb(30, 30, 30);
 }
