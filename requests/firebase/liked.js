@@ -1,14 +1,23 @@
 import firebase from './config'
 const db = firebase.firestore()
 
-async function liked_movie(movie, uid, liked, disliked, currently_liked) {
-
+async function liked_movie(movie, uid, liked, disliked, tags, currently_liked) {
+    console.log("i am here now")
+    console.log(
+        'movie', movie,
+        'uid', uid,
+        'liked', liked,
+        'disliked', disliked,
+        'tags', tags,
+        'currently_liked', currently_liked
+    )
     if(currently_liked) {
         // remove movie from liked list
         const updated_likes = liked?.filter( m => m.movie_id !== movie.id )
         await db.collection("movies").doc(uid).update({
             liked: updated_likes
         })
+
 
         // removing the counter for each movie genre
         const fb_genre_res = await db.collection("genres").doc(uid).get()
@@ -32,7 +41,25 @@ async function liked_movie(movie, uid, liked, disliked, currently_liked) {
                 })
             })
         }
+
+
+        // removing tags
+        const tagArray = Object.entries(tags)
+        console.log('tagArray', tagArray)
+
+        tagArray.forEach( async tag => {
+            const exists = tag[1].find( id => id === movie.id)
+
+            if(exists){
+                const filtered = tag[1].filter( id => id !== movie.id)
+
+                await db.collection("tags").doc(uid).update({
+                    [tag[0]]: filtered.length > 0 ? filtered : firebase.firestore.FieldValue.delete()
+                })
+            }
+        })
     }
+
     else {
         // add to "liked" and remove from "disliked"
         const updated_dislikes = disliked?.filter( m => m.movie_id !== movie.id )

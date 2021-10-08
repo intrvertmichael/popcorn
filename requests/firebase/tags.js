@@ -28,9 +28,8 @@ async function removeTag(tagText, movie_id, firebaseUser){
 
     const fb_item = firebaseUser.tags[tagText]
 
-    let updatedList
     if(fb_item){
-        updatedList = fb_item.filter( id => id !== movie_id)
+        const updatedList = fb_item.filter( id => id !== movie_id)
         await db.collection("tags").doc(firebaseUser.uid).update({
             [tagText]: updatedList
         })

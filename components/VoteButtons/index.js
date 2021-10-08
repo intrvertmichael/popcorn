@@ -38,11 +38,22 @@ const VoteButtons = ({movie}) => {
                 firebaseUser.uid,
                 firebaseUser.liked,
                 firebaseUser.disliked,
+                firebaseUser.tags,
                 true
             )
             setFirebaseUser(current => {
                 const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
-                const updatedLikes = {...current, liked: filtered}
+
+                const tagsObj = current.tags
+                const tagsArr = Object.entries(tagsObj)
+                tagsArr.forEach( tag => {
+                    const exists = tag[1].find( id => id === movie.id)
+                    if(exists){
+                        const filtered = tag[1].filter( id => id !== movie.id)
+                        tagsObj[tag[0]] = filtered
+                    }
+                })
+                const updatedLikes = {...current, liked: filtered, tags: tagsObj}
                 return updatedLikes
             })
         }
@@ -53,6 +64,7 @@ const VoteButtons = ({movie}) => {
                 firebaseUser.uid,
                 firebaseUser.liked,
                 firebaseUser.disliked,
+                firebaseUser.tags,
                 false
             )
             setFirebaseUser(current => {
@@ -70,6 +82,7 @@ const VoteButtons = ({movie}) => {
                 firebaseUser.uid,
                 firebaseUser.liked,
                 firebaseUser.disliked,
+                firebaseUser.tags,
                 true
             )
 
