@@ -2,15 +2,7 @@ import firebase from './config'
 const db = firebase.firestore()
 
 async function liked_movie(movie, uid, liked, disliked, tags, currently_liked) {
-    console.log("i am here now")
-    console.log(
-        'movie', movie,
-        'uid', uid,
-        'liked', liked,
-        'disliked', disliked,
-        'tags', tags,
-        'currently_liked', currently_liked
-    )
+
     if(currently_liked) {
         // remove movie from liked list
         const updated_likes = liked?.filter( m => m.movie_id !== movie.id )
@@ -45,7 +37,6 @@ async function liked_movie(movie, uid, liked, disliked, tags, currently_liked) {
 
         // removing tags
         const tagArray = Object.entries(tags)
-        console.log('tagArray', tagArray)
 
         tagArray.forEach( async tag => {
             const exists = tag[1].find( id => id === movie.id)
@@ -82,8 +73,6 @@ async function liked_movie(movie, uid, liked, disliked, tags, currently_liked) {
                 [genre]: total
             })
         })
-
-        console.log("added genre counters...")
     }
 }
 

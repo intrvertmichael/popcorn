@@ -14,116 +14,104 @@ const VoteButtons = ({movie}) => {
     const liked_style = currently_liked? {borderColor:'white'} : {}
     const disliked_style = currently_disliked? {borderColor:'white'} : {}
 
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // Like and Un_Like
+
+    async function likeMovie(){
+        await liked_movie(
+            movie,
+            firebaseUser.uid,
+            firebaseUser.liked,
+            firebaseUser.disliked,
+            firebaseUser.tags,
+            false
+        )
+
+        setFirebaseUser(current => {
+            const updatedLikes = {...current, liked: [...current.liked, {movie_id:movie.id}]}
+            return updatedLikes
+        })
+    }
+
+    async function un_likeMovie(){
+        await liked_movie(
+            movie,
+            firebaseUser.uid,
+            firebaseUser.liked,
+            firebaseUser.disliked,
+            firebaseUser.tags,
+            true
+        )
+
+        setFirebaseUser(current => {
+            const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
+
+            const tagsObj = current.tags
+            const tagsArr = Object.entries(tagsObj)
+            tagsArr.forEach( tag => {
+                const exists = tag[1].find( id => id === movie.id)
+                if(exists){
+                    const filtered = tag[1].filter( id => id !== movie.id)
+                    tagsObj[tag[0]] = filtered
+                }
+            })
+            const updatedLikes = {...current, liked: filtered, tags: tagsObj}
+            return updatedLikes
+        })
+    }
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // Dislike and Un_Dislike
+
+    async function dislikeMovie(){
+        await disliked_movie(
+            movie,
+            firebaseUser.uid,
+            firebaseUser.liked,
+            firebaseUser.disliked,
+            false
+        )
+
+        setFirebaseUser(current => {
+            const updatedDisikes = {...current, disliked: [...current.disliked, {movie_id:movie.id}]}
+            return updatedDisikes
+        })
+    }
+
+    async function un_dislikeMovie(){
+        await disliked_movie(
+            movie,
+            firebaseUser.uid,
+            firebaseUser.liked,
+            firebaseUser.disliked,
+            true
+        )
+
+        setFirebaseUser(current => {
+            const filtered = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
+            const updatedDisikes = {...current, disliked: filtered}
+            return updatedDisikes
+        })
+    }
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // Button Handlers
+
     async function handleLikedButton(){
+        if(currently_disliked) await un_dislikeMovie()
 
-        if(currently_disliked){
-            await disliked_movie(
-                movie,
-                firebaseUser.uid,
-                firebaseUser.liked,
-                firebaseUser.disliked,
-                true
-            )
-
-            setFirebaseUser(current => {
-                const filtered = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
-                const updatedDisikes = {...current, disliked: filtered}
-                return updatedDisikes
-            })
-        }
-
-        if(currently_liked) {
-            await liked_movie(
-                movie,
-                firebaseUser.uid,
-                firebaseUser.liked,
-                firebaseUser.disliked,
-                firebaseUser.tags,
-                true
-            )
-            setFirebaseUser(current => {
-                const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
-
-                const tagsObj = current.tags
-                const tagsArr = Object.entries(tagsObj)
-                tagsArr.forEach( tag => {
-                    const exists = tag[1].find( id => id === movie.id)
-                    if(exists){
-                        const filtered = tag[1].filter( id => id !== movie.id)
-                        tagsObj[tag[0]] = filtered
-                    }
-                })
-                const updatedLikes = {...current, liked: filtered, tags: tagsObj}
-                return updatedLikes
-            })
-        }
-
-        else {
-            await liked_movie(
-                movie,
-                firebaseUser.uid,
-                firebaseUser.liked,
-                firebaseUser.disliked,
-                firebaseUser.tags,
-                false
-            )
-            setFirebaseUser(current => {
-                const updatedLikes = {...current, liked: [...current.liked, {movie_id:movie.id}]}
-                return updatedLikes
-            })
-        }
+        if(currently_liked) await un_likeMovie()
+        else await likeMovie()
     }
 
     async function handleDisikedButton(){
+        if(currently_liked) await un_likeMovie()
 
-        if(currently_liked) {
-            await liked_movie(
-                movie,
-                firebaseUser.uid,
-                firebaseUser.liked,
-                firebaseUser.disliked,
-                firebaseUser.tags,
-                true
-            )
-
-            setFirebaseUser(current => {
-                const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
-                const updatedLikes = {...current, liked: filtered}
-                return updatedLikes
-            })
-        }
-
-        if(currently_disliked) {
-            await disliked_movie(
-                movie,
-                firebaseUser.uid,
-                firebaseUser.liked,
-                firebaseUser.disliked,
-                true
-            )
-
-            setFirebaseUser(current => {
-                const filtered = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
-                const updatedDisikes = {...current, disliked: filtered}
-                return updatedDisikes
-            })
-        }
-
-        else {
-
-            await disliked_movie(
-                movie,
-                firebaseUser.uid,
-                firebaseUser.liked,
-                firebaseUser.disliked,
-                false
-            )
-
-            setFirebaseUser(current => {
-                const updatedDisikes = {...current, disliked: [...current.disliked, {movie_id:movie.id}]}
-                return updatedDisikes
-            })
-        }
+        if(currently_disliked) await un_dislikeMovie()
+        else dislikeMovie()
     }
 
     return (
