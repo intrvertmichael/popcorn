@@ -10,7 +10,7 @@ import VoteButtons from '../VoteButtons'
 const Movie = ({ movie, fb_liked }) => {
     const firebaseUser = useGetFirebaseUser()
 
-    const [liked, setLiked] = useState()
+    const [liked, setLiked] = useState(null)
 
     // SETTING DEFAULT MOVIE VIEW
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

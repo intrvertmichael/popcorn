@@ -42,4 +42,9 @@ async function removeTag(tagText, movie_id, firebaseUser){
 
 }
 
-export {addTag, removeTag}
+
+async function removeMultipleTags(){
+
+}
+
+export {addTag, removeTag, removeMultipleTags}

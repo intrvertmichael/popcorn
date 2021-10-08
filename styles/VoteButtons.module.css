@@ -5,6 +5,7 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    color: white;
 }
 
 .voting_buttons:hover {

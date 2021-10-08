@@ -18,14 +18,7 @@ const LikedMovie = ({movie}) => {
             const message = `Are you sure you want to remove ${movie.original_title} from Likes?`
             if(confirm(message)){
                 // remove move from Firebase Liked Movies
-                await liked_movie(
-                    movie,
-                    firebaseUser.uid,
-                    firebaseUser.liked,
-                    firebaseUser.disliked,
-                    firebaseUser.tags,
-                    true
-                )
+                await liked_movie( movie, firebaseUser, true )
 
                 setFirebaseUser(current => {
                     const filteredLikes = current.liked.filter( liked => liked.movie_id !== movie.id)

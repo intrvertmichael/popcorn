@@ -21,13 +21,7 @@ const DislikedMovie = ({movie}) => {
                     return updatedLikes
                 })
 
-                disliked_movie(
-                    movie,
-                    firebaseUser.uid,
-                    firebaseUser.liked,
-                    firebaseUser.disliked,
-                    true
-                )
+                disliked_movie( movie, firebaseUser, true )
             }
         }
 
