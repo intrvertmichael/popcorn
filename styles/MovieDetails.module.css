@@ -120,16 +120,3 @@ Details
     left: 345px;
     width: fit-content;
 }
-
-.vote_btns button {
-    background: none;
-    border: none;
-    font-size: 30px;
-    padding: 10px;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.vote_btns button:hover {
-    background: rgba(30, 30, 30);
-}

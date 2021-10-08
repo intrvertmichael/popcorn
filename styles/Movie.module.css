@@ -1,7 +1,6 @@
 .movie_li, .liked, .disliked {
     position: relative;
     list-style-type: none;
-    /* display: flex; */
 }
 
 .movie_info {
@@ -54,29 +53,9 @@
 
 .votes {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
-
-.votes button {
-    padding: 20px 0px;
-    font-size: 2em;
-    width: 50%;
-    margin: 0px;
-    cursor: pointer;
-
-    background: none;
-    border: none;
-    border-bottom: 5px solid transparent;
-    box-sizing: border-box;
-}
-
-.votes button:hover {
-    border-bottom: 5px solid white;
-}
-
-
-/* .liked {
-    background: linear-gradient(#ABFF00, #00FF26);
-} */
 
 .liked img {
     border-top: 7px solid greenyellow !important;
@@ -85,11 +64,6 @@
     border-right: 5px solid greenyellow !important;
     box-sizing: border-box;
 }
-
-/*
-.disliked {
-    background: linear-gradient(#FF4900, red);
-} */
 
 .disliked img {
     border-top: 7px solid red !important;

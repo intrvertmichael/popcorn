@@ -1,4 +1,5 @@
 import { useGetFirebaseUser, useSetFirebaseUser } from '../../context/FirebaseContext'
+import styles from '../../styles/VoteButtons.module.css'
 
 import liked_movie from '../../requests/firebase/liked'
 import disliked_movie from '../../requests/firebase/disliked'
@@ -7,9 +8,13 @@ const VoteButtons = ({movie}) => {
     const firebaseUser = useGetFirebaseUser()
     const setFirebaseUser = useSetFirebaseUser()
 
+    const currently_liked = firebaseUser.liked?.find(m => m.movie_id === movie.id)
+    const currently_disliked = firebaseUser.disliked?.find(m => m.movie_id === movie.id)
+
+    const liked_style = currently_liked? {borderColor:'white'} : {}
+    const disliked_style = currently_disliked? {borderColor:'white'} : {}
+
     async function handleLikedButton(){
-        const currently_liked = firebaseUser.liked?.find(m => m.movie_id === movie.id)
-        const currently_disliked = firebaseUser.disliked?.find(m => m.movie_id === movie.id)
 
         if(currently_disliked){
             await disliked_movie(
@@ -58,8 +63,6 @@ const VoteButtons = ({movie}) => {
     }
 
     async function handleDisikedButton(){
-        const currently_liked = firebaseUser.liked?.find(m => m.movie_id === movie.id)
-        const currently_disliked = firebaseUser.disliked?.find(m => m.movie_id === movie.id)
 
         if(currently_liked) {
             await liked_movie(
@@ -112,13 +115,17 @@ const VoteButtons = ({movie}) => {
 
     return (
         <>
-            <button onClick={handleLikedButton}>
-                👍
-            </button>
+            <button
+                onClick={handleLikedButton}
+                className={styles.voting_buttons}
+                style={liked_style}
+            >👍</button>
 
-            <button onClick={handleDisikedButton}>
-                👎
-            </button>
+            <button
+                onClick={handleDisikedButton}
+                className={styles.voting_buttons}
+                style={disliked_style}
+            >👎</button>
         </>
     )
 }

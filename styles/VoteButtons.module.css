@@ -1,0 +1,12 @@
+.voting_buttons {
+    background: none;
+    border: 1px solid black;
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.voting_buttons:hover {
+    background: rgba(30, 30, 30);
+}

@@ -66,14 +66,6 @@ const MovieDetails = ({movie, images, recommended}) => {
     const fullDate = createFullDate(movie.release_date)
     const fullLength = createFullLength(movie.runtime)
 
-    let style = {}
-    const isLiked = firebaseUser?.liked?.find( like => like.movie_id === movie.id)
-    const isDisliked = firebaseUser?.disliked?.find( like => like.movie_id === movie.id)
-
-    if(isLiked) style = {borderBottom: "green 5px solid"}
-    if(isDisliked) style = {borderBottom: "red 5px solid"}
-
-
     return (
         <Layout>
             <Carousel images={altPics} />
@@ -88,7 +80,7 @@ const MovieDetails = ({movie, images, recommended}) => {
 
                 {
                     firebaseUser &&
-                    <div className={styles.vote_btns} style={style}>
+                    <div className={styles.vote_btns}>
                         <VoteButtons movie={movie} />
                     </div>
                 }
