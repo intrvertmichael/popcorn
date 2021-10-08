@@ -42,7 +42,10 @@ async function remove_tag(tagText, movie_id, firebaseUser){
 
 
 async function remove_multiple_tags(movie_id, firebaseUser){
-    const tagArray = Object.entries(firebaseUser.tags)
+    const fb_tags_res = await db.collection("tags").doc(firebaseUser.uid).get()
+    const fb_tags = fb_tags_res.data()
+
+    const tagArray = Object.entries(fb_tags)
 
     tagArray.forEach( async tag => {
         const exists = tag[1].find( id => id === movie_id)

@@ -12,6 +12,7 @@ async function liked_movie(movie, firebaseUser, currently_liked) {
             liked: updated_likes
         })
 
+
         let genres
         if(movie.genre_ids) genres = movie.genre_ids
         else genres = movie.genres.map( genre => genre.id)
@@ -20,7 +21,6 @@ async function liked_movie(movie, firebaseUser, currently_liked) {
         await remove_multiple_tags(movie.id, firebaseUser)
     }
 
-
     async function likeMovie(){
         const updated_dislikes = firebaseUser.disliked?.filter( m => m.movie_id !== movie.id )
         await db.collection("movies").doc(firebaseUser.uid).update({
@@ -28,7 +28,11 @@ async function liked_movie(movie, firebaseUser, currently_liked) {
             disliked: updated_dislikes
         })
 
-        await add_genre_counters( movie.genre_ids || movie.genres , firebaseUser)
+        let genres
+        if(movie.genre_ids) genres = movie.genre_ids
+        else genres = movie.genres.map( genre => genre.id)
+
+        await add_genre_counters( genres , firebaseUser)
     }
 
     if(currently_liked) un_likeMovie()
