@@ -1,7 +1,7 @@
 import firebase from './config'
 const db = firebase.firestore()
 
-async function addTag(tagText, movie_id, firebaseUser){
+async function add_tag(tagText, movie_id, firebaseUser){
     const usedTags = Object.keys(firebaseUser.tags)
     const exists = usedTags?.find( tag => tag === tagText)
 
@@ -22,9 +22,7 @@ async function addTag(tagText, movie_id, firebaseUser){
 }
 
 
-
-
-async function removeTag(tagText, movie_id, firebaseUser){
+async function remove_tag(tagText, movie_id, firebaseUser){
 
     const fb_item = firebaseUser.tags[tagText]
 
@@ -43,8 +41,20 @@ async function removeTag(tagText, movie_id, firebaseUser){
 }
 
 
-async function removeMultipleTags(){
+async function remove_multiple_tags(movie_id, firebaseUser){
+    const tagArray = Object.entries(firebaseUser.tags)
 
+    tagArray.forEach( async tag => {
+        const exists = tag[1].find( id => id === movie_id)
+
+        if(exists){
+            const filtered = tag[1].filter( id => id !== movie_id)
+
+            await db.collection("tags").doc(firebaseUser.uid).update({
+                [tag[0]]: filtered.length > 0 ? filtered : firebase.firestore.FieldValue.delete()
+            })
+        }
+    })
 }
 
-export {addTag, removeTag, removeMultipleTags}
+export {add_tag, remove_tag, remove_multiple_tags}

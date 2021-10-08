@@ -1,7 +1,7 @@
 import styles from '../../../styles/ProfileMovieGrid.module.css'
 import { useState } from 'react';
 import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
-import {addTag, removeTag} from '../../../requests/firebase/tags';
+import {add_tag, remove_tag} from '../../../requests/firebase/tags';
 
 const LikedMovieTags = ({movie}) => {
     const firebaseUser = useGetFirebaseUser()
@@ -29,14 +29,14 @@ const LikedMovieTags = ({movie}) => {
                 return newObj
             })
 
-            await addTag(tagText, movie.id, firebaseUser)
+            await add_tag(tagText, movie.id, firebaseUser)
         } else {
             setFirebaseUser( current => {
                 const newObj = {...current, tags: { ...current.tags, [tagText]: [...current.tags[tagText], movie.id]}}
                 return newObj
             })
 
-            await addTag(tagText, movie.id, firebaseUser)
+            await add_tag(tagText, movie.id, firebaseUser)
         }
     }
 
@@ -61,7 +61,7 @@ const LikedMovieTags = ({movie}) => {
                 }
             })
 
-            await removeTag(tag, movie.id, firebaseUser)
+            await remove_tag(tag, movie.id, firebaseUser)
         }
     }
 
