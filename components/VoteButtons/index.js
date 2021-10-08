@@ -3,6 +3,7 @@ import styles from '../../styles/VoteButtons.module.css'
 
 import liked_movie from '../../requests/firebase/liked'
 import disliked_movie from '../../requests/firebase/disliked'
+import saved_movie from '../../requests/firebase/saved'
 
 const VoteButtons = ({movie}) => {
     const firebaseUser = useGetFirebaseUser()
@@ -24,7 +25,11 @@ const VoteButtons = ({movie}) => {
         await liked_movie( movie, firebaseUser, false )
 
         setFirebaseUser(current => {
-            const updatedLikes = {...current, liked: [...current.liked, {movie_id:movie.id}]}
+            const likes = [...current.liked, {movie_id:movie.id}]
+            const dislikes = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
+            const saves = current.saved.filter( saved => saved.movie_id !== movie.id)
+
+            const updatedLikes = {...current, liked: likes, disliked: dislikes, saved: saves}
             return updatedLikes
         })
     }
@@ -57,7 +62,11 @@ const VoteButtons = ({movie}) => {
         await disliked_movie( movie, firebaseUser, false )
 
         setFirebaseUser(current => {
-            const updatedDisikes = {...current, disliked: [...current.disliked, {movie_id:movie.id}]}
+            const likes = current.liked.filter( liked => liked.movie_id !== movie.id)
+            const dislikes = [...current.disliked, {movie_id:movie.id}]
+            const saves = current.saved.filter( saved => saved.movie_id !== movie.id)
+
+            const updatedDisikes = {...current, liked: likes, disliked: dislikes, saved: saves}
             return updatedDisikes
         })
     }
@@ -76,10 +85,27 @@ const VoteButtons = ({movie}) => {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Save and Un_Save
     async function saveMovie(){
-        console.log("will save movie here")
+        await saved_movie(movie, firebaseUser, false)
+
+        setFirebaseUser(current => {
+            const likes = current.liked.filter( liked => liked.movie_id !== movie.id)
+            const dislikes = current.disliked.filter( disliked => disliked.movie_id !== movie.id)
+            const saves = current.saved? [...current.saved, {movie_id: movie.id}] : [{movie_id: movie.id}]
+
+            const updatedDisikes = {...current, disliked: dislikes, liked: likes, saved: saves}
+            return updatedDisikes
+        })
     }
-    async function un_saveMovie(){}
-    // saved_movie()
+
+    async function un_saveMovie(){
+        await saved_movie(movie, firebaseUser, true)
+
+        setFirebaseUser(current => {
+            const saves = current.saved.filter( saved => saved.movie_id !== movie.id)
+            const updatedDisikes = {...current, saved: saves}
+            return updatedDisikes
+        })
+    }
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -

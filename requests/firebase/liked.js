@@ -23,9 +23,12 @@ async function liked_movie(movie, firebaseUser, currently_liked) {
 
     async function likeMovie(){
         const updated_dislikes = firebaseUser.disliked?.filter( m => m.movie_id !== movie.id )
+        const updated_saves = firebaseUser.saved?.filter( m => m.movie_id !== movie.id )
+
         await db.collection("movies").doc(firebaseUser.uid).update({
             liked: [ ...firebaseUser.liked, {movie_id: movie.id} ],
-            disliked: updated_dislikes
+            disliked: updated_dislikes,
+            saved: updated_saves
         })
 
         let genres
