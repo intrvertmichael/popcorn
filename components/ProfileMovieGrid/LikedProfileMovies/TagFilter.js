@@ -32,6 +32,10 @@ const TagFilter = ({filter, setFilter}) => {
                     )
                 })
             }
+
+            {
+                filter && <li onClick={ () => setFilter(null)}> Clear Filter </li>
+            }
         </ul>
     )
 }
