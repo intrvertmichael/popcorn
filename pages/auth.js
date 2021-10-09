@@ -9,15 +9,16 @@ import { useRouter } from 'next/router'
 
 import LikedProfileMovies from "../components/ProfileMovieGrid/LikedProfileMovies";
 import DislikedProfileMovies from "../components/ProfileMovieGrid/DislikedProfileMovies";
+import SavedProfileMovies from "../components/ProfileMovieGrid/SavedProfileMovies";
 
 const Auth = () => {
     const router = useRouter()
-
     const firebaseUser = useGetFirebaseUser()
 
     const [page, setPage] = useState('saved')
     const [likedMovies, setLikedMovies] = useState()
     const [dislikedMovies, setDisLikedMovies] = useState()
+    const [savedMovies, setSavedMovies] = useState()
 
     async function fetch_movie(id){
         const movie_res = await fetch('/api/movie', {
@@ -45,9 +46,17 @@ const Auth = () => {
                     return await fetch_movie(movie.movie_id)
                 })).then( result => setDisLikedMovies(result))
             }
+
+            // getting the saved movies
+            if(firebaseUser.saved){
+                Promise.all(firebaseUser.saved.map( async movie => {
+                    return await fetch_movie(movie.movie_id)
+                })).then( result => setSavedMovies(result))
+            }
         }
 
     }, [firebaseUser])
+
 
     if(!firebaseUser) return <AuthForm router={router}/>
 
@@ -99,10 +108,10 @@ const Auth = () => {
                 }
                 {
                     page === 'saved' &&
-                    <div>
-                        need to make a component similar to disliked with limited information.
-                        or maybe more like likes? this is what i need to figure out
-                    </div>
+                    <SavedProfileMovies
+                        likes={true}
+                        movies={savedMovies}
+                    />
                 }
 
             </div>

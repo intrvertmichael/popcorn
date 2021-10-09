@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/FirebaseContext";
 import {add_tag, remove_tag} from '../../../requests/firebase/tags';
 
-const LikedMovieTags = ({movie}) => {
+const SavedMovieTags = ({movie}) => {
     const firebaseUser = useGetFirebaseUser()
     const setFirebaseUser = useSetFirebaseUser()
 
@@ -29,14 +29,14 @@ const LikedMovieTags = ({movie}) => {
                 return newObj
             })
 
-            await add_tag(tagText, movie.id, firebaseUser, false)
+            await add_tag(tagText, movie.id, firebaseUser, true)
         } else {
             setFirebaseUser( current => {
                 const newObj = {...current, tags: { ...current.tags, [tagText]: [...current.tags[tagText], movie.id]}}
                 return newObj
             })
 
-            await add_tag(tagText, movie.id, firebaseUser, false)
+            await add_tag(tagText, movie.id, firebaseUser, true)
         }
     }
 
@@ -61,7 +61,7 @@ const LikedMovieTags = ({movie}) => {
                 }
             })
 
-            await remove_tag(tag, movie.id, firebaseUser, false)
+            await remove_tag(tag, movie.id, firebaseUser, true)
         }
     }
 
@@ -98,4 +98,4 @@ const LikedMovieTags = ({movie}) => {
     )
 }
 
-export default LikedMovieTags;
+export default SavedMovieTags;
