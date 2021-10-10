@@ -18,7 +18,6 @@ async function liked_movie(movie, firebaseUser, currently_liked) {
         else genres = movie.genres.map( genre => genre.id)
 
         await remove_genre_counters( genres, firebaseUser)
-        await remove_multiple_tags(movie.id, firebaseUser, true)
         await remove_multiple_tags(movie.id, firebaseUser, false)
     }
 

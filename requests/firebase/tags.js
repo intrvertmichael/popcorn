@@ -43,18 +43,20 @@ async function add_tag(tagText, movie_id, firebaseUser, saved){
 }
 
 
-async function remove_tag(tagText, movie_id, firebaseUser, saved){
+async function remove_tag(tag_name, movie_id, firebaseUser, saved){
     const fb_tags_res = await db.collection("tags").doc(firebaseUser.uid).get()
     const fb_tags = fb_tags_res.data()
 
     async function remove_tag_from_saved(){
         const fb_saved = fb_tags.saved
-        const filtered_list = fb_saved[tagText]?.filter( id => id !== movie_id)
+        const filtered_list = fb_saved[tag_name]?.filter( id => id !== movie_id)
 
         let savedObj
-        if(filtered_list.length > 0) savedObj = { ...fb_tags.saved, [tagText]: filtered_list }
+        if(filtered_list.length > 0) {
+            savedObj = { ...fb_saved, [tag_name]: filtered_list }
+        }
         else {
-            delete fb_saved[tagText]
+            delete fb_saved[tag_name]
             savedObj = fb_saved
         }
 
@@ -65,12 +67,14 @@ async function remove_tag(tagText, movie_id, firebaseUser, saved){
 
     async function remove_tag_from_liked(){
         const fb_liked = fb_tags.liked
-        const filtered_list = fb_liked[tagText]?.filter( id => id !== movie_id)
+        const filtered_list = fb_liked[tag_name]?.filter( id => id !== movie_id)
 
         let savedObj
-        if(filtered_list.length > 0) savedObj = { ...fb_tags.liked, [tagText]: filtered_list }
+        if(filtered_list.length > 0) {
+            savedObj = { ...fb_tags.liked, [tag_name]: filtered_list }
+        }
         else {
-            delete fb_liked[tagText]
+            delete fb_liked[tag_name]
             savedObj = fb_liked
         }
 
@@ -79,8 +83,8 @@ async function remove_tag(tagText, movie_id, firebaseUser, saved){
         })
     }
 
-    if(saved) remove_tag_from_saved()
-    else remove_tag_from_liked()
+    if(saved) await remove_tag_from_saved()
+    else await remove_tag_from_liked()
 }
 
 
@@ -88,37 +92,29 @@ async function remove_multiple_tags(movie_id, firebaseUser, saved){
     const fb_tags_res = await db.collection("tags").doc(firebaseUser.uid).get()
     const fb_tags = fb_tags_res.data()
 
-
     async function remove_multiple_from_saved() {
-        // const fb_liked = fb_tags.liked
-        // const filtered_list = fb_liked[tagText]?.filter( id => id !== movie_id)
+        const tagArray = Object.entries(fb_tags.saved)
 
-        // let savedObj
-        // if(filtered_list.length > 0) savedObj = { ...fb_tags.liked, [tagText]: filtered_list }
-        // else {
-        //     delete fb_liked[tagText]
-        //     savedObj = fb_liked
-        // }
+        for(const tag of tagArray){
+            const tag_name = tag[0]
+            const tag_arr = tag[1]
 
-        // await db.collection("tags").doc(firebaseUser.uid).update({
-        //     liked: savedObj
-        // })
-        const tagArray = Object.entries(fb_tags)
-
-        tagArray.forEach( async tag => {
-            const exists = tag[1].find( id => id === movie_id)
-
-            if(exists){
-                const filtered = tag[1].filter( id => id !== movie_id)
-
-                await db.collection("tags").doc(firebaseUser.uid).update({
-                    [tag[0]]: filtered.length > 0 ? filtered : firebase.firestore.FieldValue.delete()
-                })
-            }
-        })
+            const exists = tag_arr.find( id => id === movie_id)
+            if(exists) await remove_tag(tag_name, movie_id, firebaseUser, true)
+        }
     }
 
-    async function remove_multiple_from_liked() {}
+    async function remove_multiple_from_liked() {
+        const tagArray = Object.entries(fb_tags.liked)
+
+        for(const tag of tagArray){
+            const tag_name = tag[0]
+            const tag_arr = tag[1]
+
+            const exists = tag_arr.find( id => id === movie_id)
+            if(exists) await remove_tag(tag_name, movie_id, firebaseUser, false)
+        }
+    }
 
     if(saved) remove_multiple_from_saved()
     else remove_multiple_from_liked()
