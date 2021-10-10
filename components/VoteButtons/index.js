@@ -40,10 +40,10 @@ const VoteButtons = ({movie}) => {
         setFirebaseUser(current => {
             const filtered = current.liked.filter( liked => liked.movie_id !== movie.id)
 
-            const tagsObj = current.tags
-            const tagsArr = Object.entries(tagsObj)
+            const tagsObj = current.tags?.liked
+            const tagsArr = tagsObj? Object.entries(tagsObj) : []
             tagsArr.forEach( tag => {
-                const exists = tag[1].find( id => id === movie.id)
+                const exists = tag[1] && tag[1].find( id => id === movie.id)
                 if(exists){
                     const filtered = tag[1].filter( id => id !== movie.id)
                     tagsObj[tag[0]] = filtered
@@ -113,6 +113,7 @@ const VoteButtons = ({movie}) => {
 
     async function handleLikedButton(){
         if(currently_disliked) await un_dislikeMovie()
+        if(currently_saved) await un_saveMovie()
 
         if(currently_liked) await un_likeMovie()
         else await likeMovie()
@@ -120,6 +121,7 @@ const VoteButtons = ({movie}) => {
 
     async function handleDisikedButton(){
         if(currently_liked) await un_likeMovie()
+        if(currently_saved) await un_saveMovie()
 
         if(currently_disliked) await un_dislikeMovie()
         else dislikeMovie()

@@ -6,7 +6,7 @@ const TagFilter = ({filter, setFilter}) => {
 
     if(!firebaseUser.tags?.saved) return false
 
-    const tagLabels = Object.keys(firebaseUser.tags.saved)
+    const tagLabels = Object.keys(firebaseUser.tags?.saved)
     const sorted = tagLabels.sort()
 
     function handleFilter(e){

@@ -26,7 +26,7 @@ const SavedMovie = ({movie}) => {
                     const tagsArr = tagsObj? Object.entries(tagsObj) : []
 
                     tagsArr.forEach( tag => {
-                        const exists = tag[1].find( id => id === movie.id)
+                        const exists = tag[1] && tag[1].find( id => id === movie.id)
                         if(exists){
                             const filtered = tag[1].filter( id => id !== movie.id)
                             if(filtered.length > 0) tagsObj[tag[0]] = filtered

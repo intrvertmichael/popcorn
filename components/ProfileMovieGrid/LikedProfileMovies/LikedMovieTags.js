@@ -14,7 +14,7 @@ const LikedMovieTags = ({movie}) => {
     const entries = firebaseUser.tags.liked? Object.entries(firebaseUser.tags.liked) : []
     if(entries.length > 0){
         tagsArr = entries.filter( tag => {
-        const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
+        const exists = tag[1].length? tag[1]?.find( tag => tag === movie.id) : tag[1] === movie.id
         if(exists) return true
     })
 }

@@ -11,10 +11,10 @@ const SavedMovieTags = ({movie}) => {
     const [tagText, setTagText] = useState(false)
 
     let tagsArr = []
-    const entries = firebaseUser.tags.saved? Object.entries(firebaseUser.tags.saved) : []
+    const entries = firebaseUser.tags?.saved? Object.entries(firebaseUser.tags?.saved) : []
     if(entries.length > 0){
         tagsArr = entries.filter( tag => {
-            const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
+            const exists = tag[1].length? tag[1]?.find( tag => tag === movie.id) : tag[1] === movie.id
             if(exists) return true
         })
     }
@@ -24,7 +24,7 @@ const SavedMovieTags = ({movie}) => {
     async function addingTag(e){
         e.preventDefault()
         setTagInput(false)
-        const tagArr = firebaseUser.tags?.saved? Object.keys(firebaseUser.tags.saved) : []
+        const tagArr = firebaseUser.tags?.saved? Object.keys(firebaseUser.tags?.saved) : []
         const exists = tagArr?.find(tag => tag === tagText)
 
         if(!exists){

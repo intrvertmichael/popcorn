@@ -99,7 +99,7 @@ async function remove_multiple_tags(movie_id, firebaseUser, saved){
             const tag_name = tag[0]
             const tag_arr = tag[1]
 
-            const exists = tag_arr.find( id => id === movie_id)
+            const exists = tag_arr?.find( id => id === movie_id)
             if(exists) await remove_tag(tag_name, movie_id, firebaseUser, true)
         }
     }
@@ -111,7 +111,7 @@ async function remove_multiple_tags(movie_id, firebaseUser, saved){
             const tag_name = tag[0]
             const tag_arr = tag[1]
 
-            const exists = tag_arr.find( id => id === movie_id)
+            const exists = tag_arr?.find( id => id === movie_id)
             if(exists) await remove_tag(tag_name, movie_id, firebaseUser, false)
         }
     }
