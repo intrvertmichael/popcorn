@@ -15,7 +15,7 @@ const SavedProfileMovies = ({movies}) => {
 
     useEffect( () => {
         async function getTags(){
-            setTags(firebaseUser.tags)
+            setTags(firebaseUser.tags.saved)
         }
 
         getTags()
