@@ -10,9 +10,9 @@ const LikedMovieTags = ({movie}) => {
     const [tagInput, setTagInput] = useState(false)
     const [tagText, setTagText] = useState(false)
 
-    const tagsArr = Object.entries(firebaseUser.tags).filter( tag => {
-        // const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
-        // if(exists) return true
+    const tagsArr = Object.entries(firebaseUser.tags.liked).filter( tag => {
+        const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
+        if(exists) return true
     })
 
     const tagsUsed = tagsArr.map( tag => tag[0])
