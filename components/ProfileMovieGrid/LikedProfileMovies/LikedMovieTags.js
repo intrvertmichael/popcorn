@@ -10,29 +10,52 @@ const LikedMovieTags = ({movie}) => {
     const [tagInput, setTagInput] = useState(false)
     const [tagText, setTagText] = useState(false)
 
-    const tagsArr = Object.entries(firebaseUser.tags.liked).filter( tag => {
+    let tagsArr = []
+    const entries = firebaseUser.tags.liked? Object.entries(firebaseUser.tags.liked) : []
+    if(entries.length > 0){
+        tagsArr = entries.filter( tag => {
         const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
         if(exists) return true
     })
-
+}
     const tagsUsed = tagsArr.map( tag => tag[0])
 
     async function addingTag(e){
         e.preventDefault()
         setTagInput(false)
-        const tagArr = firebaseUser.tags? Object.keys(firebaseUser.tags) : []
+        const tagArr = firebaseUser.tags?.liked? Object.keys(firebaseUser.tags.liked) : []
         const exists = tagArr?.find(tag => tag === tagText)
 
         if(!exists){
             setFirebaseUser( current => {
-                const newObj = {...current, tags: { ...current.tags, [tagText]: [movie.id]}}
+                const newObj = {
+                    ...current,
+                    tags: {
+                        ...current.tags,
+                        liked: {
+                            ...current.tags.liked,
+                            [tagText]: [movie.id]
+                        }
+                    }
+                }
+
                 return newObj
             })
 
             await add_tag(tagText, movie.id, firebaseUser, false)
         } else {
             setFirebaseUser( current => {
-                const newObj = {...current, tags: { ...current.tags, [tagText]: [...current.tags[tagText], movie.id]}}
+                const newObj = {
+                    ...current,
+                    tags: {
+                        ...current.tags,
+                        liked: {
+                            ...current.tags.liked,
+                            [tagText]: [...current.tags.liked[tagText], movie.id]
+                        }
+                    }
+                }
+
                 return newObj
             })
 
@@ -47,16 +70,33 @@ const LikedMovieTags = ({movie}) => {
 
         if(confirm(message)){
             setFirebaseUser( current => {
-                const filtered = current.tags[tag].filter( objtag => objtag !== movie.id)
+                const filtered = current.tags?.liked[tag].filter( objtag => objtag !== movie.id)
 
                 let newObj
                 if(filtered.length > 0) {
-                    newObj = {...current, tags: { ...current.tags, [tag]: filtered}}
+                    newObj = {
+                        ...current,
+                        tags: {
+                            ...current.tags,
+                            liked: {
+                                ...current.tags.liked,
+                                [tag]: filtered
+                            }
+                        }
+                    }
                     return newObj
                 }
                 else {
-                    delete current.tags[tag]
-                    newObj = {...current, tags: { ...current.tags }}
+                    delete current.tags.liked[tag]
+                    newObj = {
+                        ...current,
+                        tags: {
+                            ...current.tags,
+                            liked: {
+                                ...current.tags.liked
+                            }
+                        }
+                    }
                     return newObj
                 }
             })

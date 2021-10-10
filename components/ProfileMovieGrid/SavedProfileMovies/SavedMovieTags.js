@@ -10,29 +10,49 @@ const SavedMovieTags = ({movie}) => {
     const [tagInput, setTagInput] = useState(false)
     const [tagText, setTagText] = useState(false)
 
-    const tagsArr = Object.entries(firebaseUser.tags.saved).filter( tag => {
-        const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
-        if(exists) return true
-    })
+    let tagsArr = []
+    const entries = firebaseUser.tags.saved? Object.entries(firebaseUser.tags.saved) : []
+    if(entries.length > 0){
+        tagsArr = entries.filter( tag => {
+            const exists = tag[1].length? tag[1].find( tag => tag === movie.id) : tag[1] === movie.id
+            if(exists) return true
+        })
+    }
 
     const tagsUsed = tagsArr.map( tag => tag[0])
 
     async function addingTag(e){
         e.preventDefault()
         setTagInput(false)
-        const tagArr = firebaseUser.tags? Object.keys(firebaseUser.tags) : []
+        const tagArr = firebaseUser.tags?.saved? Object.keys(firebaseUser.tags.saved) : []
         const exists = tagArr?.find(tag => tag === tagText)
 
         if(!exists){
             setFirebaseUser( current => {
-                const newObj = {...current, tags: { ...current.tags, [tagText]: [movie.id]}}
+                const newObj = {
+                    ...current,
+                    tags: {
+                        ...current.tags,
+                        saved:{
+                            ...current.tags.saved,
+                            [tagText]: [movie.id]
+                        }
+                    }
+                }
                 return newObj
             })
 
             await add_tag(tagText, movie.id, firebaseUser, true)
         } else {
             setFirebaseUser( current => {
-                const newObj = {...current, tags: { ...current.tags, [tagText]: [...current.tags[tagText], movie.id]}}
+                const newObj = {
+                    ...current,
+                    tags: {
+                        ...current.tags,
+                        saved: {
+                            ...current.tags.saved,
+                            [tagText]: [...current.tags.saved[tagText], movie.id]}}
+                        }
                 return newObj
             })
 
@@ -47,16 +67,35 @@ const SavedMovieTags = ({movie}) => {
 
         if(confirm(message)){
             setFirebaseUser( current => {
-                const filtered = current.tags[tag].filter( objtag => objtag !== movie.id)
+                const filtered = current.tags?.saved[tag].filter( objtag => objtag !== movie.id)
 
                 let newObj
                 if(filtered.length > 0) {
-                    newObj = {...current, tags: { ...current.tags, [tag]: filtered}}
+                    newObj = {
+                        ...current,
+                        tags: {
+                            ...current.tags,
+                            saved: {
+                                ...current.tags.saved,
+                                [tag]: filtered
+                            }
+                        }
+                    }
+
                     return newObj
                 }
                 else {
-                    delete current.tags[tag]
-                    newObj = {...current, tags: { ...current.tags }}
+                    delete current.tags.saved[tag]
+                    newObj = {
+                        ...current,
+                        tags: {
+                            ...current.tags,
+                            saved: {
+                                ...current.tags.saved
+                            }
+                        }
+                    }
+
                     return newObj
                 }
             })

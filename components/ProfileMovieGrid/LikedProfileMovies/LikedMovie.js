@@ -20,22 +20,31 @@ const LikedMovie = ({movie}) => {
                 // remove move from Firebase Liked Movies
                 await liked_movie( movie, firebaseUser, true )
 
-                // setFirebaseUser(current => {
-                //     const filteredLikes = current.liked.filter( liked => liked.movie_id !== movie.id)
-                //     const tagsObj = current.tags
-                //     const tagsArr = Object.entries(tagsObj)
-                //     tagsArr.forEach( tag => {
-                //         const exists = tag[1].find( id => id === movie.id)
-                //         if(exists){
-                //             const filtered = tag[1].filter( id => id !== movie.id)
-                //             if(filtered.length > 0) tagsObj[tag[0]] = filtered
-                //             else delete tagsObj[tag[0]]
-                //         }
-                //     })
+                setFirebaseUser(current => {
+                    const filteredLikes = current.liked.filter( liked => liked.movie_id !== movie.id)
+                    const tagsObj = current.tags.liked
+                    const tagsArr = tagsObj? Object.entries(tagsObj) : []
 
-                //     const updatedLikes = {...current, liked: filteredLikes, tags: tagsObj}
-                //     return updatedLikes
-                // })
+                    tagsArr.forEach( tag => {
+                        const exists = tag[1].find( id => id === movie.id)
+                        if(exists){
+                            const filtered = tag[1].filter( id => id !== movie.id)
+                            if(filtered.length > 0) tagsObj[tag[0]] = filtered
+                            else delete tagsObj[tag[0]]
+                        }
+                    })
+
+                    const updatedLikes = {
+                        ...current,
+                        liked: filteredLikes,
+                        tags: {
+                            ...current.tags,
+                            liked: tagsObj
+                        }
+                    }
+
+                    return updatedLikes
+                })
             }
         }
 

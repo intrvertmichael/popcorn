@@ -4,7 +4,7 @@ import { useGetFirebaseUser, useSetFirebaseUser } from "../../../context/Firebas
 const TagFilter = ({filter, setFilter}) => {
     const firebaseUser = useGetFirebaseUser()
 
-    if(!firebaseUser.tags?.liked || Object.entries(firebaseUser.tags?.liked).length === 0) return false
+    if(!firebaseUser.tags?.liked) return false
 
     const tagLabels = Object.keys(firebaseUser.tags.liked)
     const sorted = tagLabels.sort()
