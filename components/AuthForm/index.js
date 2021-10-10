@@ -35,8 +35,8 @@ const AuthForm = ({router}) => {
             var user = userCredential.user;
             localStorage.setItem('user_id', user.uid)
             await db.collection("genres").doc(user.uid).set({})
-            await db.collection("movies").doc(user.uid).set({liked:[], disliked:[]})
-            await db.collection("tags").doc(user.uid).set({})
+            await db.collection("movies").doc(user.uid).set({liked:[], saved:[], disliked:[]})
+            await db.collection("tags").doc(user.uid).set({liked:[], saved:[]})
             router.push('/')
         }
         catch(error) {

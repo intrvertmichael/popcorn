@@ -114,7 +114,6 @@ const VoteButtons = ({movie}) => {
     async function handleLikedButton(){
         if(currently_disliked) await un_dislikeMovie()
         if(currently_saved) await un_saveMovie()
-
         if(currently_liked) await un_likeMovie()
         else await likeMovie()
     }
@@ -122,7 +121,6 @@ const VoteButtons = ({movie}) => {
     async function handleDisikedButton(){
         if(currently_liked) await un_likeMovie()
         if(currently_saved) await un_saveMovie()
-
         if(currently_disliked) await un_dislikeMovie()
         else dislikeMovie()
     }
@@ -130,7 +128,6 @@ const VoteButtons = ({movie}) => {
     async function handleSaveButton(){
         if(currently_liked) await un_likeMovie()
         if(currently_disliked) await un_dislikeMovie()
-
         if(currently_saved) await un_saveMovie()
         else saveMovie()
 
@@ -149,8 +146,9 @@ const VoteButtons = ({movie}) => {
                 onClick={handleSaveButton}
                 className={styles.voting_buttons}
                 style={saved_style}
-            >☆</button>
-            {/* ★ */}
+            >
+                { currently_saved? '★'  : '☆' }
+            </button>
 
             <button
                 onClick={handleDisikedButton}

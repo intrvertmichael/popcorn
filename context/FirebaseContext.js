@@ -42,7 +42,6 @@ const FirebaseContext = ({children}) => {
         }
 
         console.log("context: ", data)
-
         setFirebaseUser(data)
     }
 

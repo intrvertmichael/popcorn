@@ -100,6 +100,6 @@ Genre Verbs
   text-align: center;
   padding: 50px 0px;
   margin: 0px;
-  background: linear-gradient(rgb(10, 10, 10), black);
+  background: linear-gradient(rgb(10, 10, 10), black 50%);
   border-top: 1px solid rgb(30, 30, 30);
 }
