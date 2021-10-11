@@ -34,6 +34,7 @@
     text-align: center;
     justify-content: space-around;
     height: 100%;
+    cursor: pointer;
 }
 
 .movie_info_description a {

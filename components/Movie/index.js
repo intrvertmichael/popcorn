@@ -44,21 +44,19 @@ const Movie = ({ movie, fb_liked }) => {
                 className={styles.movie_info}
                 style={firebaseUser? {} : {justifyContent:"center"}}
             >
-                <div className={styles.movie_info_description}>
-                    <div>
-                        <h3>
-                            <Link href={'/movie/' + movie.id}>
-                                <a>
-                                    {title}
-                                </a>
-                            </Link>
-                        </h3>
+                <Link href={'/movie/' + movie.id} passHref={true}>
+                    <div className={styles.movie_info_description}>
+                        <div>
+                            <h3>
+                                        {title}
+                            </h3>
 
-                        <p>
-                            ★ {movie.vote_average}
-                        </p>
+                            <p>
+                                ★ {movie.vote_average}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </Link>
 
                 {
                     firebaseUser &&
