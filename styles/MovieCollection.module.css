@@ -44,21 +44,30 @@
     color: white;
 }
 
-.movement {
-    position: absolute;
-    top: -15px;
-    right: 10px;
-}
-
 .movement button {
     padding: 20px;
-    font-size: 16px;
+    font-weight: bold;
+    font-size: 20px;
     color: white;
     background: none;
     border: none;
     border-radius: 5px;
+    position: absolute;
+    top: 200px;
+    background: black;
+    z-index: 100;
+    border: 1px solid black;
+}
+
+.movement button:nth-child(1) {
+    left: 10px;
+}
+
+.movement button:nth-child(2) {
+    right: 10px;
 }
 
 .movement button:hover {
     background: rgb(10, 10, 10);
+    border: 1px solid white;
 }
