@@ -3,6 +3,7 @@
     width: 100%;
     overflow: scroll;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 .genre_movies_title {
@@ -35,6 +36,29 @@
     display: flex;
 }
 
+.movie_bar {
+    position: relative;
+}
+
 .movie_bar a {
     color: white;
+}
+
+.movement {
+    position: absolute;
+    top: -15px;
+    right: 10px;
+}
+
+.movement button {
+    padding: 20px;
+    font-size: 16px;
+    color: white;
+    background: none;
+    border: none;
+    border-radius: 5px;
+}
+
+.movement button:hover {
+    background: rgb(10, 10, 10);
 }

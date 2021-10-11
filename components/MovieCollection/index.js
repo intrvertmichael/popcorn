@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import styles from '../../styles/MovieCollection.module.css'
 import Movie from '../Movie'
@@ -9,6 +9,7 @@ const MovieCollection = ({ view, movieList }) => {
     const firebaseUser = useGetFirebaseUser()
     const FBLikedMovies = firebaseUser?.liked
     const FBDisLikedMovies = firebaseUser?.disliked
+    const movieBar = useRef(null);
 
 
     const [movies, setMovies] = useState([])
@@ -48,6 +49,16 @@ const MovieCollection = ({ view, movieList }) => {
         ul_classes = styles.genre_movies_grid
     }
 
+    function handleRMovement(e){
+        e.preventDefault()
+        movieBar.current.scrollLeft += 300
+    }
+
+    function handleLMovement(e){
+        e.preventDefault()
+        movieBar.current.scrollLeft -= 300
+    }
+
     return (
         <div className={styles.movie_bar}>
             {
@@ -61,7 +72,17 @@ const MovieCollection = ({ view, movieList }) => {
                 <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
             }
 
-            <div className={styles.genre_movies_wrapper}>
+
+{
+    view === 'bar'?
+    <div className={styles.movement}>
+        <button onClick={handleLMovement}>{'<'}</button>
+        <button onClick={handleRMovement}>{'>'}</button>
+    </div>
+    : ''
+}
+
+            <div className={styles.genre_movies_wrapper} ref={movieBar}>
                 <ul className={ul_classes} style={ul_style}>
                     {movies}
                 </ul>
