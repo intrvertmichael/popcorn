@@ -59,6 +59,7 @@ Colors
 
 .header h2 {
     color: #9b9b9b;
+    margin-right: 30px;
 }
 
 
@@ -72,4 +73,41 @@ Colors
 .logout_btn:hover {
     color: red;
     border-color: red;
+}
+
+
+.genre_list {
+    margin: 20px auto;
+    padding: 0px;
+}
+
+.genre_list li {
+    display: inline-block;
+    list-style-type: none;
+    width: 160px;
+    padding: 0px 20px;
+    margin: 0px 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.genre_list a {
+    color: white;
+}
+
+.genre_list li:hover {
+    background: rgba( 255, 255, 255, 0.08 );
+}
+
+.left button {
+    background: none;
+    color: #9b9b9b;
+    border: 1px solid #9b9b9b;
+    border-radius: 2px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.left button:hover {
+    color: white;
 }

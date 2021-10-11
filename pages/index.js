@@ -1,17 +1,11 @@
+import { useState } from 'react'
+import { useGetFirebaseUser } from "../context/FirebaseContext";
 import styles from '../styles/Home.module.css'
 import { getTrending, getGenres, getBestThisYear } from '../requests/movie.api'
 
 import Trending from '../components/Trending'
 import Header from '../components/Header'
 import MovieCollection from '../components/MovieCollection'
-import SearchBar from '../components/SearchBar'
-import GenreList from '../components/Genre/List'
-
-import { useGetFirebaseUser } from "../context/FirebaseContext";
-
-import firebase from '../requests/firebase/config'
-import { useState } from 'react'
-const db = firebase.firestore()
 
 export async function getServerSideProps () {
 
@@ -102,9 +96,6 @@ export default function Home({trending, best, genres}) {
           </div>
           : ''
         }
-
-        <GenreList genres={genres} />
-        <SearchBar />
 
         {
           firebaseUser && favGenreMovies?

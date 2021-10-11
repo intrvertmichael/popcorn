@@ -1,15 +1,34 @@
-
+import { useState } from 'react'
 import Link from 'next/link'
 import styles from '../../styles/Header.module.css'
 import { useGetFirebaseUser, useSetFirebaseUser } from '../../context/FirebaseContext'
 import { useRouter } from 'next/router'
 import {firebase_signout} from './../../requests/firebase/auth'
+import GenreList from '../Genre/List'
+import SearchBar from '../SearchBar'
 
 const Header = () => {
     const firebaseUser = useGetFirebaseUser()
     const setFirebaseUser = useSetFirebaseUser()
+
+    const [genreVisible, setGenreVisible] = useState(false)
+    const [searchVisible, setSearchVisible] = useState(false)
+
+
     const router = useRouter()
     const onAuthPage = router.pathname === '/auth'
+
+    function handleGenreBtn(){
+        if(searchVisible) setSearchVisible(false)
+        if(genreVisible) setGenreVisible(false)
+        else setGenreVisible(true)
+    }
+
+    function handleSearchBtn(){
+        if(genreVisible) setGenreVisible(false)
+        if(searchVisible) setSearchVisible(false)
+        else setSearchVisible(true)
+    }
 
     let rightComp = (
         <Link href='/auth'>
@@ -45,18 +64,26 @@ const Header = () => {
     )
 
     return (
-        <div className={styles.header}>
-            <div>
-                <Link href="/">
-                    <a>
-                        <h1><span>🍿</span>Popcorn</h1>
-                    </a>
-                </Link>
-                <h2>Find what to watch</h2>
+        <>
+            <div className={styles.header}>
+                <div className={styles.left}>
+                    <Link href="/">
+                        <a>
+                            <h1><span>🍿</span>Popcorn</h1>
+                        </a>
+                    </Link>
+                    <h2>Find what to watch</h2>
+                    <button onClick={handleGenreBtn}> Genre </button>
+                    <button onClick={handleSearchBtn}> Search </button>
+                </div>
+
+                {rightComp}
             </div>
 
-            {rightComp}
-        </div>
+            { genreVisible && <GenreList /> }
+            { searchVisible && <SearchBar /> }
+
+        </>
     )
 }
 
