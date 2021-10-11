@@ -13,6 +13,7 @@ const MovieCollection = ({ view, movieList }) => {
 
 
     const [movies, setMovies] = useState([])
+    const [movie_image_size, set_movie_image_size] = useState([])
 
     useEffect( () => {
         const movie_array = []
@@ -33,9 +34,25 @@ const MovieCollection = ({ view, movieList }) => {
 
     }, [FBDisLikedMovies, FBLikedMovies, movieList])
 
-    if(!movieList || movieList.movies?.length === 0) return false
 
-    const movie_image_size = 20
+    useEffect(()=>{
+        if(typeof window !== "undefined"){
+            function setSize(){
+                let size
+                if(window.innerWidth < 650) size = 33.4
+                else if(window.innerWidth < 900) size = 25
+                else size = 20
+
+                set_movie_image_size(size)
+            }
+
+            window.addEventListener('resize', setSize)
+            setSize()
+        }
+    }, [])
+
+
+    if(!movieList || movieList.movies?.length === 0) return false
 
     if(movies?.length === 0) return false
 
@@ -43,7 +60,9 @@ const MovieCollection = ({ view, movieList }) => {
     let ul_style
     if(view === 'bar'){
         ul_classes = styles.genre_movies_bar
-        ul_style = { width: `${ movies?.length * movie_image_size }%` }
+        const w = movies?.length * movie_image_size
+        console.log('w', w)
+        ul_style = { width: `${w}%` }
     }
     if(view === 'grid'){
         ul_classes = styles.genre_movies_grid

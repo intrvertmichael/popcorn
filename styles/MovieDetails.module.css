@@ -38,7 +38,7 @@ Images
     position: relative;
     display: block;
     width: fit-content;
-    margin: -300px 0px 0px 30px;
+    margin: -200px 0px 0px 30px;
 }
 
 
@@ -119,4 +119,14 @@ Details
     top: -70px;
     left: 345px;
     width: fit-content;
+}
+
+
+@media only screen and (max-width: 550px) {
+    .vote_btns {
+        position: static;
+        display: block;
+        margin: auto;
+        padding-top: 20px;
+    }
 }

@@ -71,3 +71,15 @@
     background: rgb(10, 10, 10);
     border: 1px solid white;
 }
+
+@media only screen and (max-width: 900px) {
+    .genre_movies_grid li {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .genre_movies_grid li {
+        width: 33.33%;
+    }
+}

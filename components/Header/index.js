@@ -34,8 +34,8 @@ const Header = () => {
         <Link href='/auth'>
             <a>
                 <h3>
-                    Create an account here <br/>
-                    to save and vote on movies
+                    Create an account<br/>
+                    to save and vote on Movies
                 </h3>
             </a>
         </Link>

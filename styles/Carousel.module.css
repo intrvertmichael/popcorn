@@ -1,24 +1,26 @@
-
 .carousel {
-    margin-bottom: 50px;
+    position: relative;
 }
 
 .carousel button{
     border: none;
     background: none;
-    color: white;
+    color: gray;
     font-size: 1.5em;
     cursor: pointer;
     padding: 0px;
     margin: 0px;
 }
 
+.carousel button:hover {
+    color: white;
+}
+
 .images {
     position: relative;
-    height: 540px;
+    padding-top: 55%;
     border-radius: 2px;
     overflow: hidden;
-    margin-bottom: 10px;
 }
 
 .alt_pics {
@@ -32,6 +34,10 @@
     align-items: center;
     justify-content: flex-end;
     color: gray;
+    position: absolute;
+    right: 20px;
+    bottom: -40px;
+    z-index: 10;
 }
 
 .nav span {
@@ -41,4 +47,11 @@
 .label {
     text-align: center;
     width: 75px;
+}
+
+@media only screen and (max-width: 650px) {
+    .nav {
+        bottom: auto;
+        top: 10px;
+    }
 }
