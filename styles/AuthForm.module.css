@@ -69,3 +69,33 @@
     cursor: pointer;
     padding: 5px 10px;
 }
+
+
+
+@media only screen and (max-width: 950px) {
+    .forms {
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .login {
+        border-right: none;
+        margin-bottom: 50px;
+    }
+
+    .register {
+        border-radius: 10px;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .forms {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .forms {
+        width: 95%;
+    }
+}

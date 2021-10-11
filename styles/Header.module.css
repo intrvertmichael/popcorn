@@ -76,6 +76,8 @@ Colors
 .genre_list {
     margin: 20px auto;
     padding: 0px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgb(30, 30, 30);
 }
 
 .genre_list li {
@@ -109,8 +111,25 @@ Colors
     color: white;
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 700px) {
     .left h2 {
         display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .left h1 {
+        display: block;
+        margin-bottom: 0px;
+        margin-left: 0px;
+    }
+
+    .left button {
+        margin: 10px 5px 20px;
+    }
+
+    .logout_btn {
+        display: block;
+        margin-bottom: 10px;
     }
 }

@@ -1,6 +1,7 @@
 .search {
     padding: 50px;
     margin: auto;
+    border-bottom: 1px solid rgb(30, 30, 30);
 }
 
 .search_bar {
@@ -89,4 +90,10 @@
     max-width: fit-content;
     text-align: left;
     display: flex;
+}
+
+@media only screen and (max-width: 400px) {
+    .search {
+        padding: 10px;
+    }
 }

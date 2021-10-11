@@ -91,7 +91,7 @@ export default function Home({trending, best, genres}) {
               <span>★</span> Save the movies you want to see <br/>
               <span>👍</span> Like movies to get recommendations  <br/>
               <span>🏷</span> Add tags to find movies faster <br/>
-              <span>👎</span> Disliked movies like will be vanished into the abyss <br/>
+              <span>👎</span> Disliked movies like will be vanished<br/>
             </p>
           </div>
           : ''

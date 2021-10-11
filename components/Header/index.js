@@ -73,7 +73,7 @@ const Header = () => {
                         </a>
                     </Link>
                     <h2>Find what to watch</h2>
-                    <button onClick={handleGenreBtn}> Genre </button>
+                    <button onClick={handleGenreBtn}> Genres </button>
                     <button onClick={handleSearchBtn}> Search </button>
                 </div>
 

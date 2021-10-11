@@ -90,3 +90,15 @@ Genre Verbs
   padding: 50px;
   margin: 0px;
 }
+
+@media only screen and (max-width: 650px) {
+  .intro {
+    width: 100%;
+    border-radius: 0px;
+    padding: 20px;
+    border: none;
+    background: none;
+    box-shadow: none;
+    margin: 0px;
+  }
+}
