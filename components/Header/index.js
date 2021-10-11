@@ -14,7 +14,10 @@ const Header = () => {
     let rightComp = (
         <Link href='/auth'>
             <a>
-                <h3>Sign Up | Log In</h3>
+                <h3>
+                    Create an account here <br/>
+                    to save and vote on movies
+                </h3>
             </a>
         </Link>
     )
@@ -46,10 +49,9 @@ const Header = () => {
             <div>
                 <Link href="/">
                     <a>
-                        <h1>🍿Popcorn</h1>
+                        <h1><span>🍿</span>Popcorn</h1>
                     </a>
                 </Link>
-
                 <h2>Find what to watch</h2>
             </div>
 
