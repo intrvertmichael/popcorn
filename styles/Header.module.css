@@ -34,10 +34,6 @@ Gaps
 - - - - - - - - - - -
 */
 
-.header h1 {
-    margin-right: 20px;
-}
-
 .header h1 span {
     margin-right: 10px;
 }
@@ -59,7 +55,7 @@ Colors
 
 .header h2 {
     color: #9b9b9b;
-    margin-right: 30px;
+    margin: 0px 20px;
 }
 
 
