@@ -93,11 +93,11 @@ export default function Home({trending, best, genres}) {
           !firebaseUser?
           <div className={styles.intro}>
             <p>
-              🍿 - Use Popcorn to: <br/>
-              🔎 - Discover new and old movies <br/>
-              👍 - Create an account to like and dislike movies <br/>
-              🏷 - Add tags to find the movies that you like faster <br/>
-              👎 - Movies you dislike like will be vanished into the abyss <br/>
+              <span>🔎</span> Discover new and old movies <br/>
+              <span>★</span> Save the movies you want to see <br/>
+              <span>👍</span> Like movies to get recommendations  <br/>
+              <span>🏷</span> Add tags to find movies faster <br/>
+              <span>👎</span> Disliked movies like will be vanished into the abyss <br/>
             </p>
           </div>
           : ''
