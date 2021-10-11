@@ -21,6 +21,10 @@
     display: flex;
 }
 
+.genre_movies li:hover {
+    box-shadow: 0px 0px 10px 0px rgba( 255, 255, 255, .2);
+}
+
 .movie_caption {
     width: fit-content;
     text-align: left;
