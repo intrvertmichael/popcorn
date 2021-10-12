@@ -110,3 +110,12 @@
     font-size: 1em;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 500px) {
+    .movie_caption h4 {
+        margin-top: 40px;
+    }
+    .remove {
+        padding: 5px 10PX;
+    }
+}
