@@ -1,11 +1,10 @@
 import { useState} from 'react'
+import { useRouter } from 'next/router'
 import styles from '../../styles/SeachBar.module.css'
-import Movie from '../Movie/index'
 import Results from './Results'
-import {useGetFirebaseUser} from '../../context/FirebaseContext'
 
 const SearchBar = () => {
-    // const firebaseUser = useGetFirebaseUser()
+    const router = useRouter()
     const [searchText, setSearchText] = useState()
     const [results, setResults] = useState()
     const [timer, setTimer] = useState()
@@ -15,19 +14,21 @@ const SearchBar = () => {
         let res
         if(requested_page) res = await fetch('/api/search', { headers: { searchTerm: searchText.value, page: requested_page}})
         else res = await fetch('/api/search', { headers: { searchTerm: searchText.value}})
+
         const data  = await res.json()
-        // const movies = filter_movies(data)
         const page =  data.page
         const total_pages = data.total_pages
 
-        // setResults({movies, page, total_pages})
         setResults({movies: data.results, page, total_pages})
     }
 
-    function searchSubmitted(){
+    async function searchSubmitted(e){
         clearTimeout(timer)
-        if(!searchText || searchText.value === '') setResults(null)
-        else fetchResults(1)
+        if(searchText?.value === '') setResults(null)
+        else {
+            await fetchResults(1)
+            router.push('/#results')
+        }
     }
 
     function typing(e){
@@ -35,7 +36,7 @@ const SearchBar = () => {
         setSearchText({ value: e.target.value })
 
         clearTimeout(timer)
-        const timer_id = setTimeout(searchSubmitted, 500)
+        const timer_id = setTimeout( searchSubmitted, 1000)
         setTimer(timer_id)
     }
 
@@ -48,6 +49,7 @@ const SearchBar = () => {
                 <input
                     type="text"
                     placeholder="Search for a movie..."
+                    onKeyUp={typing}
                     onChange={typing}
                     value={searchText? searchText.value : ''} />
                 <button> 🔎 </button>

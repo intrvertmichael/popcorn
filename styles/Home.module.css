@@ -93,12 +93,12 @@ Genre Verbs
 
 @media only screen and (max-width: 650px) {
   .intro {
-    width: 100%;
+    width: fit-content;
     border-radius: 0px;
     padding: 20px;
     border: none;
     background: none;
     box-shadow: none;
-    margin: 0px;
+    margin: 0px auto;
   }
 }

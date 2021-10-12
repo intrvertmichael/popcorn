@@ -59,7 +59,7 @@ const AuthForm = ({router}) => {
 
             <div className={styles.forms}>
                 <form className={styles.login} onSubmit={loginSubmitted}>
-                    <h2>Log In</h2>
+                    <h2>Returning User Log In</h2>
                     <label> Email: </label>
                     <input type='email' onChange={e => setEmail(e.target.value)}/>
                     <label> Password: </label>
@@ -68,7 +68,7 @@ const AuthForm = ({router}) => {
                 </form>
 
                 <form className={styles.register} onSubmit={registerSubmitted}>
-                    <h2>Register</h2>
+                    <h2>New User Registration</h2>
                     <p></p>
                     <label>
                         Email: (Does NOT have to be a real email 🙂)

@@ -132,11 +132,12 @@ Details
 
     .poster {
         width: 150px;
-        margin-top: -75px;
+        margin-top: -50px;
     }
 
     .rating {
         left: 200px;
+        top: -122px;
     }
 
     .movie_description {

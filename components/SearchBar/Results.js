@@ -63,7 +63,7 @@ const Results = ({results, searchText, setSearchText, setResults, fetchResults})
     )
 
     return (
-        <div className={styles.results_wrapper}>
+        <div id='results' className={styles.results_wrapper} >
             <button className={styles.clear_search} onClick={clearResults}> Clear Search </button>
 
             {/* <ul className={styles.results}>

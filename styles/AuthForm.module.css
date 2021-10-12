@@ -74,7 +74,7 @@
 
 @media only screen and (max-width: 950px) {
     .forms {
-        flex-direction: column;
+        flex-direction: column-reverse;
         width: 80%;
     }
 
@@ -84,14 +84,29 @@
     }
 
     .register {
-        border-radius: 10px;
+        border-radius: 5px;
     }
 }
 
 @media only screen and (max-width: 650px) {
     .forms {
         width: 90%;
+        margin: 10px auto;
     }
+
+    .forms form {
+        padding: 20px;
+    }
+
+    .forms form h2 {
+        margin: 0px;
+    }
+
+    .forms form label {
+        display: block;
+        padding-top: 5px;
+    }
+
 }
 
 @media only screen and (max-width: 500px) {
