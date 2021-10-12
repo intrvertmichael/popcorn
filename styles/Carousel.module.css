@@ -51,7 +51,10 @@
 
 @media only screen and (max-width: 650px) {
     .nav {
+        background: black;
+        padding: 10px 20px;
         bottom: auto;
-        top: 10px;
+        top: 0px;
+        right: 0px;
     }
 }

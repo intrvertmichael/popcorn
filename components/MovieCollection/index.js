@@ -61,7 +61,6 @@ const MovieCollection = ({ view, movieList }) => {
     if(view === 'bar'){
         ul_classes = styles.genre_movies_bar
         const w = movies?.length * movie_image_size
-        console.log('w', w)
         ul_style = { width: `${w}%` }
     }
     if(view === 'grid'){
@@ -70,12 +69,12 @@ const MovieCollection = ({ view, movieList }) => {
 
     function handleRMovement(e){
         e.preventDefault()
-        movieBar.current.scrollLeft += 300
+        movieBar.current.scrollLeft += (movie_image_size * 10)
     }
 
     function handleLMovement(e){
         e.preventDefault()
-        movieBar.current.scrollLeft -= 300
+        movieBar.current.scrollLeft -= (movie_image_size * 10)
     }
 
     return (

@@ -16,8 +16,6 @@ const GenreList = () => {
         getGenres()
     }, [])
 
-    console.log('genres', genres)
-
     return (
         <ul className={styles.genre_list}>
         {

@@ -82,4 +82,9 @@
     .genre_movies_grid li {
         width: 33.33%;
     }
+
+    .movement button {
+        top: 50%;
+        padding: 10px;
+    }
 }

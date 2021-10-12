@@ -52,6 +52,7 @@ Description
 
 .movie_info h1 {
     margin-bottom: 5px;
+    line-height: 1.2em;
 }
 
 .movie_info h2 {
@@ -128,21 +129,14 @@ Details
         margin: auto;
         padding-top: 20px;
     }
-}
 
-@media only screen and (max-width: 550px) {
     .poster {
         width: 150px;
+        margin-top: -75px;
     }
 
     .rating {
         left: 200px;
-    }
-}
-
-@media only screen and (max-width: 550px) {
-    .poster {
-        margin-top: -75px;
     }
 
     .movie_description {

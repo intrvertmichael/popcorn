@@ -67,30 +67,33 @@ const Auth = () => {
             <div className={styles.auth}>
                 <h1>Profile</h1>
 
-                {
-                    page === 'saved'?
-                    <h3>Saved ({firebaseUser.saved?.length})</h3>
-                    :
-                    <a onClick={()=> setPage('saved')}>
+                <div className={styles.labels}>
+                    {
+                        page === 'saved'?
                         <h3>Saved ({firebaseUser.saved?.length})</h3>
-                    </a>
-                }
-                {
-                    page === 'liked'?
-                    <h3>Liked ({firebaseUser.liked?.length})</h3>
-                    :
-                    <a onClick={()=> setPage('liked')}>
+                        :
+                        <a onClick={()=> setPage('saved')}>
+                            <h3>Saved ({firebaseUser.saved?.length})</h3>
+                        </a>
+                    }
+                    {
+                        page === 'liked'?
                         <h3>Liked ({firebaseUser.liked?.length})</h3>
-                    </a>
-                }
-                {
-                    page === 'disliked'?
-                    <h3>Disliked ({firebaseUser.disliked?.length})</h3>
-                    :
-                    <a onClick={()=> setPage('disliked')}>
+                        :
+                        <a onClick={()=> setPage('liked')}>
+                            <h3>Liked ({firebaseUser.liked?.length})</h3>
+                        </a>
+                    }
+                    {
+                        page === 'disliked'?
                         <h3>Disliked ({firebaseUser.disliked?.length})</h3>
-                    </a>
-                }
+                        :
+                        <a onClick={()=> setPage('disliked')}>
+                            <h3>Disliked ({firebaseUser.disliked?.length})</h3>
+                        </a>
+                    }
+                </div>
+
 
                 {
                     page === 'liked' &&

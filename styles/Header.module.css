@@ -112,24 +112,34 @@ Colors
 }
 
 @media only screen and (max-width: 700px) {
+    .header {
+        padding: 0px;
+    }
+
     .left h2 {
         display: none;
     }
 }
 
 @media only screen and (max-width: 500px) {
+    .header {
+        padding: 0px 10px;
+    }
+
     .left h1 {
         display: block;
-        margin-bottom: 0px;
+        margin-bottom: 10px;
         margin-left: 0px;
     }
 
     .left button {
         margin: 10px 5px 20px;
+        padding: 10px;
     }
 
     .logout_btn {
         display: block;
         margin-bottom: 10px;
+        padding: 10px;
     }
 }
