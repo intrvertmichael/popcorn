@@ -66,10 +66,6 @@ const Results = ({results, searchText, setSearchText, setResults, fetchResults})
         <div id='results' className={styles.results_wrapper} >
             <button className={styles.clear_search} onClick={clearResults}> Clear Search </button>
 
-            {/* <ul className={styles.results}>
-                {results.movies}
-            </ul> */}
-
             <MovieCollection
                 view = "grid"
                 FBLikedMovies={FBLikedMovies}

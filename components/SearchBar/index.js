@@ -5,6 +5,8 @@ import Results from './Results'
 
 const SearchBar = () => {
     const router = useRouter()
+    const { asPath } = useRouter();
+
     const [searchText, setSearchText] = useState()
     const [results, setResults] = useState()
     const [timer, setTimer] = useState()
@@ -27,7 +29,7 @@ const SearchBar = () => {
         if(searchText?.value === '') setResults(null)
         else {
             await fetchResults(1)
-            router.push('/#results')
+            router.push(`${asPath}/#results`)
         }
     }
 
