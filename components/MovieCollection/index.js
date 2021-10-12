@@ -36,18 +36,25 @@ const MovieCollection = ({ view, movieList }) => {
 
 
     useEffect(()=>{
+        let isMounted = true
+
+        function setSize(){
+            let size
+            if(window.innerWidth < 650) size = 33.4
+            else if(window.innerWidth < 900) size = 25
+            else size = 20
+
+            if(isMounted) set_movie_image_size(size)
+        }
+
         if(typeof window !== "undefined"){
-            function setSize(){
-                let size
-                if(window.innerWidth < 650) size = 33.4
-                else if(window.innerWidth < 900) size = 25
-                else size = 20
-
-                set_movie_image_size(size)
-            }
-
             window.addEventListener('resize', setSize)
             setSize()
+        }
+
+        return () => {
+            window.removeEventListener('resize', setSize)
+            isMounted = false
         }
     }, [])
 
