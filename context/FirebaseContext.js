@@ -41,7 +41,7 @@ const FirebaseContext = ({children}) => {
             genres: fb_genre_data? fb_genre_data : []
         }
 
-        console.log("context: ", data)
+        // console.log("context: ", data)
         setFirebaseUser(data)
     }
 
