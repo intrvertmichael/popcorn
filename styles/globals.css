@@ -1,35 +1,39 @@
 html,
 body {
-  padding: 0px;
-  margin: 0px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0px;
+	margin: 0px;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
-  background: black;
-  color: white;
-  max-width: 1200px;
-  margin: auto;
+	background: black;
+	color: white;
+	max-width: 1200px;
+	margin: auto;
 
-  font-size: 16px;
-  line-height: 30px;
+	font-size: 16px;
+	line-height: 30px;
 }
 
-h1, h2, h3, h4, h5 {
-  font-weight: normal;
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-weight: normal;
 }
 
 a {
-  text-decoration: none;
-  color: blue
+	text-decoration: none;
+	color: blue;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 @media only screen and (max-width: 650px) {
-  body {
-    font-size: 14px;
-    line-height: 25px;
-  }
+	body {
+		font-size: 14px;
+		line-height: 25px;
+	}
 }

@@ -1,15 +1,15 @@
-
-
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 20px;
-    border-bottom: 1px solid rgb(30, 30, 30);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0px 20px;
+	border-bottom: 1px solid rgb(30, 30, 30);
 }
 
-.header h1, .header h2, .header h3 {
-    display: inline-block;
+.header h1,
+.header h2,
+.header h3 {
+	display: inline-block;
 }
 
 /*
@@ -18,17 +18,17 @@ Font Size
 - - - - - - - - - - -
 */
 
-.header h1, .header h2 {
-    font-size: 1.2em;
-    margin: 20px 10px;
+.header h1,
+.header h2 {
+	font-size: 1.2em;
+	margin: 20px 10px;
 }
 
 .header h3 {
-    font-size: 0.8em;
-    line-height: 1.5em;
-    text-align: right;
+	font-size: 0.8em;
+	line-height: 1.5em;
+	text-align: right;
 }
-
 
 /*
 - - - - - - - - - - -
@@ -37,13 +37,12 @@ Gaps
 */
 
 .header h1 span {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 .header h3 {
-    margin:0px 10px;
+	margin: 0px 10px;
 }
-
 
 /*
 - - - - - - - - - - -
@@ -52,94 +51,92 @@ Colors
 */
 
 .header a {
-    color: white;
+	color: white;
 }
 
 .header h2 {
-    color: #9b9b9b;
+	color: #9b9b9b;
 }
 
-
 .logout_btn {
-    background: none;
-    border: 1px solid rgb(255, 104, 104);
-    color: rgb(255, 104, 104);
-    border-radius: 5px;
+	background: none;
+	border: 1px solid rgb(255, 104, 104);
+	color: rgb(255, 104, 104);
+	border-radius: 5px;
 }
 
 .logout_btn:hover {
-    color: red;
-    border-color: red;
+	color: red;
+	border-color: red;
 }
 
-
 .genre_list {
-    margin: 20px auto;
-    padding: 0px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid rgb(30, 30, 30);
+	margin: 20px auto;
+	padding: 0px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid rgb(30, 30, 30);
 }
 
 .genre_list li {
-    display: inline-block;
-    list-style-type: none;
-    width: 160px;
-    padding: 0px 20px;
-    margin: 0px 10px;
-    box-sizing: border-box;
-    cursor: pointer;
+	display: inline-block;
+	list-style-type: none;
+	width: 160px;
+	padding: 0px 20px;
+	margin: 0px 10px;
+	box-sizing: border-box;
+	cursor: pointer;
 }
 
 .genre_list a {
-    color: white;
+	color: white;
 }
 
 .genre_list li:hover {
-    background: rgba( 255, 255, 255, 0.08 );
+	background: rgba(255, 255, 255, 0.08);
 }
 
 .left button {
-    background: none;
-    color: #9b9b9b;
-    border: 1px solid #9b9b9b;
-    border-radius: 2px;
-    margin: 0px 5px;
-    cursor: pointer;
+	background: none;
+	color: #9b9b9b;
+	border: 1px solid #9b9b9b;
+	border-radius: 2px;
+	margin: 0px 5px;
+	cursor: pointer;
 }
 
 .left button:hover {
-    color: white;
+	color: white;
 }
 
 @media only screen and (max-width: 700px) {
-    .header {
-        padding: 0px;
-    }
+	.header {
+		padding: 0px;
+	}
 
-    .left h2 {
-        display: none;
-    }
+	.left h2 {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 500px) {
-    .header {
-        padding: 0px 10px;
-    }
+	.header {
+		padding: 0px 10px;
+	}
 
-    .left h1 {
-        display: block;
-        margin-bottom: 10px;
-        margin-left: 0px;
-    }
+	.left h1 {
+		display: block;
+		margin-bottom: 10px;
+		margin-left: 0px;
+	}
 
-    .left button {
-        margin: 10px 5px 20px;
-        padding: 10px;
-    }
+	.left button {
+		margin: 10px 5px 20px;
+		padding: 10px;
+	}
 
-    .logout_btn {
-        display: block;
-        margin-bottom: 10px;
-        padding: 10px;
-    }
+	.logout_btn {
+		display: block;
+		margin-bottom: 10px;
+		padding: 10px;
+	}
 }

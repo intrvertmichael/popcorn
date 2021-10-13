@@ -1,55 +1,56 @@
 .auth {
-    padding: 30px;
-    box-sizing: border-box;
+	padding: 30px;
+	box-sizing: border-box;
 }
 
 .personal_info {
-    background: rgb(5, 5, 5);
-    padding: 20px;
-    box-sizing: border-box;
+	background: rgb(5, 5, 5);
+	padding: 20px;
+	box-sizing: border-box;
 }
 
 .personal_info p {
-    margin: 0px;
+	margin: 0px;
 }
 
 .personal_info b {
-    color: gray;
-    font-weight: normal;
+	color: gray;
+	font-weight: normal;
 }
 
-.auth h3, .auth a {
-    width: fit-content;
-    display: inline-block;
+.auth h3,
+.auth a {
+	width: fit-content;
+	display: inline-block;
 }
 
 .auth h3 {
-    margin-right: 30px;
+	margin-right: 30px;
 }
 
 .auth a {
-    color: gray;
-    cursor: pointer;
+	color: gray;
+	cursor: pointer;
 }
 
 .auth a:hover {
-    color: white;
+	color: white;
 }
 
 .labels {
-    display: flex;
+	display: flex;
 }
 
 @media only screen and (max-width: 500px) {
-    .auth {
-        padding: 10px;
-    }
+	.auth {
+		padding: 10px;
+	}
 
-    .labels {
-        justify-content: space-between;
-    }
+	.labels {
+		justify-content: space-between;
+	}
 
-    .auth h3 {
-        margin-right: 0px;
-    }
+	.auth h3 {
+		margin-right: 0px;
+	}
 }
