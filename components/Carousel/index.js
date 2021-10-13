@@ -19,7 +19,7 @@ const Carousel = ({images}) => {
     }
 
     function nextClicked(){
-        if(pos > 0 && pos < images.length - 1) setPos(pos + 1)
+        if( (pos >= 0) && (pos < images.length - 1)) setPos(pos + 1)
         else setPos(0)
     }
 
