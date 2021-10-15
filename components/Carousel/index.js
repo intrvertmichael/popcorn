@@ -23,7 +23,7 @@ const Carousel = ({ images }) => {
 
 	return (
 		<div className={styles.carousel}>
-			<div className={styles.images}>
+			<div className={styles.images} onClick={nextClicked}>
 				<div className={styles.alt_pics}>{images[pos]}</div>
 			</div>
 

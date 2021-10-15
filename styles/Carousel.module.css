@@ -21,6 +21,7 @@
 	padding-top: 55%;
 	border-radius: 2px;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 .alt_pics {
