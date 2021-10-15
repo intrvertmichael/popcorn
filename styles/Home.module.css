@@ -97,4 +97,8 @@ Genre Verbs
 		box-shadow: none;
 		margin: 0px auto;
 	}
+
+	.movie_grid a {
+		width: 20%;
+	}
 }
