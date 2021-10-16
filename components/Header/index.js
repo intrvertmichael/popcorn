@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { firebase_signout } from './../../requests/firebase/auth'
 import GenreList from '../Genre/List'
 import SearchBar from '../SearchBar'
+import Head from 'next/head'
 
 const Header = () => {
 	const firebaseUser = useGetFirebaseUser()
@@ -67,6 +68,13 @@ const Header = () => {
 
 	return (
 		<>
+			<Head>
+				<meta
+					name='viewport'
+					content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no'
+				/>
+			</Head>
+
 			<div className={styles.header}>
 				<div className={styles.left}>
 					<Link href='/'>

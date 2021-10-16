@@ -99,8 +99,9 @@ Colors
 	background: none;
 	color: #9b9b9b;
 	border: 1px solid #9b9b9b;
-	border-radius: 2px;
+	border-radius: 10px;
 	margin: 0px 5px;
+	padding: 10px;
 	cursor: pointer;
 }
 
@@ -123,6 +124,19 @@ Colors
 		padding: 0px 10px;
 	}
 
+	.header h3 {
+		border: 1px solid gray;
+		padding: 10px;
+		text-align: center;
+		width: 100%;
+		margin: 0px;
+		border-radius: 5px;
+	}
+
+	.header h1 {
+		font-size: 24px;
+	}
+
 	.left h1 {
 		display: block;
 		margin-bottom: 10px;
@@ -131,7 +145,6 @@ Colors
 
 	.left button {
 		margin: 10px 5px 20px;
-		padding: 10px;
 	}
 
 	.logout_btn {
