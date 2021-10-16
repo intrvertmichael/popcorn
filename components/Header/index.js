@@ -48,7 +48,7 @@ const Header = () => {
 	if (onAuthPage) rightComp = <div></div>
 	if (firebaseUser)
 		rightComp = (
-			<div>
+			<div className={styles.right}>
 				<button
 					className={styles.logout_btn}
 					onClick={() => {
@@ -77,16 +77,21 @@ const Header = () => {
 
 			<div className={styles.header}>
 				<div className={styles.left}>
-					<Link href='/'>
-						<a>
-							<h1>
-								<span>🍿</span>Popcorn
-							</h1>
-						</a>
-					</Link>
-					<h2>Find what to watch</h2>
-					<button onClick={handleGenreBtn}> Genres </button>
-					<button onClick={handleSearchBtn}> Search </button>
+					<div>
+						<Link href='/'>
+							<a>
+								<h1>
+									<span>🍿</span>Popcorn
+								</h1>
+							</a>
+						</Link>
+						<h2>Find what to watch</h2>
+					</div>
+
+					<div>
+						<button onClick={handleGenreBtn}> Genres </button>
+						<button onClick={handleSearchBtn}> Search </button>
+					</div>
 				</div>
 
 				{rightComp}
