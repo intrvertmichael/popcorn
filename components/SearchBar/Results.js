@@ -69,8 +69,7 @@ const Results = ({
 	return (
 		<div id='results' className={styles.results_wrapper}>
 			<button className={styles.clear_search} onClick={clearResults}>
-				{' '}
-				Clear Search{' '}
+				X
 			</button>
 
 			<MovieCollection
