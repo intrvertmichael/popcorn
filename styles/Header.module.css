@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0px 20px;
+	padding: 20px;
 	border-bottom: 1px solid rgb(30, 30, 30);
 }
 
@@ -58,18 +58,6 @@ Colors
 	color: #9b9b9b;
 }
 
-.logout_btn {
-	background: none;
-	border: 1px solid rgb(255, 104, 104);
-	color: rgb(255, 104, 104);
-	border-radius: 5px;
-}
-
-.logout_btn:hover {
-	color: red;
-	border-color: red;
-}
-
 .genre_list {
 	margin: 20px auto;
 	padding: 0px;
@@ -94,19 +82,48 @@ Colors
 	background: rgba(255, 255, 255, 0.08);
 }
 
-.left button {
+/*
+- - - - - - - - - - -
+Buttons
+- - - - - - - - - - -
+*/
+
+.header button {
 	background: none;
-	color: #9b9b9b;
-	border: 1px solid #9b9b9b;
+	border-width: 1px;
+	border-style: solid;
 	border-radius: 5px;
-	margin: 0px 5px;
-	padding: 10px;
 	cursor: pointer;
+	padding: 10px;
+}
+
+.logout_btn {
+	background: none;
+	border-color: rgb(255, 104, 104);
+	color: rgb(255, 104, 104);
+	border-radius: 5px;
+}
+
+.logout_btn:hover {
+	color: red;
+	border-color: red;
+}
+
+.left button {
+	color: #9b9b9b;
+	border-color: #9b9b9b;
+	margin: 0px 5px;
 }
 
 .left button:hover {
 	color: white;
 }
+
+/*
+- - - - - - - - - - -
+Media Queries
+- - - - - - - - - - -
+*/
 
 @media only screen and (max-width: 700px) {
 	.header {
@@ -120,18 +137,22 @@ Colors
 
 @media only screen and (max-width: 500px) {
 	.header {
-		padding: 0px 10px;
+		padding: 20px 10px;
 		display: flex;
 		align-items: flex-end;
 	}
 
-	.header h3 {
-		border: 1px solid gray;
+	.header h1 {
+		padding-bottom: 10px;
+	}
+
+	.right h3 {
+		border: 1px solid #9b9b9b;
+		color: #9b9b9b;
 		padding: 10px;
 		text-align: center;
 		width: 100%;
 		margin: 0px;
-		margin-bottom: 20px;
 		border-radius: 5px;
 	}
 
@@ -153,18 +174,15 @@ Colors
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: flex-start;
+		align-items: flex-end;
 		width: 55%;
-		padding-bottom: 10px;
 	}
 
 	.left button {
-		margin: 10px 5px 20px;
+		margin-right: 5px;
 	}
 
 	.logout_btn {
-		display: block;
-		margin-bottom: 10px;
 		margin-left: 10px;
-		padding: 10px;
 	}
 }
