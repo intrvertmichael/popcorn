@@ -160,8 +160,7 @@ Media Queries
 		font-size: 30px;
 		display: block;
 		margin: 0px;
-		margin-bottom: 10px;
-		margin-top: 20px;
+		margin: 20px 0px 30px;
 	}
 
 	.left {
