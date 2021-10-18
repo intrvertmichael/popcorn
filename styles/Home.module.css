@@ -1,5 +1,7 @@
 .container {
 	position: relative;
+	background: black;
+	margin-top: -2px;
 }
 
 /*
