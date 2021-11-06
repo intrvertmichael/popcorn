@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Head from 'next/head'
 import { useGetFirebaseUser } from '../context/FirebaseContext'
 import styles from '../styles/Home.module.css'
 import { getTrending, getGenres, getBestThisYear } from '../requests/movie.api'
@@ -82,6 +83,25 @@ export default function Home({ trending, best, genres }) {
 
 	return (
 		<>
+			<Head>
+				<meta property='og:title' content='Popcorn' />
+				<meta name='author' content='Michael Paguay' />
+				<meta
+					property='og:url'
+					content='https://popcorn-intrvertmichael.vercel.app'
+				/>
+				<meta
+					name='image'
+					property='og:image'
+					content='https://i.imgur.com/ZNdeYuX.jpg'
+				/>
+				<meta
+					name='description'
+					property='og:description'
+					content='Created a movie app to discover new and old movies. You can like, save, and dislike movies to organize them. Tags allow you to find the movies you want faster.'
+				/>
+			</Head>
+
 			<Trending movies={trending} />
 
 			<div className={styles.container}>
