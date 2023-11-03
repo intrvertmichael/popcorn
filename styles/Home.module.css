@@ -1,7 +1,9 @@
 .container {
-	position: relative;
-	background: black;
-	margin-top: -2px;
+  background: black;
+  margin-top: -2px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /*
@@ -10,19 +12,19 @@ Movie Grid @ Top
 */
 
 .movie_grid {
-	display: flex;
-	flex-wrap: wrap;
-	list-style-type: none;
-	padding: 0px;
-	margin: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .movie_grid li {
-	padding-top: 150%;
+  padding-top: 150%;
 }
 
 .movie_grid a {
-	width: 10%;
+  width: 10%;
 }
 
 /*
@@ -31,76 +33,81 @@ Genre Verbs
 */
 
 .genre_verbs {
-	padding: 150px;
+  padding: 150px;
 }
 
 .genre_verbs ul {
-	margin: 0px;
-	padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .genre_verbs li {
-	list-style-type: none;
-	padding: 5px 10px;
-	font-size: 0.8em;
-	border: 1px solid #9b9b9b;
-	color: #9b9b9b;
-	width: fit-content;
-	display: inline-block;
-	margin: 5px;
-	border-radius: 5px;
+  list-style-type: none;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  border: 1px solid #9b9b9b;
+  color: #9b9b9b;
+  width: fit-content;
+  display: inline-block;
+  margin: 5px;
+  border-radius: 5px;
 }
 
 .not_found {
-	width: 500px;
-	margin: auto;
-	background: white;
-	color: black;
-	text-align: center;
-	font-size: 30px;
-	padding: 0px 50px 30px;
-	box-sizing: border-box;
-	margin-top: 20px;
-	border-radius: 5px;
+  width: 500px;
+  margin: auto;
+  background: white;
+  color: black;
+  text-align: center;
+  font-size: 30px;
+  padding: 0px 50px 30px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  border-radius: 5px;
 }
 
 .intro {
-	width: fit-content;
-	margin: 100px auto;
-	padding: 20px 40px;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: linear-gradient(transparent 20%, rgba(255, 255, 255, 0.1));
-	border-radius: 10px;
-	box-shadow: 0px 15px 25px 0px rgba(255, 255, 255, 0.2);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro p {
+  padding: 20px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(transparent 20%, rgba(255, 255, 255, 0.1));
+  border-radius: 10px;
+  box-shadow: 0px 15px 25px 0px rgba(255, 255, 255, 0.2);
 }
 
 .intro span {
-	display: inline-block;
-	width: 40px;
-	font-size: 1.5em;
-	line-height: 1.6em;
-	text-align: left;
-	vertical-align: middle;
+  display: inline-block;
+  width: 40px;
+  font-size: 1.5em;
+  line-height: 1.6em;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .genre_intro {
-	text-align: center;
-	padding: 50px;
-	margin: 0px;
+  text-align: center;
+  padding: 50px;
+  margin: 0px;
 }
 
 @media only screen and (max-width: 650px) {
-	.intro {
-		width: fit-content;
-		border-radius: 0px;
-		padding: 20px;
-		border: none;
-		background: none;
-		box-shadow: none;
-		margin: 0px auto;
-	}
+  .intro {
+    width: fit-content;
+    border-radius: 0px;
+    padding: 20px;
+    border: none;
+    background: none;
+    box-shadow: none;
+    margin: 0px auto;
+  }
 
-	.movie_grid a {
-		width: 20%;
-	}
+  .movie_grid a {
+    width: 20%;
+  }
 }

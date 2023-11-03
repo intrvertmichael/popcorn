@@ -1,55 +1,55 @@
-import { useEffect, useState } from 'react'
-import styles from '../../../styles/ProfileMovieGrid.module.css'
+import { useEffect, useState } from "react"
+import styles from "styles/ProfileMovieGrid.module.css"
 
-import { useGetFirebaseUser } from '../../../context/FirebaseContext'
+import { useGetFirebaseUser } from "context/FirebaseContext"
 
-import LikedMovie from './SavedMovie'
-import TagFilter from './TagFilter'
+import LikedMovie from "./SavedMovie"
+import TagFilter from "./TagFilter"
 
 const SavedProfileMovies = ({ movies }) => {
-	const firebaseUser = useGetFirebaseUser()
-	const [tags, setTags] = useState()
-	const [filter, setFilter] = useState()
-	const [filteredMovies, setFilteredMovies] = useState()
+  const firebaseUser = useGetFirebaseUser()
+  const [tags, setTags] = useState()
+  const [filter, setFilter] = useState()
+  const [filteredMovies, setFilteredMovies] = useState()
 
-	useEffect(() => {
-		async function getTags() {
-			setTags(firebaseUser.tags?.saved)
-		}
+  useEffect(() => {
+    async function getTags() {
+      setTags(firebaseUser.tags?.saved)
+    }
 
-		getTags()
-	}, [firebaseUser])
+    getTags()
+  }, [firebaseUser])
 
-	useEffect(() => {
-		if (filter) {
-			const tagArr = tags[filter]
-			const filtered = movies.filter((movie) => {
-				const exists = tagArr?.length
-					? tagArr.find((id) => id === movie.id)
-					: tagArr === movie.id
-				return exists ? true : false
-			})
-			setFilteredMovies(filtered)
-		} else {
-			setFilteredMovies(movies)
-		}
-	}, [filter, movies, tags])
+  useEffect(() => {
+    if (filter) {
+      const tagArr = tags[filter]
+      const filtered = movies.filter(movie => {
+        const exists = tagArr?.length
+          ? tagArr.find(id => id === movie.id)
+          : tagArr === movie.id
+        return exists ? true : false
+      })
+      setFilteredMovies(filtered)
+    } else {
+      setFilteredMovies(movies)
+    }
+  }, [filter, movies, tags])
 
-	if (movies?.length === 0) return false
+  if (movies?.length === 0) return false
 
-	return (
-		<>
-			<TagFilter filter={filter} setFilter={setFilter} />
+  return (
+    <>
+      <TagFilter filter={filter} setFilter={setFilter} />
 
-			<ul className={styles.genre_movies}>
-				{filteredMovies?.map((movie) => {
-					return (
-						<LikedMovie key={movie.id} movie={movie} movies={filteredMovies} />
-					)
-				})}
-			</ul>
-		</>
-	)
+      <ul className={styles.genre_movies}>
+        {filteredMovies?.map(movie => {
+          return (
+            <LikedMovie key={movie.id} movie={movie} movies={filteredMovies} />
+          )
+        })}
+      </ul>
+    </>
+  )
 }
 
 export default SavedProfileMovies

@@ -1,61 +1,61 @@
 .carousel {
-	position: relative;
+  position: relative;
 }
 
 .carousel button {
-	border: none;
-	background: none;
-	color: gray;
-	font-size: 1.5em;
-	cursor: pointer;
-	padding: 0px;
-	margin: 0px;
+  border: none;
+  background: none;
+  color: gray;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0px;
+  margin: 0px;
 }
 
 .carousel button:hover {
-	color: white;
+  color: white;
 }
 
 .images {
-	position: relative;
-	padding-top: 55%;
-	border-radius: 2px;
-	overflow: hidden;
-	cursor: pointer;
+  position: relative;
+  padding-top: 55%;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .alt_pics {
-	position: absolute;
-	top: 0;
-	right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .nav {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	color: gray;
-	position: absolute;
-	right: 20px;
-	bottom: -40px;
-	z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: gray;
+  position: absolute;
+  right: 20px;
+  bottom: -40px;
+  z-index: 10;
 }
 
 .nav span {
-	color: white;
+  color: white;
 }
 
 .label {
-	text-align: center;
-	width: 75px;
+  text-align: center;
+  width: 75px;
 }
 
 @media only screen and (max-width: 650px) {
-	.nav {
-		background: black;
-		padding: 5px 10px;
-		bottom: auto;
-		top: 0px;
-		right: 0px;
-	}
+  .nav {
+    background: black;
+    padding: 5px 10px;
+    bottom: auto;
+    top: 0px;
+    right: 0px;
+  }
 }

@@ -1,114 +1,114 @@
 .forms {
-	display: flex;
-	width: 80%;
-	margin: 50px auto;
+  display: flex;
+  width: 80%;
+  margin: 50px auto;
 }
 
 .forms form {
-	width: 100%;
-	padding: 30px;
-	box-sizing: border-box;
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
 }
 
 .forms form input {
-	display: block;
+  display: block;
 }
 
-.forms form input[type='text'],
-.forms form input[type='email'],
-.forms form input[type='password'] {
-	width: 100%;
-	padding: 10px;
-	font-size: 18px;
+.forms form input[type="text"],
+.forms form input[type="email"],
+.forms form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
 }
 
-.forms form input[type='submit'] {
-	padding: 10px 20px;
-	margin-top: 20px;
-	background: none;
-	color: white;
-	border: 1px solid white;
-	border-radius: 5px;
-	cursor: pointer;
+.forms form input[type="submit"] {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background: none;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.forms form input[type='submit']:hover {
-	background: white;
-	color: black;
+.forms form input[type="submit"]:hover {
+  background: white;
+  color: black;
 }
 
 .login {
-	border-right: 1px solid white;
+  border-right: 1px solid white;
 }
 
 .register {
-	background: rgb(10, 10, 10);
-	border-radius: 0px 10px 10px 0px;
+  background: rgb(10, 10, 10);
+  border-radius: 0px 10px 10px 0px;
 }
 
 .error {
-	border: 1px solid red;
-	background: rgba(255, 0, 0, 0.2);
-	color: white;
-	border-radius: 5px;
-	box-sizing: border-box;
-	text-align: center;
-	width: 80%;
-	padding: 30px;
-	margin: auto;
-	position: relative;
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.2);
+  color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 80%;
+  padding: 30px;
+  margin: auto;
+  position: relative;
 }
 
 .error button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: red;
-	background: none;
-	border: none;
-	cursor: pointer;
-	padding: 5px 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
 }
 
 @media only screen and (max-width: 950px) {
-	.forms {
-		flex-direction: column-reverse;
-		width: 80%;
-	}
+  .forms {
+    flex-direction: column-reverse;
+    width: 80%;
+  }
 
-	.login {
-		border-right: none;
-		margin-bottom: 50px;
-	}
+  .login {
+    border-right: none;
+    margin-bottom: 50px;
+  }
 
-	.register {
-		border-radius: 5px 5px 0px 0px;
-		border-bottom: 1px solid white;
-	}
+  .register {
+    border-radius: 5px 5px 0px 0px;
+    border-bottom: 1px solid white;
+  }
 }
 
 @media only screen and (max-width: 650px) {
-	.forms {
-		width: 90%;
-		margin: 10px auto;
-	}
+  .forms {
+    width: 90%;
+    margin: 10px auto;
+  }
 
-	.forms form {
-		padding: 20px;
-	}
+  .forms form {
+    padding: 20px;
+  }
 
-	.forms form h2 {
-		margin: 0px;
-	}
+  .forms form h2 {
+    margin: 0px;
+  }
 
-	.forms form label {
-		display: block;
-		padding-top: 5px;
-	}
+  .forms form label {
+    display: block;
+    padding-top: 5px;
+  }
 }
 
 @media only screen and (max-width: 500px) {
-	.forms {
-		width: 95%;
-	}
+  .forms {
+    width: 95%;
+  }
 }

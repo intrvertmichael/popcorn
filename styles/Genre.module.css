@@ -1,30 +1,30 @@
 .genre_title {
-	text-align: center;
-	padding: 20px 0px;
+  text-align: center;
+  padding: 20px 0px;
 }
 
 .genre_nav {
-	padding: 20px 0px;
-	margin-bottom: 50px;
-	text-align: center;
-	font-size: 1.5em;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: rgb(65, 65, 65);
+  padding: 20px 0px;
+  margin-bottom: 50px;
+  text-align: center;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(65, 65, 65);
 }
 
 .genre_nav span {
-	color: white;
-	margin: 0px 5px;
+  color: white;
+  margin: 0px 5px;
 }
 
 .genre_nav a,
 .genre_nav p {
-	padding: 0px 10px;
-	font-size: 1em;
+  padding: 0px 10px;
+  font-size: 1em;
 }
 
 .genre_nav a {
-	color: white;
+  color: white;
 }
