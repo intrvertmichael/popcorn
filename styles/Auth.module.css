@@ -1,6 +1,7 @@
 .auth {
-  padding: 30px;
-  box-sizing: border-box;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
 }
 
 .personal_info {

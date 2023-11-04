@@ -1,3 +1,9 @@
+.root {
+  margin: auto;
+  max-width: 900px;
+  width: 100%;
+}
+
 .genre_title {
   text-align: center;
   padding: 20px 0px;

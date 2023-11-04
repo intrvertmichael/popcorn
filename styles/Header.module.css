@@ -2,8 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid rgb(30, 30, 30);
+  padding: 0 40px 30px;
 }
 
 .header h1,
@@ -12,16 +11,9 @@
   display: inline-block;
 }
 
-/*
-- - - - - - - - - - -
-Font Size
-- - - - - - - - - - -
-*/
-
 .header h1,
 .header h2 {
   font-size: 1.2em;
-  margin: 20px 10px;
 }
 
 .header h3 {
@@ -30,12 +22,6 @@ Font Size
   text-align: right;
 }
 
-/*
-- - - - - - - - - - -
-Gaps
-- - - - - - - - - - -
-*/
-
 .header h1 span {
   margin-right: 10px;
 }
@@ -43,12 +29,6 @@ Gaps
 .header h3 {
   margin: 0px 10px;
 }
-
-/*
-- - - - - - - - - - -
-Colors
-- - - - - - - - - - -
-*/
 
 .header a {
   color: white;
@@ -59,9 +39,8 @@ Colors
 }
 
 .genre_list {
-  margin: 20px auto;
-  padding: 0px;
-  padding-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .genre_list li {
@@ -82,19 +61,8 @@ Colors
   background: rgba(255, 255, 255, 0.08);
 }
 
-/*
-- - - - - - - - - - -
-Buttons
-- - - - - - - - - - -
-*/
-
 .header button {
   background: none;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 10px;
 }
 
 .logout_btn {
@@ -110,7 +78,11 @@ Buttons
 }
 
 .left button {
+  padding: 10px;
   color: #9b9b9b;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
   border-color: #9b9b9b;
   margin: 0px 5px;
 }
@@ -119,11 +91,17 @@ Buttons
   color: white;
 }
 
-/*
-- - - - - - - - - - -
-Media Queries
-- - - - - - - - - - -
-*/
+.leftTop {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
 @media only screen and (max-width: 700px) {
   .header {
@@ -184,4 +162,11 @@ Media Queries
   .logout_btn {
     margin-left: 10px;
   }
+}
+
+.auth {
+  color: #9b9b9b;
+  border: none;
+  text-align: left;
+  line-height: 1.25rem;
 }

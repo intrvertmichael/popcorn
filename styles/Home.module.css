@@ -6,31 +6,19 @@
   flex-direction: column;
 }
 
-/*
-Movie Grid @ Top
-- - - - - - - - - - - - - - - - -
-*/
-
 .movie_grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
   list-style-type: none;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 
+.movie_grid a,
 .movie_grid li {
-  padding-top: 150%;
+  width: 100%;
+  aspect-ratio: 1/1.5;
 }
-
-.movie_grid a {
-  width: 10%;
-}
-
-/*
-Genre Verbs
-- - - - - - - - - - - - - - - - -
-*/
 
 .genre_verbs {
   padding: 150px;
@@ -71,6 +59,7 @@ Genre Verbs
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5rem 0;
 }
 
 .intro p {
@@ -105,9 +94,5 @@ Genre Verbs
     background: none;
     box-shadow: none;
     margin: 0px auto;
-  }
-
-  .movie_grid a {
-    width: 20%;
   }
 }

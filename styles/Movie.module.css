@@ -1,7 +1,21 @@
+.root {
+  position: relative;
+}
+
+.root,
+.movie_li {
+  width: 100%;
+  aspect-ratio: 1/ 1.5;
+}
+
+.root:hover .votes,
+.root:hover .movie_info {
+  opacity: 1;
+}
+
 .movie_li,
 .liked,
 .disliked {
-  position: relative;
   list-style-type: none;
 }
 
@@ -22,10 +36,6 @@
   position: absolute;
   top: 0px;
   left: 0px;
-}
-
-.movie_info:hover {
-  opacity: 1;
 }
 
 .movie_info_description {
@@ -55,10 +65,13 @@
 }
 
 .votes {
+  opacity: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
 }
 
 .liked img {

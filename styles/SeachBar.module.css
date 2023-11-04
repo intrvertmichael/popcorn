@@ -1,15 +1,14 @@
 .search {
-  padding: 50px;
   border-bottom: 1px solid rgb(30, 30, 30);
-  position: relative;
 }
 
 .search_bar {
   margin: auto;
   padding: 0px;
   overflow: hidden;
-  border-radius: 5px;
-  background: white;
+  border-radius: 0.5rem;
+  background: black;
+  border: 2px solid #252525;
 
   display: flex;
   flex-direction: row;
@@ -17,20 +16,21 @@
 
 .search_bar input,
 .search_bar button {
-  margin: 0px;
-  padding: 20px;
+  color: white;
+  margin: 0;
+  padding: 0 20px;
   border: none;
   box-sizing: border-box;
   background: none;
 }
 
 .search_bar input {
-  font-size: 1.5em;
-  width: 100%;
+  font-size: 1.25em;
 }
 
 .search_bar button {
-  font-size: 2em;
+  font-size: 2rem;
+  padding: 0 0.5rem;
 }
 
 .clear_search {

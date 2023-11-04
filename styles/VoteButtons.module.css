@@ -1,20 +1,20 @@
 .voting_buttons {
-  background: none;
-  border: 1px solid black;
+  background: transparent;
+  border: 2px solid transparent;
   font-size: 30px;
-  padding: 10px;
   border-radius: 5px;
   cursor: pointer;
   color: white;
+  width: 60px;
+  aspect-ratio: 1;
 }
 
 .voting_buttons:hover {
-  background: rgba(30, 30, 30);
+  border-color: gray;
 }
 
 @media only screen and (max-width: 650px) {
   .voting_buttons {
     font-size: 20px;
-    padding: 5px;
   }
 }
