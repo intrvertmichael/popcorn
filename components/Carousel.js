@@ -1,35 +1,44 @@
 import { useState } from "react"
 
-import styles from "styles/Carousel.module.css"
+const buttonStyle = "hover:text-white"
 
 export default function Carousel({ images }) {
   const [pos, setPos] = useState(
     images ? Math.floor(images.length * Math.random()) : 0,
-  )
+  ) // TODO: keep image pos on the url so when shared can share with specific picture
 
   if (!images) return false
 
-  function backClicked() {
-    setPos(images.length > pos && pos > 0 ? pos - 1 : images.length - 1)
-  }
+  const backClicked = () =>
+    setPos(curr =>
+      images.length > curr && curr > 0 ? curr - 1 : images.length - 1,
+    )
 
-  function nextClicked() {
-    setPos(pos >= 0 && pos < images.length - 1 ? pos + 1 : 0)
-  }
+  const nextClicked = () =>
+    setPos(curr => (curr >= 0 && curr < images.length - 1 ? curr + 1 : 0))
 
   return (
-    <div className={styles.carousel}>
-      <div className={styles.images} onClick={nextClicked}>
-        <div className={styles.alt_pics}>{images[pos]}</div>
+    <div className='relative max-w-6xl mx-auto overflow-hidden bg-neutral-950'>
+      <div
+        className='aspect-[16/9] cursor-pointer relative'
+        onClick={nextClicked}
+      >
+        {images[pos]}
       </div>
 
       {images.length > 1 && (
-        <div className={styles.nav}>
-          <button onClick={backClicked}> ◀ </button>
-          <div className={styles.label}>
-            <span>{pos}</span> / {images.length - 1}
+        <div className='absolute top-0 right-0 flex gap-2 p-3 text-neutral-400 rounded-bl-xl bg-neutral-950'>
+          <button onClick={backClicked} className={buttonStyle}>
+            ◀
+          </button>
+
+          <div>
+            <span className='text-white'>{pos + 1}</span> / {images.length}
           </div>
-          <button onClick={nextClicked}> ▶ </button>
+
+          <button onClick={nextClicked} className={buttonStyle}>
+            ▶
+          </button>
         </div>
       )}
     </div>

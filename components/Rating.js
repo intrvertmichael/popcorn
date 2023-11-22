@@ -1,28 +1,20 @@
 import { formatRating } from "utils/general"
 
-import styles from "styles/MovieDetails.module.css"
-
 export default function Rating({ score, count }) {
-  if (count <= 50 || score === 0) return false
+  const roundedScore = formatRating(score)
 
-  const good = {
-    backgroundImage:
-      "linear-gradient(25deg, #2a8535, #5dac4d, #8cd567, #bcff82)",
-  }
+  if (count <= 50 || roundedScore === 0) return false
 
-  const bad = {
-    backgroundImage:
-      "linear-gradient(25deg, #5e112b, #8e142c, #c0142b, #f41029)",
-  }
-
-  let color
-  if (score > 8) color = good
-  if (score < 5) color = bad
+  let color = "from-yellow-600 to-yellow-400"
+  if (roundedScore >= 8) color = "from-green-600 to-green-400"
+  if (roundedScore <= 5) color = "from-red-600 to-red-400"
 
   return (
-    <div className={styles.rating} style={color}>
-      <span>{formatRating(score)}</span>
-      <p>{count} votes</p>
+    <div
+      className={`p-3 text-center text-black rounded pointer-events-auto bg-gradient-to-t ${color}`}
+    >
+      <span className='text-5xl'>{roundedScore}</span>
+      <p className='pt-3 font-thin '>{count} votes</p>
     </div>
   )
 }

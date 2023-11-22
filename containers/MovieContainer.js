@@ -10,59 +10,65 @@ import Carousel from "components/Carousel"
 import MovieCollection from "components/MovieCollection"
 import VoteButtons from "components/VoteButtons"
 
-import styles from "styles/MovieDetails.module.css"
-
 export default function Movie({ movie, images, recommended }) {
   const firebaseUser = useGetFirebaseUser()
 
   if (!movie || !images || !recommended) return false
 
-  const altPics = images.backdrops.map((img, key) => {
-    const altImage = createMovieImageURL(img.file_path)
-    return <Image key={key} src={altImage} fill={true} alt={key} />
-  })
-
-  const posterImage = createMovieImageURL(movie.poster_path)
-  const genres = movie.genres.map(g => (
-    <Link href={"/genre/" + g.id} key={g.id} passHref>
-      <li> {g.name} </li>
-    </Link>
-  ))
-
   const fullDate = createFullDate(movie.release_date)
   const fullLength = createFullLength(movie.runtime)
 
   return (
-    <div className={styles.container}>
-      <Carousel images={altPics} />
+    <>
+      <Carousel
+        images={images.backdrops.map((img, key) => (
+          <Image
+            key={key}
+            alt={key}
+            src={createMovieImageURL(img.file_path)}
+            fill={true}
+            sizes='(max-width: 2400px) 100vw, (max-width: 1200px) 50vw'
+          />
+        ))}
+      />
 
-      <div className={styles.content}>
-        <div className={styles.top}>
-          <div className={styles.poster}>
-            <Image src={posterImage} alt={movie.title} fill={true} />
+      <div className='relative z-10 w-full max-w-3xl px-3 mx-auto -mt-32 pointer-events-none lg:-mt-56'>
+        <div className='flex items-end gap-3'>
+          <div className='relative w-44 aspect-[1/1.5] pointer-events-auto'>
+            <Image
+              src={createMovieImageURL(movie.poster_path)}
+              alt={movie.title}
+              fill={true}
+              sizes='20vw'
+            />
           </div>
 
           <Rating score={movie.vote_average} count={movie.vote_count} />
 
-          <ul className={styles.genres}>{genres}</ul>
+          <ul className='flex flex-wrap gap-1 pointer-events-auto'>
+            {movie.genres.map(g => (
+              <Link href={"/genre/" + g.id} key={g.id} passHref>
+                <li className='px-2 py-1 rounded text-neutral-400 bg-neutral-900 hover:text-white'>
+                  {g.name}
+                </li>
+              </Link>
+            ))}
+          </ul>
         </div>
 
-        <div className={styles.movie_info}>
-          <div className={styles.movie_description}>
-            <h1>{movie.title}</h1>
-            <h2>{movie.tagline}</h2>
-            <p className={styles.overview}>{movie.overview}</p>
-            <div className={styles.details}>
-              <p> Released on {fullDate}</p>
-              <p> {fullLength} long</p>
-            </div>
+        <div className='px-12 py-36'>
+          <h1 className='text-2xl '>{movie.title}</h1>
+          <h2 className='text-neutral-500'>{movie.tagline}</h2>
+          <p className='py-12 leading-8'>{movie.overview}</p>
 
-            {firebaseUser && (
-              <div className={styles.vote_btns}>
-                <VoteButtons movie={movie} />
-              </div>
-            )}
-          </div>
+          <p className='text-right'> Released on {fullDate}</p>
+          <p className='text-right'> {fullLength} long</p>
+
+          {firebaseUser && (
+            <div className='flex gap-2'>
+              <VoteButtons movie={movie} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -73,6 +79,6 @@ export default function Movie({ movie, images, recommended }) {
           title: "Recommended Movies",
         }}
       />
-    </div>
+    </>
   )
 }

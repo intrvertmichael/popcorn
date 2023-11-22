@@ -37,11 +37,6 @@ function getURL(type, id, page) {
     case "imageList":
       return baseURL + "/movie/" + id + "/images" + keyPath
 
-    case "search":
-      return (
-        baseURL + "/search/movie/" + keyPath + "&query=" + id + "&page=" + page
-      )
-
     case "recommendedMovies":
       return baseURL + "/movie/" + id + "/recommendations" + keyPath
 
@@ -117,13 +112,6 @@ export async function getSingleMovie(id) {
 
 export async function getImageList(id) {
   const url = getURL("imageList", id)
-  const res = await fetch(url)
-  const data = await res.json()
-  return data
-}
-
-export async function searchForMovie(query, page = 1) {
-  const url = getURL("search", query, page)
   const res = await fetch(url)
   const data = await res.json()
   return data

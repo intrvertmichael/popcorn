@@ -2,8 +2,6 @@ import Link from "next/link"
 
 import MovieCollection from "components/MovieCollection"
 
-import styles from "styles/Genre.module.css"
-
 export default function GenreDetails({ movies, genreLabel, page }) {
   if (!movies && !genreLabel && !page) return false
 
@@ -26,17 +24,17 @@ export default function GenreDetails({ movies, genreLabel, page }) {
     )
 
   return (
-    <div className={styles.root}>
-      <div className={styles.genre_title}>
+    <div className='w-full max-w-4xl m-auto'>
+      <div className='text-center py-10 text-3xl'>
         <h1>{genreLabel.name} Movies</h1>
       </div>
 
       <MovieCollection view='grid' movieList={{ movies: movies.results }} />
 
-      <nav className={styles.genre_nav}>
+      <nav className='flex gap-3 text-3xl m-auto w-fit py-10 text-neutral-500'>
         {backBtn}
         <p>
-          Page <span>{page}</span> / {movies.total_pages}
+          Page <span className='text-white'>{page}</span> / {movies.total_pages}
         </p>
         {nextBtn}
       </nav>

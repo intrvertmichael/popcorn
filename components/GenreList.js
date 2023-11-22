@@ -1,13 +1,11 @@
 import Link from "next/link"
 
-import styles from "styles/Header.module.css"
-
 export default function GenreList({ genres }) {
   return (
-    <ul className={styles.genre_list}>
+    <ul className='grid grid-cols-5 p-5'>
       {genres?.map((genre, key) => (
         <Link key={key} href={"/genre/" + genre.id} passHref>
-          <li>{genre.name}</li>
+          <li className='text-white hover:text-neutral-500'>{genre.name}</li>
         </Link>
       ))}
     </ul>

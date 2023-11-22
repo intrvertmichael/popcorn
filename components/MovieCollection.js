@@ -5,7 +5,12 @@ import { useGetFirebaseUser } from "context/FirebaseContext"
 
 import Movie from "components/Movie"
 
-import styles from "styles/MovieCollection.module.css"
+const buttonStyle =
+  "absolute pb-1 px-3 text-3xl font-bold bg-black top-1/2 z-20 rounded -translate-y-1/2"
+
+const collectionTitleStyle = "p-6 text-2xl text-neutral-500"
+
+const scrollAmount = 500 // TODO: needs to adapt depending on the screen width
 
 export default function MovieCollection({ view, movieList }) {
   const firebaseUser = useGetFirebaseUser()
@@ -14,7 +19,6 @@ export default function MovieCollection({ view, movieList }) {
   const movieBar = useRef(null)
 
   const [movies, setMovies] = useState([])
-  const [movie_image_size, set_movie_image_size] = useState([])
 
   useEffect(() => {
     const movie_array = []
@@ -26,84 +30,76 @@ export default function MovieCollection({ view, movieList }) {
 
       if (!disliked)
         movie_array.push(
-          <Movie movie={movie} key={movie.id} fb_liked={liked ? true : null} />,
+          <Movie
+            movie={movie}
+            key={movie.id}
+            fb_liked={liked ? true : null}
+            className='snap-start'
+          />,
         )
     })
 
     setMovies(movie_array)
   }, [FBDisLikedMovies, FBLikedMovies, movieList])
 
-  useEffect(() => {
-    let isMounted = true
+  if (!movieList || movieList.movies?.length === 0 || movies?.length === 0) {
+    return false
+  }
 
-    function setSize() {
-      let size
-      if (window.innerWidth < 650) size = 33.4
-      else if (window.innerWidth < 900) size = 25
-      else size = 20
+  let moviesWrapperStyle
+  let moviesListStyle = "grid grid-cols-4"
 
-      if (isMounted) set_movie_image_size(size)
-    }
-
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", setSize)
-      setSize()
-    }
-
-    return () => {
-      window.removeEventListener("resize", setSize)
-      isMounted = false
-    }
-  }, [])
-
-  if (!movieList || movieList.movies?.length === 0) return false
-
-  if (movies?.length === 0) return false
-
-  let ul_classes
-  let ul_style
   if (view === "bar") {
-    ul_classes = styles.genre_movies_bar
-    const w = movies?.length * movie_image_size
-    ul_style = { width: `${w}%` }
-  }
-  if (view === "grid") {
-    ul_classes = styles.genre_movies_grid
+    moviesWrapperStyle =
+      "w-full scroll-smooth overflow-x-scroll snap-x snap-mandatory"
+    moviesListStyle =
+      "w-[400%] md:w-[334%] xl:w-[286%] grid grid-cols-20 grid-rows-1"
   }
 
-  const scrollAmount = 50 // TODO: needs to adapt depending on the screen width
-
-  function handleRMovement(e) {
+  const handleRMovement = e => {
     e.preventDefault()
-    movieBar.current.scrollLeft += movie_image_size * scrollAmount
+    movieBar.current.scrollLeft += scrollAmount
   }
 
-  function handleLMovement(e) {
+  const handleLMovement = e => {
     e.preventDefault()
-    movieBar.current.scrollLeft -= movie_image_size * scrollAmount
+    movieBar.current.scrollLeft -= scrollAmount
   }
 
   return (
-    <div className={styles.movie_bar}>
+    <div className=''>
       {movieList.genreID ? (
         <Link href={`/genre/${movieList.genreID}`} passHref>
-          <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+          <h3 className={collectionTitleStyle}>{movieList.title}</h3>
         </Link>
       ) : (
-        <h3 className={styles.genre_movies_title}> {movieList.title} </h3>
+        <h3 className={collectionTitleStyle}> {movieList.title} </h3>
       )}
 
-      {view === "bar" && (
-        <div className={styles.movement}>
-          <button onClick={handleLMovement}>{"<"}</button>
-          <button onClick={handleRMovement}>{">"}</button>
+      <div className='relative'>
+        {view === "bar" && (
+          <>
+            <button
+              onClick={handleLMovement}
+              className={`${buttonStyle} left-3`}
+            >
+              {"<"}
+            </button>
+
+            <button
+              onClick={handleRMovement}
+              className={`${buttonStyle} right-3`}
+            >
+              {">"}
+            </button>
+          </>
+        )}
+
+        <div className={moviesWrapperStyle} ref={movieBar}>
+          <ul className={moviesListStyle}>
+            {view === "bar" ? movies.slice(0, 20) : movies}
+          </ul>
         </div>
-      )}
-
-      <div className={styles.genre_movies_wrapper} ref={movieBar}>
-        <ul className={ul_classes} style={ul_style}>
-          {movies}
-        </ul>
       </div>
     </div>
   )

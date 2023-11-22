@@ -3,9 +3,15 @@ import { useRouter } from "next/router"
 
 import firebase from "utils/firebase/config"
 
-import styles from "styles/AuthForm.module.css"
-
 const db = firebase.firestore()
+
+const styles = {
+  section: "p-5 flex flex-1 flex-col gap-2",
+  sectionHeader: "text-xl font-bold",
+  formLabel: "text-neutral-400",
+  formInput: "bg-neutral-400 py-1 px-2 text-black rounded",
+  submit: "bg-neutral-800 text-white mt-3 py-3 rounded",
+}
 
 export default function AuthForm() {
   const router = useRouter()
@@ -60,39 +66,71 @@ export default function AuthForm() {
   }
 
   return (
-    <div className={styles.root}>
-      {error ? (
-        <div className={styles.error}>
-          <button onClick={() => setError(null)}>X</button>
-          <p>{error}</p>
+    <div className='p-5'>
+      {error && (
+        <div className='flex flex-col items-end border border-red-500 rounded'>
+          <button
+            onClick={() => setError(null)}
+            className='px-3 py-1 text-red-500'
+          >
+            X
+          </button>
+
+          <p className='w-full pb-8 text-center'>{error}</p>
         </div>
-      ) : (
-        ""
       )}
 
-      <div className={styles.forms}>
-        <form className={styles.login} onSubmit={loginSubmitted}>
-          <h2>Returning User Log In</h2>
-          <label> Email: </label>
-          <input type='email' onChange={e => setEmail(e.target.value)} />
-          <label> Password: </label>
-          <input type='password' onChange={e => setPassword(e.target.value)} />
-          <input type='submit' value='Log In' />
+      <div className='flex w-full p-5'>
+        <form
+          className={styles.section + " border-r"}
+          onSubmit={loginSubmitted}
+        >
+          <h2 className={styles.sectionHeader}>Log In</h2>
+
+          <label className={styles.formLabel}> Email: </label>
+          <input
+            type='email'
+            onChange={e => setEmail(e.target.value)}
+            className={styles.formInput}
+          />
+
+          <label className={styles.formLabel}> Password: </label>
+          <input
+            type='password'
+            onChange={e => setPassword(e.target.value)}
+            className={styles.formInput}
+          />
+
+          <input type='submit' value='Log In' className={styles.submit} />
         </form>
 
-        <form className={styles.register} onSubmit={registerSubmitted}>
-          <h2>New User Registration</h2>
-          <p></p>
-          <label>Email: (Does NOT have to be a real email 🙂)</label>
-          <input type='email' onChange={e => setEmail(e.target.value)} />
-          <label> Password: </label>
-          <input type='password' onChange={e => setPassword(e.target.value)} />
-          <label> Confirm Password: </label>
+        <form onSubmit={registerSubmitted} className={styles.section}>
+          <h2 className={styles.sectionHeader}>New User Registration</h2>
+
+          <label className={styles.formLabel}>
+            Email: (Does NOT have to be a real email 🙂)
+          </label>
+          <input
+            type='email'
+            onChange={e => setEmail(e.target.value)}
+            className={styles.formInput}
+          />
+
+          <label className={styles.formLabel}> Password: </label>
+          <input
+            type='password'
+            onChange={e => setPassword(e.target.value)}
+            className={styles.formInput}
+          />
+
+          <label className={styles.formLabel}> Confirm Password: </label>
           <input
             type='password'
             onChange={e => setPasswordConfirm(e.target.value)}
+            className={styles.formInput}
           />
-          <input type='submit' value='Register' />
+
+          <input type='submit' value='Register' className={styles.submit} />
         </form>
       </div>
     </div>

@@ -3,19 +3,21 @@ import { useEffect, useState } from "react"
 import { useGetFirebaseUser } from "context/FirebaseContext"
 
 import AuthForm from "components/AuthForm"
-import LikedProfileMovies from "components/LikedMovies"
-import DislikedProfileMovies from "components/DislikedMovies"
-import SavedProfileMovies from "components/SavedMovies"
+import ProfileMovieList from "components/ProfileMovieList"
 
-import styles from "styles/Auth.module.css"
+const PAGES = {
+  SAVED: "saved",
+  LIKED: "liked",
+  DISLIKED: "disliked",
+}
 
 export default function ProfileContainer() {
   const firebaseUser = useGetFirebaseUser()
 
-  const [page, setPage] = useState("saved")
-  const [likedMovies, setLikedMovies] = useState()
-  const [dislikedMovies, setDisLikedMovies] = useState()
-  const [savedMovies, setSavedMovies] = useState()
+  const [page, setPage] = useState(PAGES.SAVED)
+  const [likedMovies, setLikedMovies] = useState([])
+  const [dislikedMovies, setDisLikedMovies] = useState([])
+  const [savedMovies, setSavedMovies] = useState([])
 
   async function fetch_movie(id) {
     const movie_res = await fetch("/api/movie", {
@@ -29,30 +31,27 @@ export default function ProfileContainer() {
 
   useEffect(() => {
     if (firebaseUser) {
-      // getting the liked movies
       if (firebaseUser.liked) {
         Promise.all(
-          firebaseUser.liked.map(async movie => {
-            return await fetch_movie(movie.movie_id)
-          }),
+          firebaseUser.liked.map(
+            async movie => await fetch_movie(movie.movie_id),
+          ),
         ).then(result => setLikedMovies(result))
       }
 
-      // getting the disliked movies
       if (firebaseUser.disliked) {
         Promise.all(
-          firebaseUser.disliked.map(async movie => {
-            return await fetch_movie(movie.movie_id)
-          }),
+          firebaseUser.disliked.map(
+            async movie => await fetch_movie(movie.movie_id),
+          ),
         ).then(result => setDisLikedMovies(result))
       }
 
-      // getting the saved movies
       if (firebaseUser.saved) {
         Promise.all(
-          firebaseUser.saved.map(async movie => {
-            return await fetch_movie(movie.movie_id)
-          }),
+          firebaseUser.saved.map(
+            async movie => await fetch_movie(movie.movie_id),
+          ),
         ).then(result => setSavedMovies(result))
       }
     }
@@ -61,45 +60,47 @@ export default function ProfileContainer() {
   if (!firebaseUser) return <AuthForm />
 
   return (
-    <div className={styles.auth}>
-      <h1>Profile</h1>
+    <div className='w-full max-w-4xl pb-6 mx-auto'>
+      <div className='flex gap-5'>
+        {Object.values(PAGES).map(p => {
+          const pageLabel = (
+            <h3 key={p} className='capitalize'>
+              {p} ({firebaseUser[p]?.length})
+            </h3>
+          )
 
-      <div className={styles.labels}>
-        {page === "saved" ? (
-          <h3>⭐ Saved ({firebaseUser.saved?.length})</h3>
-        ) : (
-          <a onClick={() => setPage("saved")}>
-            <h3>Saved ({firebaseUser.saved?.length})</h3>
-          </a>
-        )}
-
-        {page === "liked" ? (
-          <h3>👍 Liked ({firebaseUser.liked?.length})</h3>
-        ) : (
-          <a onClick={() => setPage("liked")}>
-            <h3>Liked ({firebaseUser.liked?.length})</h3>
-          </a>
-        )}
-
-        {page === "disliked" ? (
-          <h3>👎 Disliked ({firebaseUser.disliked?.length})</h3>
-        ) : (
-          <a onClick={() => setPage("disliked")}>
-            <h3>Disliked ({firebaseUser.disliked?.length})</h3>
-          </a>
-        )}
+          return page === p ? (
+            pageLabel
+          ) : (
+            <button
+              key={p}
+              onClick={() => setPage(p)}
+              className='text-neutral-500'
+            >
+              {pageLabel}
+            </button>
+          )
+        })}
       </div>
 
-      {page === "liked" && (
-        <LikedProfileMovies likes={true} movies={likedMovies} />
+      <h2 className='my-5 text-2xl text-neutral-500 capitalize'>
+        {page} movies
+      </h2>
+
+      {page === PAGES.LIKED && (
+        <ProfileMovieList movies={likedMovies} likes liked />
       )}
 
-      {page === "disliked" && (
-        <DislikedProfileMovies likes={false} movies={dislikedMovies} />
+      {page === PAGES.DISLIKED && (
+        <ProfileMovieList movies={dislikedMovies} likes={false} disliked />
       )}
 
-      {page === "saved" && (
-        <SavedProfileMovies likes={true} movies={savedMovies} />
+      {page === PAGES.SAVED && (
+        <ProfileMovieList
+          movies={savedMovies}
+          likes={page === PAGES.LIKED || page === PAGES.SAVED}
+          saved
+        />
       )}
     </div>
   )

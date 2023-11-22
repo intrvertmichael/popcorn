@@ -1,9 +1,13 @@
 import { useGetFirebaseUser, useSetFirebaseUser } from "context/FirebaseContext"
-import liked_movie from "utils/firebase/liked"
-import disliked_movie from "utils/firebase/disliked"
-import saved_movie from "utils/firebase/saved"
+import { liked_movie } from "utils/firebase/liked"
+import { disliked_movie } from "utils/firebase/disliked"
+import { saved_movie } from "utils/firebase/saved"
 
-import styles from "styles/VoteButtons.module.css"
+const styles = {
+  votingButtons:
+    "pointer-events-auto text-3xl py-2 px-3 rounded border border-transparent hover:border-neutral-500",
+  selectedButton: "border-white",
+}
 
 export default function VoteButtons({ movie }) {
   const firebaseUser = useGetFirebaseUser()
@@ -14,8 +18,6 @@ export default function VoteButtons({ movie }) {
     m => m.movie_id === movie.id,
   )
   const currently_saved = firebaseUser.saved?.find(m => m.movie_id === movie.id)
-
-  const selectedBorderColor = { borderColor: "white" }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Like and Un_Like
@@ -157,24 +159,27 @@ export default function VoteButtons({ movie }) {
     <>
       <button
         onClick={handleLikedButton}
-        className={styles.voting_buttons}
-        style={currently_liked && selectedBorderColor}
+        className={`${styles.votingButtons} ${
+          currently_liked && styles.selectedButton
+        }`}
       >
         👍
       </button>
 
       <button
         onClick={handleSaveButton}
-        className={styles.voting_buttons}
-        style={currently_saved && selectedBorderColor}
+        className={`${styles.votingButtons} ${
+          currently_saved && styles.selectedButton
+        }`}
       >
         ⭐
       </button>
 
       <button
         onClick={handleDisikedButton}
-        className={styles.voting_buttons}
-        style={currently_disliked && selectedBorderColor}
+        className={`${styles.votingButtons} ${
+          currently_disliked && styles.selectedButton
+        }`}
       >
         👎
       </button>

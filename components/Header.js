@@ -6,10 +6,9 @@ import { useGetFirebaseUser, useSetFirebaseUser } from "context/FirebaseContext"
 import { firebase_signout } from "utils/firebase/auth"
 
 import GenreList from "components/GenreList"
-// import SearchBar from "components/SearchBar"
 import AuthForm from "components/AuthForm"
 
-import styles from "styles/Header.module.css"
+const linkStyle = "text-neutral-500 hover:text-white"
 
 export default function Header({ genres }) {
   const firebaseUser = useGetFirebaseUser()
@@ -22,62 +21,50 @@ export default function Header({ genres }) {
   const onProfilePage = router.pathname === "/profile"
 
   const handleGenreBtn = () => setGenreVisible(curr => !curr)
-
-  function handleSearchBtn() {
-    if (genreVisible) setGenreVisible(false)
-    else setSearchVisible(true)
-  }
-
   const handleAuthClick = () => setAuthVisible(curr => !curr)
 
   return (
     <>
-      <div className={styles.header}>
-        <div className={styles.left}>
-          <div className={styles.leftTop}>
+      <div className='flex justify-between p-6'>
+        <div className='flex flex-col items-start gap-3'>
+          <div className='flex items-center gap-3'>
             <Link href='/' passHref>
-              <h1>
+              <h1 className='flex gap-2 text-2xl text-white'>
                 <span>🍿</span>Popcorn
               </h1>
             </Link>
 
-            <h2>Find what to watch</h2>
-          </div>
-
-          <div>
-            <button onClick={handleGenreBtn}> Genres </button>
+            <h2 className='text-neutral-500'>Find what to watch</h2>
           </div>
         </div>
 
-        <div className={styles.right}>
-          {/* <SearchBar /> */}
+        <div className='flex items-center gap-3'>
+          {firebaseUser && !onProfilePage && (
+            <Link href='/profile' passHref className='px-2'>
+              <h3 className={linkStyle}>Profile</h3>
+            </Link>
+          )}
+
+          <button onClick={handleGenreBtn} className={linkStyle}>
+            Genres
+          </button>
 
           {firebaseUser && (
-            <>
-              <button
-                className={styles.logout_btn}
-                onClick={() => {
-                  setFirebaseUser(null)
-                  firebase_signout()
-                  onProfilePage && router.push("/")
-                }}
-              >
-                Sign Out
-              </button>
-
-              {!onProfilePage && (
-                <Link href='/profile' passHref>
-                  <h3>Profile</h3>
-                </Link>
-              )}
-            </>
+            <button
+              className='px-2 text-sm text-red-500 hover:text-red-600'
+              onClick={() => {
+                setFirebaseUser(null)
+                firebase_signout()
+                onProfilePage && router.push("/")
+              }}
+            >
+              Sign Out
+            </button>
           )}
 
           {!firebaseUser && !onProfilePage && (
-            <button onClick={handleAuthClick} className={styles.auth}>
-              Create an account <br />
-              to save and vote <br />
-              on Movies
+            <button onClick={handleAuthClick} className={linkStyle}>
+              Log In / Sign Up
             </button>
           )}
         </div>

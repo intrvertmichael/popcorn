@@ -64,10 +64,11 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
 
-      {isIndex && <Trending movies={trending} />}
-
-      <Header genres={genres} />
-      <Component {...pageProps} />
+      <div className={isIndex ? "flex flex-col h-full" : ""}>
+        {isIndex && <Trending movies={trending} />}
+        <Header genres={genres} />
+        <Component {...pageProps} />
+      </div>
     </FirebaseContext>
   )
 }

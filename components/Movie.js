@@ -8,9 +8,7 @@ import { useGetFirebaseUser } from "context/FirebaseContext"
 
 import VoteButtons from "components/VoteButtons"
 
-import styles from "styles/Movie.module.css"
-
-export default function Movie({ movie, fb_liked }) {
+export default function Movie({ movie, fb_liked, className }) {
   const firebaseUser = useGetFirebaseUser()
 
   const [liked, setLiked] = useState(null)
@@ -29,35 +27,32 @@ export default function Movie({ movie, fb_liked }) {
 
   const poster = createMovieImageURL(movie.poster_path)
 
-  let classes = styles.movie_li
-  if (liked) classes = styles.liked
-  if (liked === false) classes = styles.disliked
-
   if (!movie || !movie.poster_path) return false
 
   return (
-    <div className={styles.root}>
+    <div
+      className={`relative w-full group aspect-[1/1.5] ${
+        liked ? "border-4 border-green-500 `" : ""
+      }${className}`}
+    >
       <Link href={"/movie/" + movie.id} passHref={true}>
-        <li className={classes} key={movie.id}>
-          <Image src={poster} alt={movie.original_title} fill={true} />
+        <li className='relative h-full' key={movie.id}>
+          <Image
+            src={poster}
+            alt={movie.original_title}
+            fill={true}
+            sizes='25vw'
+          />
 
-          <div
-            className={styles.movie_info}
-            style={firebaseUser ? {} : { justifyContent: "center" }}
-          >
-            <div className={styles.movie_info_description}>
-              <div>
-                <h3>{title}</h3>
-
-                <p>★ {formatRating(movie.vote_average)}</p>
-              </div>
-            </div>
+          <div className='relative z-10 flex flex-col items-center justify-center w-full h-full p-3 text-center transition-opacity duration-500 opacity-0 bg-black/90 group-hover:opacity-100'>
+            <h3 className='text-2xl'>{title}</h3>
+            <p>★ {formatRating(movie.vote_average)}</p>
           </div>
         </li>
       </Link>
 
       {firebaseUser && (
-        <div className={styles.votes}>
+        <div className='absolute z-10 flex justify-between w-full px-3 opacity-0 bottom-4 group-hover:opacity-100'>
           <VoteButtons movie={movie} />
         </div>
       )}

@@ -60,3 +60,65 @@ export async function getFavGenres(firebaseUser, setfavGenreMovies) {
     })
   })
 }
+
+export const updateSavedMovies = (current, movie) => {
+  const filteredSaves = current.saved.filter(
+    liked => liked.movie_id !== movie.id,
+  )
+  const tagsObj = current.tags.saved
+  const tagsArr = tagsObj ? Object.entries(tagsObj) : []
+
+  tagsArr.forEach(tag => {
+    const exists = tag[1] && tag[1].find(id => id === movie.id)
+    if (exists) {
+      const filtered = tag[1].filter(id => id !== movie.id)
+      if (filtered.length > 0) tagsObj[tag[0]] = filtered
+      else delete tagsObj[tag[0]]
+    }
+  })
+
+  return {
+    ...current,
+    saved: filteredSaves,
+    tags: {
+      ...current.tags,
+      saved: tagsObj,
+    },
+  }
+}
+
+export const updateLikedMovies = (current, movie) => {
+  const filteredLikes = current.liked.filter(
+    liked => liked.movie_id !== movie.id,
+  )
+  const tagsObj = current.tags.liked
+  const tagsArr = tagsObj ? Object.entries(tagsObj) : []
+
+  tagsArr?.forEach(tag => {
+    const exists = tag[1] && tag[1].find(id => id === movie.id)
+    if (exists) {
+      const filtered = tag[1].filter(id => id !== movie.id)
+      if (filtered.length > 0) tagsObj[tag[0]] = filtered
+      else delete tagsObj[tag[0]]
+    }
+  })
+
+  const updatedLikes = {
+    ...current,
+    liked: filteredLikes,
+    tags: {
+      ...current.tags,
+      liked: tagsObj,
+    },
+  }
+
+  return updatedLikes
+}
+
+export const updateDislikedMovies = (current, movie) => {
+  const filtered = current.disliked.filter(
+    disliked => disliked.movie_id !== movie.id,
+  )
+  const updatedLikes = { ...current, disliked: filtered }
+  return updatedLikes
+}
