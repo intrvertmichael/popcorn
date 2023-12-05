@@ -4,13 +4,10 @@ import Image from "next/image"
 
 import { createMovieImageURL } from "utils/movie.api"
 import { formatRating } from "utils/general"
-import { useGetFirebaseUser } from "context/FirebaseContext"
 
 import VoteButtons from "components/VoteButtons"
 
 export default function Movie({ movie, fb_liked, className }) {
-  const firebaseUser = useGetFirebaseUser()
-
   const [liked, setLiked] = useState(null)
 
   // default movie view
@@ -32,7 +29,7 @@ export default function Movie({ movie, fb_liked, className }) {
   return (
     <div
       className={`relative w-full group aspect-[1/1.5] ${
-        liked ? "border-4 border-green-500 `" : ""
+        liked ? "border-4 border-green-500 " : ""
       }${className}`}
     >
       <Link href={"/movie/" + movie.id} passHref={true}>
@@ -51,11 +48,9 @@ export default function Movie({ movie, fb_liked, className }) {
         </li>
       </Link>
 
-      {firebaseUser && (
-        <div className='absolute z-10 flex justify-between w-full px-3 opacity-0 bottom-4 group-hover:opacity-100'>
-          <VoteButtons movie={movie} />
-        </div>
-      )}
+      <div className='absolute z-10 flex justify-between w-full px-3 opacity-0 bottom-4 group-hover:opacity-100'>
+        <VoteButtons movie={movie} />
+      </div>
     </div>
   )
 }

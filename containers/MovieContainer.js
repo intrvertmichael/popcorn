@@ -3,7 +3,6 @@ import Link from "next/link"
 
 import { createMovieImageURL } from "utils/movie.api"
 import { createFullLength, createFullDate } from "utils/general"
-import { useGetFirebaseUser } from "context/FirebaseContext"
 
 import Rating from "components/Rating"
 import Carousel from "components/Carousel"
@@ -11,8 +10,6 @@ import MovieCollection from "components/MovieCollection"
 import VoteButtons from "components/VoteButtons"
 
 export default function Movie({ movie, images, recommended }) {
-  const firebaseUser = useGetFirebaseUser()
-
   if (!movie || !images || !recommended) return false
 
   const fullDate = createFullDate(movie.release_date)
@@ -64,11 +61,9 @@ export default function Movie({ movie, images, recommended }) {
           <p className='text-right'> Released on {fullDate}</p>
           <p className='text-right'> {fullLength} long</p>
 
-          {firebaseUser && (
-            <div className='flex gap-2'>
-              <VoteButtons movie={movie} />
-            </div>
-          )}
+          <div className='flex justify-center gap-2 mt-6'>
+            <VoteButtons movie={movie} />
+          </div>
         </div>
       </div>
 

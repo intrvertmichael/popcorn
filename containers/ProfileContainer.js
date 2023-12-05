@@ -1,80 +1,42 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { isEmpty } from "lodash"
 
-import { useGetFirebaseUser } from "context/FirebaseContext"
+import { PAGES } from "constants/general"
+import { useUserContext } from "context"
 
-import AuthForm from "components/AuthForm"
 import ProfileMovieList from "components/ProfileMovieList"
-
-const PAGES = {
-  SAVED: "saved",
-  LIKED: "liked",
-  DISLIKED: "disliked",
-}
+import ProfiledUserInfo from "components/ProfileUserInfo"
 
 export default function ProfileContainer() {
-  const firebaseUser = useGetFirebaseUser()
+  const { likedMovies, dislikedMovies, savedMovies } = useUserContext()
 
-  const [page, setPage] = useState(PAGES.SAVED)
-  const [likedMovies, setLikedMovies] = useState([])
-  const [dislikedMovies, setDisLikedMovies] = useState([])
-  const [savedMovies, setSavedMovies] = useState([])
+  const [currentPage, setCurrentPage] = useState(PAGES.SAVED)
 
-  async function fetch_movie(id) {
-    const movie_res = await fetch("/api/movie", {
-      method: "GET",
-      headers: { movie_id: id },
-    })
-
-    const movie_data = await movie_res.json()
-    return movie_data
+  const movieList = {
+    [PAGES.SAVED]: savedMovies,
+    [PAGES.LIKED]: likedMovies,
+    [PAGES.DISLIKED]: dislikedMovies,
   }
 
-  useEffect(() => {
-    if (firebaseUser) {
-      if (firebaseUser.liked) {
-        Promise.all(
-          firebaseUser.liked.map(
-            async movie => await fetch_movie(movie.movie_id),
-          ),
-        ).then(result => setLikedMovies(result))
-      }
-
-      if (firebaseUser.disliked) {
-        Promise.all(
-          firebaseUser.disliked.map(
-            async movie => await fetch_movie(movie.movie_id),
-          ),
-        ).then(result => setDisLikedMovies(result))
-      }
-
-      if (firebaseUser.saved) {
-        Promise.all(
-          firebaseUser.saved.map(
-            async movie => await fetch_movie(movie.movie_id),
-          ),
-        ).then(result => setSavedMovies(result))
-      }
-    }
-  }, [firebaseUser])
-
-  if (!firebaseUser) return <AuthForm />
-
   return (
-    <div className='w-full max-w-4xl pb-6 mx-auto'>
-      <div className='flex gap-5'>
-        {Object.values(PAGES).map(p => {
+    <div className='grid w-full max-w-4xl gap-12 pb-12 mx-auto'>
+      <ProfiledUserInfo />
+
+      <div className='flex justify-center gap-6'>
+        {Object.values(PAGES).map(page => {
           const pageLabel = (
-            <h3 key={p} className='capitalize'>
-              {p} ({firebaseUser[p]?.length})
+            <h3 key={page} className='capitalize pointer-events-none'>
+              {page}
+              {isEmpty(movieList[page]) ? "" : ` (${movieList[page].length})`}
             </h3>
           )
 
-          return page === p ? (
+          return currentPage === page ? (
             pageLabel
           ) : (
             <button
-              key={p}
-              onClick={() => setPage(p)}
+              key={page}
+              onClick={() => setCurrentPage(page)}
               className='text-neutral-500'
             >
               {pageLabel}
@@ -83,25 +45,14 @@ export default function ProfileContainer() {
         })}
       </div>
 
-      <h2 className='my-5 text-2xl text-neutral-500 capitalize'>
-        {page} movies
-      </h2>
-
-      {page === PAGES.LIKED && (
-        <ProfileMovieList movies={likedMovies} likes liked />
-      )}
-
-      {page === PAGES.DISLIKED && (
-        <ProfileMovieList movies={dislikedMovies} likes={false} disliked />
-      )}
-
-      {page === PAGES.SAVED && (
-        <ProfileMovieList
-          movies={savedMovies}
-          likes={page === PAGES.LIKED || page === PAGES.SAVED}
-          saved
-        />
-      )}
+      {/* TODO: pass only the current page and derrive everything inside of the component */}
+      <ProfileMovieList
+        movies={movieList[currentPage]}
+        likes={currentPage === PAGES.LIKED || currentPage === PAGES.SAVED}
+        liked={currentPage === PAGES.LIKED}
+        disliked={currentPage === PAGES.DISLIKED}
+        saved={currentPage === PAGES.SAVED}
+      />
     </div>
   )
 }

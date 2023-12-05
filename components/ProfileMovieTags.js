@@ -1,24 +1,20 @@
 import { useState } from "react"
 
-import { useGetFirebaseUser, useSetFirebaseUser } from "context/FirebaseContext"
-import { add_tag, remove_tag } from "utils/firebase/tags"
-
 export default function LikedMovieTags({ movie, liked, saved }) {
-  const firebaseUser = useGetFirebaseUser()
-  const setFirebaseUser = useSetFirebaseUser()
-
   const [tagInput, setTagInput] = useState(false)
   const [tagText, setTagText] = useState(false)
+
+  // TODO: need to add tags
 
   let entries = []
   let tagsArr = []
 
-  if (liked && firebaseUser.tags?.liked) {
-    entries = Object.entries(firebaseUser.tags?.liked)
+  if (liked && []) {
+    entries = Object.entries([])
   }
 
-  if (saved && firebaseUser.tags?.saved) {
-    entries = Object.entries(firebaseUser.tags?.saved)
+  if (saved && []) {
+    entries = Object.entries([])
   }
 
   if (entries.length > 0) {
@@ -38,73 +34,25 @@ export default function LikedMovieTags({ movie, liked, saved }) {
 
     let tagArr = []
 
-    if (liked && firebaseUser.tags?.liked) {
-      tagArr = Object.keys(firebaseUser.tags?.liked)
+    if (liked && []) {
+      tagArr = Object.keys([])
     }
 
-    if (saved && firebaseUser.tags?.saved) {
-      tagArr = Object.entries(firebaseUser.tags?.saved)
+    if (saved && []) {
+      tagArr = Object.entries([])
     }
 
     if (!tagArr?.find(tag => tag === tagText)) {
       if (liked) {
-        setFirebaseUser(current => ({
-          ...current,
-          tags: {
-            ...current.tags,
-            liked: {
-              ...current.tags.liked,
-              [tagText]: [movie.id],
-            },
-          },
-        }))
-
-        await add_tag(tagText, movie.id, firebaseUser, false)
       }
 
       if (saved) {
-        setFirebaseUser(current => ({
-          ...current,
-          tags: {
-            ...current.tags,
-            saved: {
-              ...current.tags.saved,
-              [tagText]: [movie.id],
-            },
-          },
-        }))
-
-        await add_tag(tagText, movie.id, firebaseUser, true)
       }
     } else {
       if (liked) {
-        setFirebaseUser(current => ({
-          ...current,
-          tags: {
-            ...current.tags,
-            liked: {
-              ...current.tags.liked,
-              [tagText]: [...current.tags.liked[tagText], movie.id],
-            },
-          },
-        }))
-
-        await add_tag(tagText, movie.id, firebaseUser, false)
       }
 
       if (saved) {
-        setFirebaseUser(current => ({
-          ...current,
-          tags: {
-            ...current.tags,
-            saved: {
-              ...current.tags.saved,
-              [tagText]: [...current.tags.saved[tagText], movie.id],
-            },
-          },
-        }))
-
-        await add_tag(tagText, movie.id, firebaseUser, true)
       }
     }
   }
@@ -126,73 +74,9 @@ export default function LikedMovieTags({ movie, liked, saved }) {
 
     if (confirm(message)) {
       if (liked) {
-        setFirebaseUser(current => {
-          const filtered = current.tags?.liked[tag].filter(
-            objtag => objtag !== movie.id,
-          )
-
-          if (filtered.length > 0) {
-            return {
-              ...current,
-              tags: {
-                ...current.tags,
-                liked: {
-                  ...current.tags.liked,
-                  [tag]: filtered,
-                },
-              },
-            }
-          } else {
-            delete current.tags.liked[tag]
-
-            return {
-              ...current,
-              tags: {
-                ...current.tags,
-                liked: {
-                  ...current.tags.liked,
-                },
-              },
-            }
-          }
-        })
-
-        await remove_tag(tag, movie.id, firebaseUser, false)
       }
 
       if (saved) {
-        setFirebaseUser(current => {
-          const filtered = current.tags?.saved[tag].filter(
-            objtag => objtag !== movie.id,
-          )
-
-          if (filtered.length > 0) {
-            return {
-              ...current,
-              tags: {
-                ...current.tags,
-                saved: {
-                  ...current.tags.saved,
-                  [tag]: filtered,
-                },
-              },
-            }
-          } else {
-            delete current.tags.saved[tag]
-
-            return {
-              ...current,
-              tags: {
-                ...current.tags,
-                saved: {
-                  ...current.tags.saved,
-                },
-              },
-            }
-          }
-        })
-
-        await remove_tag(tag, movie.id, firebaseUser, true)
       }
     }
   }
@@ -217,20 +101,20 @@ export default function LikedMovieTags({ movie, liked, saved }) {
             <input
               type='text'
               autoFocus
-              className=''
+              className='text-black'
               onChange={e => setTagText(e.target.value)}
             />
           </form>
           <button
             onClick={() => setTagInput(false)}
-            className='px-3 bg-neutral-800 rounded-r'
+            className='px-3 rounded-r bg-neutral-800'
           >
             x
           </button>
         </li>
       ) : (
         <li
-          className='px-3 py-1 text-xs text-neutral-500 bg-neutral-900 rounded cursor-pointer w-fit hover:text-white'
+          className='px-3 py-1 text-xs rounded cursor-pointer text-neutral-500 bg-neutral-900 w-fit hover:text-white'
           onClick={() => setTagInput(true)}
         >
           add tag

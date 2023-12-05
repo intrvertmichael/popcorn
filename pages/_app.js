@@ -3,7 +3,7 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 
 import { getTrending } from "utils/movie.api"
-import FirebaseContext from "context/FirebaseContext"
+import { UserProvider } from "context"
 
 import Header from "components/Header"
 import Trending from "components/Trending"
@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   return (
-    <FirebaseContext>
+    <UserProvider>
       <Head>
         <meta
           name='viewport'
@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }) {
         <Header genres={genres} />
         <Component {...pageProps} />
       </div>
-    </FirebaseContext>
+    </UserProvider>
   )
 }
 

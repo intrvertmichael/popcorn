@@ -1,6 +1,17 @@
 import { ERROR_MESSAGES } from "../constants/general"
 import { isEmpty } from "lodash"
 
+export async function fetch_movie(movie_id) {
+  const res = await fetch("/api/movie", {
+    method: "GET",
+    headers: { movie_id },
+  })
+
+  const data = await res.json()
+
+  return data
+}
+
 function getURL(type, id, page) {
   const baseURL = "https://api.themoviedb.org/3"
   const key = process.env.MOVIE_KEY || process.env.NEXT_PUBLIC_MOVIE_KEY

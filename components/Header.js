@@ -2,26 +2,17 @@ import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import { useGetFirebaseUser, useSetFirebaseUser } from "context/FirebaseContext"
-import { firebase_signout } from "utils/firebase/auth"
-
 import GenreList from "components/GenreList"
-import AuthForm from "components/AuthForm"
 
 const linkStyle = "text-neutral-500 hover:text-white"
 
 export default function Header({ genres }) {
-  const firebaseUser = useGetFirebaseUser()
-  const setFirebaseUser = useSetFirebaseUser()
-
   const [genreVisible, setGenreVisible] = useState(false)
-  const [authVisible, setAuthVisible] = useState(false)
 
   const router = useRouter()
   const onProfilePage = router.pathname === "/profile"
 
   const handleGenreBtn = () => setGenreVisible(curr => !curr)
-  const handleAuthClick = () => setAuthVisible(curr => !curr)
 
   return (
     <>
@@ -39,7 +30,7 @@ export default function Header({ genres }) {
         </div>
 
         <div className='flex items-center gap-3'>
-          {firebaseUser && !onProfilePage && (
+          {!onProfilePage && (
             <Link href='/profile' passHref className='px-2'>
               <h3 className={linkStyle}>Profile</h3>
             </Link>
@@ -48,30 +39,10 @@ export default function Header({ genres }) {
           <button onClick={handleGenreBtn} className={linkStyle}>
             Genres
           </button>
-
-          {firebaseUser && (
-            <button
-              className='px-2 text-sm text-red-500 hover:text-red-600'
-              onClick={() => {
-                setFirebaseUser(null)
-                firebase_signout()
-                onProfilePage && router.push("/")
-              }}
-            >
-              Sign Out
-            </button>
-          )}
-
-          {!firebaseUser && !onProfilePage && (
-            <button onClick={handleAuthClick} className={linkStyle}>
-              Log In / Sign Up
-            </button>
-          )}
         </div>
       </div>
 
       {genreVisible && <GenreList genres={genres} />}
-      {authVisible && <AuthForm />}
     </>
   )
 }

@@ -9,3 +9,9 @@ export const APP_FEATURES = [
   { icon: "🏷", description: "Add tags to find movies faster" },
   { icon: "👎", description: "Disliked movies like will be vanished" },
 ]
+
+export const PAGES = {
+  SAVED: "saved",
+  LIKED: "liked",
+  DISLIKED: "disliked",
+}

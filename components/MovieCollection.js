@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 
-import { useGetFirebaseUser } from "context/FirebaseContext"
+import { useUserContext } from "context"
 
 import Movie from "components/Movie"
 
@@ -13,34 +13,28 @@ const collectionTitleStyle = "p-6 text-2xl text-neutral-500"
 const scrollAmount = 500 // TODO: needs to adapt depending on the screen width
 
 export default function MovieCollection({ view, movieList }) {
-  const firebaseUser = useGetFirebaseUser()
-  const FBLikedMovies = firebaseUser?.liked
-  const FBDisLikedMovies = firebaseUser?.disliked
+  const { likedMovies, dislikedMovies } = useUserContext()
+
   const movieBar = useRef(null)
 
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
-    const movie_array = []
-    movieList.movies?.map(movie => {
-      const liked = FBLikedMovies?.find(liked => liked.movie_id === movie.id)
-      const disliked = FBDisLikedMovies?.find(
-        liked => liked.movie_id === movie.id,
-      )
+    const movie_array = movieList?.movies?.filter(
+      movie => !dislikedMovies.find(disliked => disliked.id === movie.id),
+    )
 
-      if (!disliked)
-        movie_array.push(
-          <Movie
-            movie={movie}
-            key={movie.id}
-            fb_liked={liked ? true : null}
-            className='snap-start'
-          />,
-        )
-    })
-
-    setMovies(movie_array)
-  }, [FBDisLikedMovies, FBLikedMovies, movieList])
+    setMovies(
+      movie_array?.map(movie => (
+        <Movie
+          movie={movie}
+          key={movie.id}
+          fb_liked={likedMovies?.find(liked => liked.id === movie.id)}
+          className='snap-start'
+        />
+      )),
+    )
+  }, [dislikedMovies, likedMovies, movieList])
 
   if (!movieList || movieList.movies?.length === 0 || movies?.length === 0) {
     return false
