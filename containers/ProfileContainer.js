@@ -1,14 +1,15 @@
 import { useState } from "react"
 import { isEmpty } from "lodash"
 
-import { PAGES } from "constants/general"
+import { CONFIRM_MESSAGES, PAGES } from "constants/general"
 import { useUserContext } from "context"
 
 import ProfileMovieList from "components/ProfileMovieList"
 import ProfiledUserInfo from "components/ProfileUserInfo"
 
 export default function ProfileContainer() {
-  const { likedMovies, dislikedMovies, savedMovies } = useUserContext()
+  const { likedMovies, dislikedMovies, savedMovies, resetData } =
+    useUserContext()
 
   const [currentPage, setCurrentPage] = useState(PAGES.SAVED)
 
@@ -18,9 +19,20 @@ export default function ProfileContainer() {
     [PAGES.DISLIKED]: dislikedMovies,
   }
 
+  const handleRemoveAllData = () => {
+    if (confirm(CONFIRM_MESSAGES.REMOVE_ALL_DATA)) resetData()
+  }
+
   return (
-    <div className='grid w-full max-w-4xl gap-12 pb-12 mx-auto'>
+    <div className='grid w-full max-w-4xl gap-12 py-12 mx-auto'>
       <ProfiledUserInfo />
+
+      <button
+        className='mx-auto text-neutral-800 hover:text-red-500 w-fit'
+        onClick={handleRemoveAllData}
+      >
+        Remove Account Information
+      </button>
 
       <div className='flex justify-center gap-6'>
         {Object.values(PAGES).map(page => {
@@ -45,13 +57,9 @@ export default function ProfileContainer() {
         })}
       </div>
 
-      {/* TODO: pass only the current page and derrive everything inside of the component */}
       <ProfileMovieList
         movies={movieList[currentPage]}
-        likes={currentPage === PAGES.LIKED || currentPage === PAGES.SAVED}
-        liked={currentPage === PAGES.LIKED}
-        disliked={currentPage === PAGES.DISLIKED}
-        saved={currentPage === PAGES.SAVED}
+        currentPage={currentPage}
       />
     </div>
   )

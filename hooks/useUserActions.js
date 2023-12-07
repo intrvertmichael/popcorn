@@ -1,5 +1,7 @@
 import { useUserContext } from "context"
 
+import { findMovieFromList } from "utils/general"
+
 export default function useUserActions(movie) {
   const {
     savedMovies,
@@ -10,24 +12,21 @@ export default function useUserActions(movie) {
     setDisLikedMovies,
   } = useUserContext()
 
-  const isSaved = savedMovies.find(saved => saved.id === movie.id)
-  const isLiked = likedMovies.find(liked => liked.id === movie.id)
-  const isDisliked = dislikedMovies.find(disliked => disliked.id === movie.id)
+  const addToList = curr => (curr ? [...curr, movie] : [movie])
+  const removeFromList = curr => curr.filter(c => c.id !== movie.id)
 
-  const addToSaved = () => setSavedMovies(curr => [...curr, movie])
-  const removeFromSaved = () => {
-    setSavedMovies(curr => curr.filter(c => c.id !== movie.id))
-  }
+  const isSaved = findMovieFromList(movie, savedMovies)
+  const isLiked = findMovieFromList(movie, likedMovies)
+  const isDisliked = findMovieFromList(movie, dislikedMovies)
 
-  const addToLiked = () => setLikedMovies(curr => [...curr, movie])
-  const removeFromLiked = () => {
-    setLikedMovies(curr => curr.filter(c => c.id !== movie.id))
-  }
+  const addToSaved = () => setSavedMovies(addToList)
+  const removeFromSaved = () => setSavedMovies(removeFromList)
 
-  const addToDisliked = () => setDisLikedMovies(curr => [...curr, movie])
-  const removeFromDisliked = () => {
-    setDisLikedMovies(curr => curr.filter(c => c.id !== movie.id))
-  }
+  const addToLiked = () => setLikedMovies(addToList)
+  const removeFromLiked = () => setLikedMovies(removeFromList)
+
+  const addToDisliked = () => setDisLikedMovies(addToList)
+  const removeFromDisliked = () => setDisLikedMovies(removeFromList)
 
   return {
     isSaved,

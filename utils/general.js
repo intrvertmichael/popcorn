@@ -1,6 +1,6 @@
-import { round } from "lodash"
+import { round, isEmpty } from "lodash"
 
-export async function getGenreMovies(genreID) {
+export const getGenreMovies = async genreID => {
   const genre_res = await fetch("/api/genre", {
     method: "GET",
     headers: { genre_id: genreID },
@@ -10,7 +10,7 @@ export async function getGenreMovies(genreID) {
   return genre_data
 }
 
-export function createFullLength(length) {
+export const createFullLength = length => {
   const lengthHours = Math.floor(length / 60)
   const lengthMins = length % 60
   const fullLength =
@@ -22,7 +22,7 @@ export function createFullLength(length) {
   return fullLength
 }
 
-export function createFullDate(date) {
+export const createFullDate = date => {
   const dateObj = new Date(date)
   const months = [
     "January",
@@ -45,3 +45,7 @@ export function createFullDate(date) {
 }
 
 export const formatRating = rating => round(rating, 2).toFixed(1)
+
+export const findMovieFromList = (movie, movieList) => {
+  return !isEmpty(movieList) && movieList.find(m => m.id === movie.id)
+}

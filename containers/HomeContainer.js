@@ -1,35 +1,68 @@
-import { useState } from "react"
+import { useMemo } from "react"
+import { isEmpty } from "lodash"
+
+import { useUserContext } from "context"
+import { LIKED_MOVIES_LIMIT } from "constants/general"
 
 import MovieCollection from "components/MovieCollection"
 import Intro from "components/Intro"
-import FavoriteMovies from "components/FavoriteMovies"
+import FavoriteGenreMovies from "components/FavoriteGenreMovies"
 
 export default function Home({ best, genres }) {
-  const [favGenreMovies, setfavGenreMovies] = useState() // TODO: move this to context (?)
+  const { likedMovies } = useUserContext()
 
-  if (null && !favGenreMovies) {
-  }
+  const favoriteGenres = useMemo(() => {
+    if (!likedMovies) return {}
+
+    return likedMovies
+      .map(movie => {
+        if (movie.genres) return movie.genres.map(g => g.id)
+        if (movie.genre_ids) return movie.genre_ids
+      })
+      .flat(Infinity)
+      .reduce((acc, curr) => {
+        if (!curr) return acc
+        if (acc[curr]) return { ...acc, [curr]: acc[curr] + 1 }
+        return { ...acc, [curr]: 1 }
+      }, {})
+  }, [likedMovies])
+
+  const sortedFavoriteGenres =
+    !isEmpty(favoriteGenres) &&
+    Object.entries(favoriteGenres)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+
+  const showFavorites = Boolean(likedMovies?.length >= LIKED_MOVIES_LIMIT)
 
   return (
     <div className='flex flex-col h-full'>
-      {!null && <Intro />}
-
-      {null && favGenreMovies ? (
+      {showFavorites ? (
         <>
           <h2 className='py-32 text-2xl text-center'>
             Based on your Liked Movies:
           </h2>
 
-          <FavoriteMovies favGenreMovies={favGenreMovies} genres={genres} />
+          {sortedFavoriteGenres.map(favoriteGenre => (
+            <FavoriteGenreMovies
+              key={favoriteGenre[0]}
+              allGenres={genres}
+              favoriteGenre={favoriteGenre}
+            />
+          ))}
         </>
       ) : (
-        <MovieCollection
-          view='bar'
-          movieList={{
-            title: "Best of the Year",
-            movies: best?.results,
-          }}
-        />
+        <>
+          <Intro />
+
+          <MovieCollection
+            view='bar'
+            movieList={{
+              title: "Best of the Year",
+              movies: best?.results,
+            }}
+          />
+        </>
       )}
     </div>
   )

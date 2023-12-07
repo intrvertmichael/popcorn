@@ -2,22 +2,24 @@ import { useEffect, useState } from "react"
 import { isEmpty } from "lodash"
 
 import { useUserContext } from "context"
+import { CONFIRM_MESSAGES, PAGES } from "constants/general"
 
 import ProfileMovie from "components/ProfileMovie"
 import TagFilter from "components/TagFilter"
 
-export default function ProfileMovieList({ movies, saved, liked, disliked }) {
+export default function ProfileMovieList({ movies, currentPage }) {
+  const { setSavedMovies, setLikedMovies, setDisLikedMovies } = useUserContext()
+
   const [tags, setTags] = useState([])
   const [filter, setFilter] = useState("")
   const [filteredMovies, setFilteredMovies] = useState()
-  const { setSavedMovies, setLikedMovies, setDisLikedMovies } = useUserContext()
+
+  const saved = currentPage === PAGES.SAVED
+  const liked = currentPage === PAGES.LIKED
+  const disliked = currentPage === PAGES.DISLIKED
 
   const handleRemoveMoviesList = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to remove all movies from this list?",
-      )
-    ) {
+    if (confirm(CONFIRM_MESSAGES.REMOVE_MOVIE_LIST)) {
       if (saved) setSavedMovies([])
       if (liked) setLikedMovies([])
       if (disliked) setDisLikedMovies([])
@@ -72,14 +74,14 @@ export default function ProfileMovieList({ movies, saved, liked, disliked }) {
             />
           )
         })}
-      </ul>
 
-      <button
-        className='py-2 text-sm text-red-500 border border-transparent hover:border-red-500'
-        onClick={handleRemoveMoviesList}
-      >
-        Remove all movies from this list
-      </button>
+        <button
+          className='py-6 text-sm text-red-500 border rounded hover:border-red-500 border-neutral-900 bg-neutral-950'
+          onClick={handleRemoveMoviesList}
+        >
+          Remove all {currentPage} movies
+        </button>
+      </ul>
     </>
   )
 }

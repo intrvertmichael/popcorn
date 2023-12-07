@@ -1,18 +1,7 @@
-import { ERROR_MESSAGES } from "../constants/general"
+import { ERROR_MESSAGES } from "constants/general"
 import { isEmpty } from "lodash"
 
-export async function fetch_movie(movie_id) {
-  const res = await fetch("/api/movie", {
-    method: "GET",
-    headers: { movie_id },
-  })
-
-  const data = await res.json()
-
-  return data
-}
-
-function getURL(type, id, page) {
+const getURL = (type, id, page) => {
   const baseURL = "https://api.themoviedb.org/3"
   const key = process.env.MOVIE_KEY || process.env.NEXT_PUBLIC_MOVIE_KEY
   const keyPath = "?api_key=" + key
@@ -63,11 +52,10 @@ function getURL(type, id, page) {
   }
 }
 
-export function createMovieImageURL(path) {
-  return "https://image.tmdb.org/t/p/original/" + path
-}
+export const createMovieImageURL = path =>
+  "https://image.tmdb.org/t/p/original/" + path
 
-export async function getTrending() {
+export const getTrending = async () => {
   const url = getURL("trending")
   const res = await fetch(url)
   const data = await res.json()
@@ -87,14 +75,14 @@ export async function getTrending() {
   return movies
 }
 
-export async function getGenres() {
+export const getGenres = async () => {
   const url = getURL("genres")
   const res = await fetch(url)
   const data = await res.json()
   return data.genres
 }
 
-export async function getGenreLabel(id) {
+export const getGenreLabel = async id => {
   const url = getURL("genres")
   const res = await fetch(url)
   const data = await res.json()
@@ -104,7 +92,7 @@ export async function getGenreLabel(id) {
   return genreLabel
 }
 
-export async function getMoviesFromGenre(genreID, page) {
+export const getMoviesFromGenre = async (genreID, page) => {
   let url
   if (page) url = getURL("moviesFromGenre&page", genreID, page)
   else url = getURL("moviesFromGenre", genreID)
@@ -114,28 +102,28 @@ export async function getMoviesFromGenre(genreID, page) {
   return data
 }
 
-export async function getSingleMovie(id) {
+export const getSingleMovie = async id => {
   const url = getURL("singleMovie", id)
   const res = await fetch(url)
   const data = await res.json()
   return data
 }
 
-export async function getImageList(id) {
+export const getImageList = async id => {
   const url = getURL("imageList", id)
   const res = await fetch(url)
   const data = await res.json()
   return data
 }
 
-export async function getRecommendedMovies(id) {
+export const getRecommendedMovies = async id => {
   const url = getURL("recommendedMovies", id)
   const res = await fetch(url)
   const data = await res.json()
   return data
 }
 
-export async function getBestThisYear() {
+export const getBestThisYear = async () => {
   const url = getURL("bestThisYear")
   const res = await fetch(url)
   const data = await res.json()

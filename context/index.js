@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import UserProvider, { UserContext } from "context/UserContext"
+import UserProvider, { UserContext } from "./UserContext"
 
 export const useUserContext = () => useContext(UserContext)
 

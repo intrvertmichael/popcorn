@@ -5,7 +5,7 @@ export default function TagFilter({ filter, setFilter, saved }) {
   const tagLabels = Object.keys(saved ? [] : [])
   const sorted = tagLabels.sort()
 
-  function handleFilter(e) {
+  const handleFilter = e => {
     const clickedTag = e.target.innerHTML.trim()
 
     if (filter === clickedTag) setFilter(null)

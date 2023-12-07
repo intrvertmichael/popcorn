@@ -28,7 +28,7 @@ export default function LikedMovieTags({ movie, liked, saved }) {
 
   const tagsUsed = tagsArr.map(tag => tag[0])
 
-  async function addingTag(e) {
+  const addingTag = async e => {
     e.preventDefault()
     setTagInput(false)
 
@@ -57,7 +57,7 @@ export default function LikedMovieTags({ movie, liked, saved }) {
     }
   }
 
-  async function removingTag(e) {
+  const removingTag = async e => {
     e.preventDefault()
 
     const tag = e.target.innerHTML

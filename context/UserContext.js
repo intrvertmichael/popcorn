@@ -1,12 +1,31 @@
-import { createContext, useMemo, useState } from "react"
+import { createContext, useCallback, useMemo } from "react"
+
+import { LOCAL_STORAGE_KEYS } from "constants/general"
+import { useLocalStorage } from "hooks"
 
 export const UserContext = createContext({})
 
 export default function UserProvider({ children }) {
-  const [username, setUsername] = useState("")
-  const [likedMovies, setLikedMovies] = useState([])
-  const [dislikedMovies, setDisLikedMovies] = useState([])
-  const [savedMovies, setSavedMovies] = useState([])
+  const [username, setUsername] = useLocalStorage(LOCAL_STORAGE_KEYS.USERNAME)
+
+  const [likedMovies, setLikedMovies] = useLocalStorage(
+    LOCAL_STORAGE_KEYS.LIKED_MOVIES,
+  )
+
+  const [dislikedMovies, setDisLikedMovies] = useLocalStorage(
+    LOCAL_STORAGE_KEYS.DISLIKED_MOVIES,
+  )
+
+  const [savedMovies, setSavedMovies] = useLocalStorage(
+    LOCAL_STORAGE_KEYS.SAVED_MOVIES,
+  )
+
+  const resetData = useCallback(() => {
+    setUsername("")
+    setLikedMovies([])
+    setDisLikedMovies([])
+    setSavedMovies([])
+  }, [setDisLikedMovies, setLikedMovies, setSavedMovies, setUsername])
 
   const value = useMemo(
     () => ({
@@ -18,6 +37,7 @@ export default function UserProvider({ children }) {
       setDisLikedMovies,
       savedMovies,
       setSavedMovies,
+      resetData,
     }),
     [
       username,
@@ -28,6 +48,7 @@ export default function UserProvider({ children }) {
       setDisLikedMovies,
       savedMovies,
       setSavedMovies,
+      resetData,
     ],
   )
 

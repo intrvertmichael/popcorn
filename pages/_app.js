@@ -18,6 +18,9 @@ function MyApp({ Component, pageProps }) {
 
   const isIndex = router.pathname === "/"
 
+  // TEST
+  console.log("router.pathname", router.pathname)
+
   useEffect(() => {
     const fetchTrending = async () => {
       const trendingRes = await getTrending()
@@ -28,7 +31,7 @@ function MyApp({ Component, pageProps }) {
   }, [isIndex])
 
   useEffect(() => {
-    async function getGenres() {
+    const getGenres = async () => {
       const genres_res = await fetch("/api/genres", { method: "GET" })
       const genres_data = await genres_res.json()
       const genres = Object.entries(genres_data)?.map(data => data[1])
