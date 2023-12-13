@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
 
   // TEST
   console.log("router.pathname", router.pathname)
+  console.log({ isIndex })
 
   useEffect(() => {
     const fetchTrending = async () => {

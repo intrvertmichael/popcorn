@@ -1,21 +1,49 @@
-import { useState } from "react"
+import { useEffect } from "react"
+import { useRouter } from "next/router"
 
 const buttonStyle = "hover:text-white"
 
 export default function Carousel({ images }) {
-  const [pos, setPos] = useState(
-    images ? Math.floor(images.length * Math.random()) : 0,
-  ) // TODO: keep image pos on the url so when shared can share with specific picture
+  const router = useRouter()
+
+  const galleryPosition = parseInt(router.query.galleryPosition)
+
+  useEffect(() => {
+    if (galleryPosition) return
+
+    router.replace({
+      query: {
+        ...router.query,
+        galleryPosition: images ? Math.floor(images.length * Math.random()) : 0,
+      },
+    })
+  }, [galleryPosition, images, router])
 
   if (!images) return false
 
-  const backClicked = () =>
-    setPos(curr =>
-      images.length > curr && curr > 0 ? curr - 1 : images.length - 1,
-    )
+  const backClicked = () => {
+    router.replace({
+      query: {
+        ...router.query,
+        galleryPosition:
+          images.length > galleryPosition && galleryPosition > 0
+            ? galleryPosition - 1
+            : images.length - 1,
+      },
+    })
+  }
 
-  const nextClicked = () =>
-    setPos(curr => (curr >= 0 && curr < images.length - 1 ? curr + 1 : 0))
+  const nextClicked = () => {
+    router.replace({
+      query: {
+        ...router.query,
+        galleryPosition:
+          galleryPosition >= 0 && galleryPosition < images.length - 1
+            ? galleryPosition + 1
+            : 0,
+      },
+    })
+  }
 
   return (
     <div className='relative max-w-6xl mx-auto overflow-hidden bg-neutral-950'>
@@ -23,7 +51,7 @@ export default function Carousel({ images }) {
         className='aspect-[16/9] cursor-pointer relative'
         onClick={nextClicked}
       >
-        {images[pos]}
+        {images[galleryPosition]}
       </div>
 
       {images.length > 1 && (
@@ -33,7 +61,8 @@ export default function Carousel({ images }) {
           </button>
 
           <div>
-            <span className='text-white'>{pos + 1}</span> / {images.length}
+            <span className='text-white'>{galleryPosition}</span> /{" "}
+            {images.length}
           </div>
 
           <button onClick={nextClicked} className={buttonStyle}>
