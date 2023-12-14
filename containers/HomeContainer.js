@@ -1,38 +1,37 @@
 import { useMemo } from "react"
-import { isEmpty } from "lodash"
+import { useQuery } from "@tanstack/react-query"
 
 import { useUserContext } from "context"
 import { LIKED_MOVIES_LIMIT } from "constants/general"
+import {
+  getFavoriteGenresFromLikedMovies,
+  sortFavoriteGenres,
+} from "utils/general"
+import { getBestOf2023, getGenres } from "utils/movie.api"
 
 import MovieCollection from "components/MovieCollection"
 import Intro from "components/Intro"
 import FavoriteGenreMovies from "components/FavoriteGenreMovies"
 
-export default function Home({ best, genres }) {
+export default function Home() {
   const { likedMovies } = useUserContext()
 
-  const favoriteGenres = useMemo(() => {
-    if (!likedMovies) return {}
+  const { data: genres } = useQuery({
+    queryKey: ["genres"],
+    queryFn: getGenres,
+  })
 
-    return likedMovies
-      .map(movie => {
-        if (movie.genres) return movie.genres.map(g => g.id)
-        if (movie.genre_ids) return movie.genre_ids
-      })
-      .flat(Infinity)
-      .reduce((acc, curr) => {
-        if (!curr) return acc
-        if (acc[curr]) return { ...acc, [curr]: acc[curr] + 1 }
-        return { ...acc, [curr]: 1 }
-      }, {})
-  }, [likedMovies])
+  const { data: best } = useQuery({
+    queryKey: ["best2023"],
+    queryFn: getBestOf2023,
+  })
 
-  const sortedFavoriteGenres =
-    !isEmpty(favoriteGenres) &&
-    Object.entries(favoriteGenres)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
+  const favoriteGenres = useMemo(
+    () => getFavoriteGenresFromLikedMovies(likedMovies),
+    [likedMovies],
+  )
 
+  const sortedFavoriteGenres = sortFavoriteGenres(favoriteGenres)
   const showFavorites = Boolean(likedMovies?.length >= LIKED_MOVIES_LIMIT)
 
   return (
@@ -58,7 +57,7 @@ export default function Home({ best, genres }) {
           <MovieCollection
             view='bar'
             movieList={{
-              title: "Best of the Year",
+              title: "Best of 2023",
               movies: best?.results,
             }}
           />

@@ -10,10 +10,10 @@ export const CONFIRM_MESSAGES = {
 
 export const APP_FEATURES = [
   { icon: "🔎", description: "Discover new and old movies" },
-  { icon: "★", description: "Save the movies you want to see" },
+  { icon: "⭐", description: "Save the movies you want to see" },
   { icon: "👍", description: "Like movies to get recommendations" },
   { icon: "🏷", description: "Add tags to find movies faster" },
-  { icon: "👎", description: "Disliked movies like will be vanished" },
+  { icon: "👎", description: "Disliked movies will not be shown" },
 ]
 
 export const PAGES = {
@@ -30,3 +30,15 @@ export const LOCAL_STORAGE_KEYS = {
 }
 
 export const LIKED_MOVIES_LIMIT = 5
+
+export const MOVIE_DB_URL = {
+  TRENDING: "trending",
+  GENRES: "genres",
+  MOVIE_FROM_GENRE: "movieFromGenre",
+  MOVIE_FROM_GENRE_AND_PAGE: "moviesFromGenre&page",
+  SINGLE_MOVIE: "singleMovie",
+  IMAGELIST: "imageList",
+  RECOMMENDED_MOVIES: "recommendedMovies",
+  BEST_THIS_YEAR: "bestThisYear",
+  BEST_OF_2023: "bestOf2023",
+}

@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.13.4",
+    "@tanstack/react-query-devtools": "^5.17.9",
     "lodash": "^4.17.21",
     "next": "^14.0.1",
     "react": "^18.2.0",
@@ -16,9 +18,10 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.12.1",
     "autoprefixer": "^10.4.16",
-    "eslint": "7.30.0",
-    "eslint-config-next": "11.0.1",
+    "eslint": "^8.55.0",
+    "eslint-config-next": "^14.0.4",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5"
   }

@@ -22,8 +22,6 @@ export default function Movie({ movie, fb_liked, className }) {
       ? movie.original_title.substring(0, titleLimit) + "..."
       : movie.original_title
 
-  const poster = createMovieImageURL(movie.poster_path)
-
   if (!movie || !movie.poster_path) return false
 
   return (
@@ -35,7 +33,7 @@ export default function Movie({ movie, fb_liked, className }) {
       <Link href={"/movie/" + movie.id} passHref={true}>
         <li className='relative h-full' key={movie.id}>
           <Image
-            src={poster}
+            src={createMovieImageURL(movie.poster_path)}
             alt={movie.original_title}
             fill={true}
             sizes='25vw'

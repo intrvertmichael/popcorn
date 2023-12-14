@@ -1,18 +1,25 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useQuery } from "@tanstack/react-query"
+
+import { fetchGenres } from "utils/endpoints"
 
 import GenreList from "components/GenreList"
 
 const linkStyle = "text-neutral-500 hover:text-white"
 
-export default function Header({ genres }) {
+export default function Header() {
+  const router = useRouter()
+
+  const { isLoading, data: genres } = useQuery({
+    queryKey: ["genres"],
+    queryFn: fetchGenres,
+  })
+
   const [genreVisible, setGenreVisible] = useState(false)
 
-  const router = useRouter()
   const onProfilePage = router.pathname === "/profile"
-
-  const handleGenreBtn = () => setGenreVisible(curr => !curr)
 
   return (
     <>
@@ -36,13 +43,18 @@ export default function Header({ genres }) {
             </Link>
           )}
 
-          <button onClick={handleGenreBtn} className={linkStyle}>
+          <button
+            onClick={() => setGenreVisible(curr => !curr)}
+            className={linkStyle}
+          >
             Genres
           </button>
         </div>
       </div>
 
-      {genreVisible && <GenreList genres={genres} />}
+      {genreVisible && !isLoading && (
+        <GenreList genres={genres && Object.values(genres)} />
+      )}
     </>
   )
 }

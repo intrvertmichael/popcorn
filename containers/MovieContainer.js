@@ -1,7 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useQuery } from "@tanstack/react-query"
 
-import { createMovieImageURL } from "utils/movie.api"
+import {
+  createMovieImageURL,
+  getImageList,
+  getRecommendedMovies,
+  getSingleMovie,
+} from "utils/movie.api"
 import { createFullLength, createFullDate } from "utils/general"
 
 import Rating from "components/Rating"
@@ -9,25 +15,33 @@ import Carousel from "components/Carousel"
 import MovieCollection from "components/MovieCollection"
 import VoteButtons from "components/VoteButtons"
 
-export default function Movie({ movie, images, recommended }) {
-  if (!movie || !images || !recommended) return false
+export default function Movie({ id }) {
+  const { data: movie } = useQuery({
+    queryKey: ["movie", id],
+    enabled: Boolean(id),
+    queryFn: () => getSingleMovie(id),
+  })
+
+  const { data: images } = useQuery({
+    queryKey: ["images", id],
+    enabled: Boolean(id),
+    queryFn: () => getImageList(id),
+  })
+
+  const { data: recommended } = useQuery({
+    queryKey: ["recommended", id],
+    enabled: Boolean(id),
+    queryFn: () => getRecommendedMovies(id),
+  })
+
+  if (!movie || !images) return <>Loading...</>
 
   const fullDate = createFullDate(movie.release_date)
   const fullLength = createFullLength(movie.runtime)
 
   return (
     <>
-      <Carousel
-        images={images.backdrops.map((img, key) => (
-          <Image
-            key={key}
-            alt={key}
-            src={createMovieImageURL(img.file_path)}
-            fill={true}
-            sizes='(max-width: 2400px) 100vw, (max-width: 1200px) 50vw'
-          />
-        ))}
-      />
+      <Carousel images={images?.backdrops} />
 
       <div className='relative z-10 w-full max-w-3xl px-3 mx-auto -mt-32 pointer-events-none lg:-mt-56'>
         <div className='flex items-end gap-3'>
@@ -43,7 +57,7 @@ export default function Movie({ movie, images, recommended }) {
           <Rating score={movie.vote_average} count={movie.vote_count} />
 
           <ul className='flex flex-wrap gap-1 pointer-events-auto'>
-            {movie.genres.map(g => (
+            {movie.genres?.map(g => (
               <Link href={"/genre/" + g.id} key={g.id} passHref>
                 <li className='px-2 py-1 rounded text-neutral-400 bg-neutral-900 hover:text-white'>
                   {g.name}
@@ -70,7 +84,7 @@ export default function Movie({ movie, images, recommended }) {
       <MovieCollection
         view='bar'
         movieList={{
-          movies: recommended.results,
+          movies: recommended?.results,
           title: "Recommended Movies",
         }}
       />

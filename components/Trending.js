@@ -1,12 +1,20 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useQuery } from "@tanstack/react-query"
 
-export default function Trending({ movies }) {
-  if (!movies) return false
+import { getTrending } from "utils/movie.api"
+
+export default function Trending() {
+  const { isLoading, data: trending } = useQuery({
+    queryKey: ["trending"],
+    queryFn: getTrending,
+  })
+
+  if (isLoading) return <>Loading...</>
 
   return (
     <ul className='grid grid-cols-10'>
-      {movies?.map(movie => (
+      {trending?.map(movie => (
         <Link
           key={movie.id}
           href={"/movie/" + movie.id}

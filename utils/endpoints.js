@@ -16,6 +16,11 @@ export const fetchGenreMovies = async genre_id => {
   })
 
   const data = await res.json()
-
   return data?.results
+}
+
+export const fetchGenres = async () => {
+  const res = await fetch("/api/genres")
+  const data = await res.json()
+  return data
 }

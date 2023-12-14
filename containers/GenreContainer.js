@@ -1,42 +1,53 @@
-import Link from "next/link"
+import { isEmpty } from "lodash"
+import { useQuery } from "@tanstack/react-query"
+
+import { getGenreLabel, getMoviesFromGenre } from "utils/movie.api"
 
 import MovieCollection from "components/MovieCollection"
+import GenrePageControl from "components/GenrePageControl"
 
-export default function GenreDetails({ movies, genreLabel, page }) {
-  if (!movies && !genreLabel && !page) return false
+export default function GenreDetails({ id, page }) {
+  const { data: movies } = useQuery({
+    queryKey: ["genreMovies", id, page],
+    enabled: Boolean(id),
+    queryFn: () =>
+      page ? getMoviesFromGenre(id, page) : getMoviesFromGenre(id),
+  })
 
-  const nextPage = (parseInt(page) + 1).toString()
-  const prevPage = (parseInt(page) - 1).toString()
+  const { data: genreLabel } = useQuery({
+    queryKey: ["genreLabel", id],
+    enabled: Boolean(id),
+    queryFn: () => getGenreLabel(id),
+  })
 
-  const backBtn =
-    movies.page > 1 ? (
-      <Link href={"/genre/" + genreLabel.id + "?page=" + prevPage}>←</Link>
-    ) : (
-      <p> ← </p>
-    )
-
-  const next_page_label = "/genre/" + genreLabel.id + "?page=" + nextPage
-  const nextBtn =
-    movies.page < movies.total_pages ? (
-      <Link href={next_page_label}>→</Link>
-    ) : (
-      <p> → </p>
-    )
+  if (isEmpty(movies) || isEmpty(genreLabel)) return <>Loading...</>
 
   return (
     <div className='w-full max-w-4xl m-auto'>
-      <div className='text-center py-10 text-3xl'>
+      <div className='py-10 text-3xl text-center'>
         <h1>{genreLabel.name} Movies</h1>
       </div>
 
       <MovieCollection view='grid' movieList={{ movies: movies.results }} />
 
-      <nav className='flex gap-3 text-3xl m-auto w-fit py-10 text-neutral-500'>
-        {backBtn}
+      <nav className='flex gap-3 py-10 m-auto text-3xl w-fit text-neutral-500'>
+        <GenrePageControl
+          label='←'
+          genreLabel={genreLabel}
+          page={(parseInt(page) - 1).toString()}
+          showLink={movies.page > 1}
+        />
+
         <p>
           Page <span className='text-white'>{page}</span> / {movies.total_pages}
         </p>
-        {nextBtn}
+
+        <GenrePageControl
+          label='→'
+          genreLabel={genreLabel}
+          page={(parseInt(page) + 1).toString()}
+          showLink={movies.page < movies.total_pages}
+        />
       </nav>
     </div>
   )
