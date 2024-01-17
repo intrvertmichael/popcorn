@@ -23,14 +23,17 @@ export default function MovieCollection({ view, movieList }) {
 
   const movies = movieList?.movies
     ?.filter(movie => !findMovieFromList(movie, dislikedMovies))
-    ?.map(movie => (
-      <Movie
-        movie={movie}
-        key={movie.id}
-        fb_liked={likedMovies?.find(liked => liked.id === movie.id)}
-        className='snap-start'
-      />
-    ))
+    ?.map(
+      movie =>
+        movie?.id && (
+          <Movie
+            movie={movie}
+            key={movie.id}
+            fb_liked={likedMovies?.find(liked => liked.id === movie.id)}
+            className='snap-start'
+          />
+        ),
+    )
 
   let moviesWrapperStyle
   let moviesListStyle = "grid grid-cols-4"

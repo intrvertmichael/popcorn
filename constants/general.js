@@ -41,4 +41,5 @@ export const MOVIE_DB_URL = {
   RECOMMENDED_MOVIES: "recommendedMovies",
   BEST_THIS_YEAR: "bestThisYear",
   BEST_OF_2023: "bestOf2023",
+  SEARCH_MOVIE: "searchMovie",
 }

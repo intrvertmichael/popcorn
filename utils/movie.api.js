@@ -2,9 +2,10 @@ import { isEmpty } from "lodash"
 
 import { ERROR_MESSAGES, MOVIE_DB_URL } from "constants/general"
 
-const GET_MOVIE_DB_URL = (type, id, page) => {
-  const BASE_URL = "https://api.themoviedb.org/3"
-  const KEY = process.env.MOVIE_KEY || process.env.NEXT_PUBLIC_MOVIE_KEY
+const BASE_URL = "https://api.themoviedb.org/3"
+const KEY = process.env.MOVIE_KEY || process.env.NEXT_PUBLIC_MOVIE_KEY
+
+const GET_MOVIE_DB_URL = (type, id, page, movie) => {
   const KEY_PATH = "?api_key=" + KEY
   const YEAR = new Date().getFullYear()
 
@@ -57,6 +58,15 @@ const GET_MOVIE_DB_URL = (type, id, page) => {
         KEY_PATH +
         "&primary_release_year=2023" +
         "&certification_country=US&certification=R&vote_count.gte=500&sort_by=vote_average.desc"
+      )
+
+    case MOVIE_DB_URL.SEARCH_MOVIE:
+      return (
+        BASE_URL +
+        "/search/movie" +
+        KEY_PATH +
+        `&query=${movie}` +
+        "&include_adult=false&language=en-US&page=1"
       )
   }
 }
@@ -132,6 +142,13 @@ export const getBestThisYear = async () => {
 
 export const getBestOf2023 = async () => {
   const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.BEST_OF_2023)
+  const res = await fetch(url)
+  const data = await res.json()
+  return data
+}
+
+export const searchForMovie = async movie => {
+  const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.SEARCH_MOVIE, null, null, movie)
   const res = await fetch(url)
   const data = await res.json()
   return data

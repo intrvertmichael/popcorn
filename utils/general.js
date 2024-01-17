@@ -50,3 +50,11 @@ export const sortFavoriteGenres = favoriteGenres =>
 
 export const checkIfExists = value =>
   value !== null && typeof value !== "undefined"
+
+export const extractJSON = d => {
+  try {
+    return JSON.parse(d)
+  } catch (e) {
+    return d
+  }
+}

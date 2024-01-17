@@ -1,4 +1,4 @@
-import { createContext, useCallback, useMemo } from "react"
+import { createContext, useCallback, useMemo, useState } from "react"
 
 import { LOCAL_STORAGE_KEYS } from "constants/general"
 import { useLocalStorage } from "hooks"
@@ -20,6 +20,8 @@ export default function UserProvider({ children }) {
     LOCAL_STORAGE_KEYS.SAVED_MOVIES,
   )
 
+  const [aiRecommendations, setAiRecommendations] = useState({})
+
   const resetData = useCallback(() => {
     setUsername()
     setLikedMovies()
@@ -38,6 +40,8 @@ export default function UserProvider({ children }) {
       savedMovies,
       setSavedMovies,
       resetData,
+      aiRecommendations,
+      setAiRecommendations,
     }),
     [
       username,
@@ -49,6 +53,7 @@ export default function UserProvider({ children }) {
       savedMovies,
       setSavedMovies,
       resetData,
+      aiRecommendations,
     ],
   )
 

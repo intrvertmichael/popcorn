@@ -8,7 +8,9 @@ export default function FavoriteGenreMovies({ favoriteGenre, allGenres }) {
   const [movies, setMovies] = useState()
 
   const genreID = favoriteGenre[0]
-  const genreInfo = allGenres?.find(genre => String(genre.id) === genreID)
+  const genreInfo = Object.values(allGenres)?.find(
+    genre => String(genre.id) === genreID,
+  )
 
   useEffect(() => {
     fetchGenreMovies(genreID).then(result => setMovies(result))
