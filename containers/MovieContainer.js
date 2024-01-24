@@ -1,12 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
+import { isEmpty } from "lodash"
 
 import {
   createMovieImageURL,
   getImageList,
   getRecommendedMovies,
   getSingleMovie,
+  getVideoList,
 } from "utils/movie.api"
 import { createFullLength, createFullDate } from "utils/general"
 
@@ -26,6 +28,16 @@ export default function Movie({ id }) {
     queryKey: ["images", id],
     enabled: Boolean(id),
     queryFn: () => getImageList(id),
+  })
+
+  const { data: trailer } = useQuery({
+    queryKey: ["videos", id],
+    enabled: Boolean(id),
+    queryFn: async () => {
+      const videos = await getVideoList(id)
+      const trailer = videos.results.find(m => m.type === "Trailer")
+      return trailer.key
+    },
   })
 
   const { data: recommended } = useQuery({
@@ -68,7 +80,20 @@ export default function Movie({ id }) {
         </div>
 
         <div className='px-12 py-36'>
-          <h1 className='text-2xl '>{movie.title}</h1>
+          <div className='flex items-center gap-3'>
+            <h1 className='text-2xl '>{movie.title}</h1>
+            {!isEmpty(trailer) && (
+              <a
+                target='_blank'
+                href={`https://www.youtube.com/watch?v=${trailer}`}
+                rel='noopener noreferrer'
+                className='px-3 py-1 text-xs border rounded-lg cursor-pointer pointer-events-auto text-neutral-600 border-neutral-600 hover:text-white hover:border-white'
+              >
+                Watch Trailer
+              </a>
+            )}
+          </div>
+
           <h2 className='text-neutral-500'>{movie.tagline}</h2>
           <p className='py-12 leading-8'>{movie.overview}</p>
 

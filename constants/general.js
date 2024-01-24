@@ -38,6 +38,7 @@ export const MOVIE_DB_URL = {
   MOVIE_FROM_GENRE_AND_PAGE: "moviesFromGenre&page",
   SINGLE_MOVIE: "singleMovie",
   IMAGELIST: "imageList",
+  VIDEOLIST: "videoList",
   RECOMMENDED_MOVIES: "recommendedMovies",
   BEST_THIS_YEAR: "bestThisYear",
   BEST_OF_2023: "bestOf2023",

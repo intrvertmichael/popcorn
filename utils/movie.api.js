@@ -38,6 +38,9 @@ const GET_MOVIE_DB_URL = (type, id, page, movie) => {
     case MOVIE_DB_URL.IMAGELIST:
       return BASE_URL + "/movie/" + id + "/images" + KEY_PATH
 
+    case MOVIE_DB_URL.VIDEOLIST:
+      return BASE_URL + "/movie/" + id + "/videos" + KEY_PATH
+
     case MOVIE_DB_URL.RECOMMENDED_MOVIES:
       return BASE_URL + "/movie/" + id + "/recommendations" + KEY_PATH
 
@@ -121,6 +124,13 @@ export const getSingleMovie = async id => {
 
 export const getImageList = async id => {
   const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.IMAGELIST, id)
+  const res = await fetch(url)
+  const data = await res.json()
+  return data
+}
+
+export const getVideoList = async id => {
+  const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.VIDEOLIST, id)
   const res = await fetch(url)
   const data = await res.json()
   return data
