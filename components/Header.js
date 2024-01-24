@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useQuery } from "@tanstack/react-query"
@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchGenres } from "utils/endpoints"
 
 import GenreList from "components/GenreList"
+import Search from "./Search"
 
 const linkStyle = "text-neutral-500 hover:text-white"
 
@@ -18,8 +19,14 @@ export default function Header() {
   })
 
   const [genreVisible, setGenreVisible] = useState(false)
+  const [searchVisible, setSearchVisible] = useState(false)
 
   const onProfilePage = router.pathname === "/profile"
+
+  useEffect(() => {
+    setGenreVisible(false)
+    setSearchVisible(false)
+  }, [router.asPath])
 
   return (
     <>
@@ -37,6 +44,16 @@ export default function Header() {
         </div>
 
         <div className='flex items-center gap-3'>
+          <button
+            onClick={() => {
+              setSearchVisible(curr => !curr)
+              setGenreVisible(false)
+            }}
+            className='text-xl'
+          >
+            🔎
+          </button>
+
           {!onProfilePage && (
             <Link href='/profile' passHref className='px-2'>
               <h3 className={linkStyle}>Profile</h3>
@@ -44,13 +61,18 @@ export default function Header() {
           )}
 
           <button
-            onClick={() => setGenreVisible(curr => !curr)}
+            onClick={() => {
+              setGenreVisible(curr => !curr)
+              setSearchVisible(false)
+            }}
             className={linkStyle}
           >
             Genres
           </button>
         </div>
       </div>
+
+      {searchVisible && <Search />}
 
       {genreVisible && !isLoading && (
         <GenreList genres={genres && Object.values(genres)} />

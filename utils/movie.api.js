@@ -72,7 +72,8 @@ const GET_MOVIE_DB_URL = (type, id, page, movie) => {
         "/search/movie" +
         KEY_PATH +
         `&query=${movie}` +
-        "&include_adult=false&language=en-US&page=1"
+        "&language=en-US" +
+        `&page=${page || 1}`
       )
   }
 }
@@ -167,8 +168,8 @@ export const getBestOf2023 = async () => {
   return data
 }
 
-export const searchForMovie = async movie => {
-  const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.SEARCH_MOVIE, null, null, movie)
+export const searchForMovie = async (movie, page) => {
+  const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.SEARCH_MOVIE, null, page, movie)
   const res = await fetch(url)
   const data = await res.json()
   return data
