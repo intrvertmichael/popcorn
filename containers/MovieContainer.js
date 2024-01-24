@@ -7,6 +7,7 @@ import {
   createMovieImageURL,
   getImageList,
   getRecommendedMovies,
+  getSimilarMovies,
   getSingleMovie,
   getVideoList,
 } from "utils/movie.api"
@@ -44,6 +45,12 @@ export default function Movie({ id }) {
     queryKey: ["recommended", id],
     enabled: Boolean(id),
     queryFn: () => getRecommendedMovies(id),
+  })
+
+  const { data: similar } = useQuery({
+    queryKey: ["similar", id],
+    enabled: Boolean(id),
+    queryFn: () => getSimilarMovies(id),
   })
 
   if (!movie || !images) return <>Loading...</>
@@ -106,13 +113,25 @@ export default function Movie({ id }) {
         </div>
       </div>
 
-      <MovieCollection
-        view='bar'
-        movieList={{
-          movies: recommended?.results,
-          title: "Recommended Movies",
-        }}
-      />
+      {!isEmpty(similar) && (
+        <MovieCollection
+          view='bar'
+          movieList={{
+            movies: similar.results,
+            title: "Similar Movies",
+          }}
+        />
+      )}
+
+      {!isEmpty(recommended) && (
+        <MovieCollection
+          view='bar'
+          movieList={{
+            movies: recommended.results,
+            title: "Recommended Movies",
+          }}
+        />
+      )}
     </>
   )
 }

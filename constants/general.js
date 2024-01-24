@@ -40,6 +40,7 @@ export const MOVIE_DB_URL = {
   IMAGELIST: "imageList",
   VIDEOLIST: "videoList",
   RECOMMENDED_MOVIES: "recommendedMovies",
+  SIMILAR_MOVIES: "similarMovies",
   BEST_THIS_YEAR: "bestThisYear",
   BEST_OF_2023: "bestOf2023",
   SEARCH_MOVIE: "searchMovie",

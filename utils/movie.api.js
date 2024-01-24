@@ -44,6 +44,9 @@ const GET_MOVIE_DB_URL = (type, id, page, movie) => {
     case MOVIE_DB_URL.RECOMMENDED_MOVIES:
       return BASE_URL + "/movie/" + id + "/recommendations" + KEY_PATH
 
+    case MOVIE_DB_URL.SIMILAR_MOVIES:
+      return BASE_URL + "/movie/" + id + "/similar" + KEY_PATH
+
     case MOVIE_DB_URL.BEST_THIS_YEAR:
       return (
         BASE_URL +
@@ -138,6 +141,13 @@ export const getVideoList = async id => {
 
 export const getRecommendedMovies = async id => {
   const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.RECOMMENDED_MOVIES, id)
+  const res = await fetch(url)
+  const data = await res.json()
+  return data
+}
+
+export const getSimilarMovies = async id => {
+  const url = GET_MOVIE_DB_URL(MOVIE_DB_URL.SIMILAR_MOVIES, id)
   const res = await fetch(url)
   const data = await res.json()
   return data
