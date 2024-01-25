@@ -58,3 +58,5 @@ export const extractJSON = d => {
     return d
   }
 }
+
+export const makeArray = length => [...Array(length).keys()]

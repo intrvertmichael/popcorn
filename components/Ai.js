@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { isEmpty } from "lodash"
 
 import { getRecommendedMovieData } from "utils/endpoints"
-import { extractJSON } from "utils/general"
+import { extractJSON, makeArray } from "utils/general"
 
 import MovieCollection from "./MovieCollection"
 import { useUserContext } from "context"
@@ -11,9 +11,11 @@ import { useUserContext } from "context"
 const MOVIE_AI_INPUT_LIMIT = 10
 
 export default function Ai({ likedMovies }) {
-  const [recommendedMovieData, setRecommendedMovieData] = useState()
   const { aiRecommendations, setAiRecommendations, dislikedMovies } =
     useUserContext()
+
+  const [recommendedMovieData, setRecommendedMovieData] = useState()
+  const [loading, setLoading] = useState(false)
 
   const likedMovieTitles = likedMovies
     ?.slice(likedMovies.length - MOVIE_AI_INPUT_LIMIT, likedMovies.length)
@@ -54,24 +56,42 @@ export default function Ai({ likedMovies }) {
   })
 
   useEffect(() => {
+    const setRecommendedMovieDate = all => {
+      setLoading(false)
+      setRecommendedMovieData(all)
+    }
+
+    setLoading(true)
+
     if (isEmpty(data) && recommendationsExist) {
       getRecommendedMovieData(aiRecommendations[likedMovieTitlesString]).then(
-        all => setRecommendedMovieData(all),
+        setRecommendedMovieDate,
       )
 
       return
     }
 
     if (Array.isArray(data)) {
-      getRecommendedMovieData(data).then(all => setRecommendedMovieData(all))
+      getRecommendedMovieData(data).then(setRecommendedMovieDate)
     }
   }, [aiRecommendations, data, recommendationsExist, likedMovieTitlesString])
 
-  if (isLoading || isRefetching) {
+  if (isLoading || isRefetching || loading) {
     return (
-      <div className='p-3 text-2xl text-center text-neutral-500'>
-        Getting recommendations from ChatGPT...
-      </div>
+      <>
+        <p className='p-6 text-2xl text-neutral-500'>
+          Getting recommendations from ChatGPT...
+        </p>
+
+        <div className='grid grid-cols-7 gap-1'>
+          {makeArray(7).map(key => (
+            <div
+              key={key}
+              className='aspect-[1/1.5] bg-neutral-900 animate-pulse'
+            />
+          ))}
+        </div>
+      </>
     )
   }
 

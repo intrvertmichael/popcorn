@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
 
 import { getTrending } from "utils/movie.api"
+import { makeArray } from "utils/general"
 
 export default function Trending() {
   const { isLoading, data: trending } = useQuery({
@@ -10,7 +11,18 @@ export default function Trending() {
     queryFn: getTrending,
   })
 
-  if (isLoading) return <>Loading...</>
+  if (isLoading) {
+    return (
+      <div className='grid grid-cols-10 gap-1'>
+        {makeArray(10).map(key => (
+          <div
+            key={key}
+            className='aspect-[1/1.5] bg-neutral-900 animate-pulse'
+          />
+        ))}
+      </div>
+    )
+  }
 
   return (
     <ul className='grid grid-cols-10'>

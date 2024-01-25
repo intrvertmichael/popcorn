@@ -5,6 +5,7 @@ import { getGenreLabel, getMoviesFromGenre } from "utils/movie.api"
 
 import MovieCollection from "components/MovieCollection"
 import GenrePageControl from "components/GenrePageControl"
+import { makeArray } from "utils/general"
 
 export default function GenreDetails({ id, page }) {
   const { data: movies } = useQuery({
@@ -20,7 +21,20 @@ export default function GenreDetails({ id, page }) {
     queryFn: () => getGenreLabel(id),
   })
 
-  if (isEmpty(movies) || isEmpty(genreLabel)) return <>Loading...</>
+  if (isEmpty(movies) || isEmpty(genreLabel)) {
+    return (
+      <div className='w-full max-w-4xl pt-40 m-auto'>
+        <div className='grid grid-cols-4 gap-1'>
+          {makeArray(20).map(key => (
+            <div
+              key={key}
+              className='aspect-[1/1.5] bg-neutral-900 animate-pulse'
+            />
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className='w-full max-w-4xl m-auto'>
