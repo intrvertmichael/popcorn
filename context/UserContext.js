@@ -24,9 +24,9 @@ export default function UserProvider({ children }) {
 
   const resetData = useCallback(() => {
     setUsername()
-    setLikedMovies()
-    setDisLikedMovies()
-    setSavedMovies()
+    setLikedMovies([])
+    setDisLikedMovies([])
+    setSavedMovies([])
   }, [setDisLikedMovies, setLikedMovies, setSavedMovies, setUsername])
 
   const value = useMemo(

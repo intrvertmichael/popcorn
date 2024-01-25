@@ -28,29 +28,30 @@ export default function Header() {
     setSearchVisible(false)
   }, [router.asPath])
 
+  const showSearch = () => {
+    setSearchVisible(curr => !curr)
+    setGenreVisible(false)
+  }
+
   return (
     <>
       <div className='flex justify-between p-6'>
         <div className='flex flex-col items-start gap-3'>
-          <div className='flex items-center gap-3'>
+          <div className='flex items-end gap-3'>
             <Link href='/' passHref>
               <h1 className='flex gap-2 text-2xl text-white'>
                 <span>🍿</span>Popcorn
               </h1>
             </Link>
 
-            <h2 className='text-neutral-500'>Find what to watch</h2>
+            <h2 className='text-neutral-500' onClick={showSearch}>
+              Find what to watch
+            </h2>
           </div>
         </div>
 
         <div className='flex items-center gap-3'>
-          <button
-            onClick={() => {
-              setSearchVisible(curr => !curr)
-              setGenreVisible(false)
-            }}
-            className='text-xl'
-          >
+          <button onClick={showSearch} className='text-xl'>
             🔎
           </button>
 

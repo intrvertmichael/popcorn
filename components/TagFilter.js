@@ -1,9 +1,14 @@
-export default function TagFilter({ filter, setFilter, saved }) {
-  if (saved && ![]) return false
-  if (![]) return false
+import { isEmpty, sortedUniq } from "lodash"
 
-  const tagLabels = Object.keys(saved ? [] : [])
-  const sorted = tagLabels.sort()
+export default function TagFilter({ filter, setFilter, movies }) {
+  const allTags = sortedUniq(
+    movies?.reduce(
+      (acc, curr) => (!isEmpty(curr.tags) ? [...acc, ...curr.tags] : acc),
+      [],
+    ),
+  )
+
+  const sorted = allTags.sort()
 
   const handleFilter = e => {
     const clickedTag = e.target.innerHTML.trim()
@@ -12,7 +17,8 @@ export default function TagFilter({ filter, setFilter, saved }) {
     else setFilter(clickedTag)
   }
 
-  if (!sorted.length > 0) return false
+  if (isEmpty(sorted)) return <></>
+
   return (
     <ul className='flex flex-wrap gap-6 p-3 mb-3 border rounded text-neutral-500 border-neutral-900 bg-neutral-950'>
       <h4 className='text-white'>Tags:</h4>
@@ -20,7 +26,9 @@ export default function TagFilter({ filter, setFilter, saved }) {
       {sorted.map(tag => (
         <li
           key={tag}
-          className='cursor-pointer hover:text-white'
+          className={`cursor-pointer hover:text-white ${
+            filter === tag ? "text-white" : ""
+          }`}
           onClick={handleFilter}
         >
           {tag}

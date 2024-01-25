@@ -10,7 +10,6 @@ import TagFilter from "components/TagFilter"
 export default function ProfileMovieList({ movies, currentPage }) {
   const { setSavedMovies, setLikedMovies, setDisLikedMovies } = useUserContext()
 
-  const [tags, setTags] = useState([])
   const [filter, setFilter] = useState("")
   const [filteredMovies, setFilteredMovies] = useState()
 
@@ -27,25 +26,18 @@ export default function ProfileMovieList({ movies, currentPage }) {
   }
 
   useEffect(() => {
-    if (saved) setTags([])
-    if (liked) setTags([])
-    if (disliked) setTags([])
-  }, [saved, liked, disliked])
-
-  useEffect(() => {
     if (disliked || isEmpty(filter)) return setFilteredMovies(movies)
 
-    const tagArr = tags[filter]
-
-    const filtered = movies.filter(movie => {
-      const exists = tagArr?.length
-        ? tagArr?.find(id => id === movie.id)
-        : tagArr === movie.id
-      return exists ? true : false
-    })
+    const filtered = movies.filter(movie =>
+      movie.tags?.find(tag => tag === filter),
+    )
 
     setFilteredMovies(filtered)
-  }, [filter, movies, tags, disliked])
+  }, [filter, movies, disliked])
+
+  useEffect(() => {
+    setFilter("")
+  }, [currentPage])
 
   if (isEmpty(movies)) {
     return (
@@ -58,7 +50,7 @@ export default function ProfileMovieList({ movies, currentPage }) {
   return (
     <>
       {(saved || liked) && (
-        <TagFilter filter={filter} setFilter={setFilter} saved={!liked} />
+        <TagFilter filter={filter} setFilter={setFilter} movies={movies} />
       )}
 
       <ul className='grid gap-3'>

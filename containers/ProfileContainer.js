@@ -31,7 +31,7 @@ export default function ProfileContainer() {
         className='mx-auto text-neutral-800 hover:text-red-500 w-fit'
         onClick={handleRemoveAllData}
       >
-        Remove Account Information
+        Remove All Account Information
       </button>
 
       <div className='flex justify-center gap-6'>

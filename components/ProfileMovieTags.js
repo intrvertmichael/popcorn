@@ -1,93 +1,63 @@
 import { useState } from "react"
 
+import { useUserContext } from "context"
+
 export default function LikedMovieTags({ movie, liked, saved }) {
-  const [tagInput, setTagInput] = useState(false)
+  const { setSavedMovies, setLikedMovies } = useUserContext()
+
+  const [showInput, setShowInput] = useState(false)
   const [tagText, setTagText] = useState(false)
 
-  // TODO: need to add tags
-
-  let entries = []
-  let tagsArr = []
-
-  if (liked && []) {
-    entries = Object.entries([])
-  }
-
-  if (saved && []) {
-    entries = Object.entries([])
-  }
-
-  if (entries.length > 0) {
-    tagsArr = entries.filter(tag => {
-      const exists = tag[1].length
-        ? tag[1]?.find(tag => tag === movie.id)
-        : tag[1] === movie.id
-      if (exists) return true
-    })
-  }
-
-  const tagsUsed = tagsArr.map(tag => tag[0])
-
-  const addingTag = async e => {
+  const addTag = async e => {
     e.preventDefault()
-    setTagInput(false)
+    setShowInput(false)
 
-    let tagArr = []
-
-    if (liked && []) {
-      tagArr = Object.keys([])
+    const addTagToList = curr => {
+      return curr.map(m =>
+        m.id === movie.id
+          ? {
+              ...m,
+              tags:
+                m.tags && !m.tags.find(t => t === tagText)
+                  ? [...m.tags, tagText]
+                  : [tagText],
+            }
+          : m,
+      )
     }
 
-    if (saved && []) {
-      tagArr = Object.entries([])
-    }
-
-    if (!tagArr?.find(tag => tag === tagText)) {
-      if (liked) {
-      }
-
-      if (saved) {
-      }
-    } else {
-      if (liked) {
-      }
-
-      if (saved) {
-      }
-    }
+    if (liked) setLikedMovies(addTagToList)
+    if (saved) setSavedMovies(addTagToList)
   }
 
-  const removingTag = async e => {
+  const removeTag = async e => {
     e.preventDefault()
 
     const tag = e.target.innerHTML
 
-    let message
-
-    if (liked) {
-      message = `Are you sure you want to remove ${tag} tag from ${movie.original_title}?`
+    const removeTagFromList = curr => {
+      return curr.map(m =>
+        m.id === movie.id ? { ...m, tags: m.tags.filter(t => t !== tag) } : m,
+      )
     }
 
-    if (saved) {
-      message = `Are you sure you want to remove ${tag} tag from ${movie.original_title}?`
-    }
+    const message =
+      (liked || saved) &&
+      `Are you sure you want to remove ${tag} tag from ${movie.original_title}?`
 
     if (confirm(message)) {
-      if (liked) {
-      }
-
-      if (saved) {
-      }
+      if (liked) setLikedMovies(removeTagFromList)
+      if (saved) setSavedMovies(removeTagFromList)
     }
   }
 
   return (
     <ul className='flex flex-wrap gap-3'>
-      {tagsUsed?.map(tag => {
+      {movie.tags?.map(tag => {
         return (
           <li
             key={tag}
-            onClick={removingTag}
+            onClick={removeTag}
             className='text-sm cursor-pointer hover:text-red-500'
           >
             {tag}
@@ -95,9 +65,9 @@ export default function LikedMovieTags({ movie, liked, saved }) {
         )
       })}
 
-      {tagInput ? (
+      {showInput ? (
         <li className='flex items-stretch'>
-          <form onSubmit={addingTag}>
+          <form onSubmit={addTag}>
             <input
               type='text'
               autoFocus
@@ -106,7 +76,7 @@ export default function LikedMovieTags({ movie, liked, saved }) {
             />
           </form>
           <button
-            onClick={() => setTagInput(false)}
+            onClick={() => setShowInput(false)}
             className='px-3 rounded-r bg-neutral-800'
           >
             x
@@ -115,7 +85,7 @@ export default function LikedMovieTags({ movie, liked, saved }) {
       ) : (
         <li
           className='px-3 py-1 text-xs rounded cursor-pointer text-neutral-500 bg-neutral-900 w-fit hover:text-white'
-          onClick={() => setTagInput(true)}
+          onClick={() => setShowInput(true)}
         >
           add tag
         </li>

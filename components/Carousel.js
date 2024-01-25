@@ -61,6 +61,7 @@ export default function Carousel({ images }) {
             src={createMovieImageURL(images[galleryPosition].file_path)}
             fill={true}
             sizes='(max-width: 2400px) 100vw, (max-width: 1200px) 50vw'
+            priority
           />
         )}
       </div>

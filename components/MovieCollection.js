@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { isEmpty } from "lodash"
 
@@ -13,11 +13,21 @@ const buttonStyle =
 const collectionTitleStyle =
   "p-6 text-2xl text-neutral-500 w-fit hover:text-white"
 
-const scrollAmount = 500 // TODO: needs to adapt depending on the screen width
-
 export default function MovieCollection({ view, movieList }) {
   const movieBar = useRef(null)
   const { likedMovies, dislikedMovies } = useUserContext()
+
+  const [scrollAmount, setScrollAmount] = useState()
+
+  useEffect(() => {
+    window.addEventListener("resize", e => {
+      setScrollAmount(e.currentTarget.innerWidth)
+    })
+
+    if (typeof window !== "undefined") {
+      setScrollAmount(window.innerWidth)
+    }
+  }, [])
 
   if (isEmpty(movieList) || isEmpty(movieList.movies)) return <></>
 
@@ -35,15 +45,15 @@ export default function MovieCollection({ view, movieList }) {
         ),
     )
 
-  let moviesWrapperStyle
-  let moviesListStyle = "grid grid-cols-4"
+  const moviesWrapperStyle =
+    view === "bar"
+      ? "w-full scroll-smooth overflow-x-scroll snap-x snap-mandatory"
+      : ""
 
-  if (view === "bar") {
-    moviesWrapperStyle =
-      "w-full scroll-smooth overflow-x-scroll snap-x snap-mandatory"
-    moviesListStyle =
-      "w-[400%] md:w-[334%] xl:w-[286%] grid grid-cols-20 grid-rows-1"
-  }
+  const moviesListStyle =
+    view === "bar"
+      ? "w-[400%] md:w-[334%] xl:w-[286%] grid grid-cols-20 grid-rows-1"
+      : "grid grid-cols-4"
 
   const handleRMovement = e => {
     e.preventDefault()

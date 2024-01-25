@@ -22,7 +22,7 @@ export default function Movie({ movie, fb_liked, className }) {
       ? movie.original_title.substring(0, titleLimit) + "..."
       : movie.original_title
 
-  if (!movie || !movie.poster_path) return false
+  if (!movie || !movie.poster_path) return <></>
 
   return (
     <div

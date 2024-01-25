@@ -19,13 +19,13 @@ import MovieCollection from "components/MovieCollection"
 import VoteButtons from "components/VoteButtons"
 
 export default function Movie({ id }) {
-  const { data: movie } = useQuery({
+  const { data: movie, isLoading: movieLoading } = useQuery({
     queryKey: ["movie", id],
     enabled: Boolean(id),
     queryFn: () => getSingleMovie(id),
   })
 
-  const { data: images } = useQuery({
+  const { data: images, isLoading: imagesLoading } = useQuery({
     queryKey: ["images", id],
     enabled: Boolean(id),
     queryFn: () => getImageList(id),
@@ -41,19 +41,23 @@ export default function Movie({ id }) {
     },
   })
 
-  const { data: recommended } = useQuery({
+  const { data: recommended, isLoading: recommendedLoading } = useQuery({
     queryKey: ["recommended", id],
     enabled: Boolean(id),
     queryFn: () => getRecommendedMovies(id),
   })
 
-  const { data: similar } = useQuery({
+  const { data: similar, isLoading: similarLoading } = useQuery({
     queryKey: ["similar", id],
     enabled: Boolean(id),
     queryFn: () => getSimilarMovies(id),
   })
 
-  if (!movie || !images) return <>Loading...</>
+  if (!movie || !images || movieLoading || imagesLoading) {
+    return (
+      <div className='relative max-w-5xl mx-auto overflow-hidden bg-neutral-950 animate-pulse aspect-video' />
+    )
+  }
 
   const fullDate = createFullDate(movie.release_date)
   const fullLength = createFullLength(movie.runtime)
@@ -113,7 +117,7 @@ export default function Movie({ id }) {
         </div>
       </div>
 
-      {!isEmpty(similar) && (
+      {!similarLoading && !isEmpty(similar) && (
         <MovieCollection
           view='bar'
           movieList={{
@@ -123,7 +127,7 @@ export default function Movie({ id }) {
         />
       )}
 
-      {!isEmpty(recommended) && (
+      {!recommendedLoading && !isEmpty(recommended) && (
         <MovieCollection
           view='bar'
           movieList={{
