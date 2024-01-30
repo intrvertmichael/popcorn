@@ -1,16 +1,12 @@
-import { searchForMovie } from '../../requests/movie.api'
+import { searchForMovie } from "utils/movie.api"
 
 export default async function handler(req, res) {
-	const searchTerm = req.headers.searchterm
-	const page = req.headers.page
+  const { movie, page } = req.headers
 
-	let data
-	if (page) data = await searchForMovie(searchTerm, page)
-	else data = await searchForMovie(searchTerm)
-
-	if (req.method === 'GET') {
-		res.status(200).json({ ...data })
-	} else {
-		res.status(400)
-	}
+  if (req.method === "GET") {
+    const movie_data = await searchForMovie(movie, page)
+    res.status(200).json({ ...movie_data })
+  } else {
+    res.status(400)
+  }
 }
