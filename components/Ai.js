@@ -80,7 +80,7 @@ export default function Ai({ likedMovies }) {
     return (
       <>
         <p className='p-6 text-2xl text-neutral-500'>
-          Getting recommendations from ChatGPT...
+          Getting AI recommendations...
         </p>
 
         <div className='grid grid-cols-7 gap-1'>
@@ -110,7 +110,7 @@ export default function Ai({ likedMovies }) {
     <MovieCollection
       view='bar'
       movieList={{
-        title: "Recommended by ChatGPT",
+        title: "AI Recommended",
         movies: recommendedMovieData,
       }}
     />

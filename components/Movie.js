@@ -35,10 +35,9 @@ export default function Movie({ movie, fb_liked, className }) {
           <img
             src={createMovieImageURL(movie.poster_path)}
             alt={movie.original_title}
-            fill={true}
           />
 
-          <div className='relative z-10 flex flex-col items-center justify-center w-full h-full p-3 text-center transition-opacity duration-500 opacity-0 bg-black/90 group-hover:opacity-100'>
+          <div className='absolute top-0 z-10 flex flex-col items-center justify-center w-full h-full p-3 text-center transition-opacity duration-500 opacity-0 bg-black/90 group-hover:opacity-100'>
             <h3 className='text-2xl'>{title}</h3>
             <p>★ {formatRating(movie.vote_average)}</p>
           </div>

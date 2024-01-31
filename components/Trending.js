@@ -33,7 +33,7 @@ export default function Trending() {
           passHref
           className='aspect-[1/1.5] relative'
         >
-          <img src={movie.image} alt={movie.title} fill={true} />
+          <img src={movie.image} alt={movie.title} />
         </Link>
       ))}
     </ul>

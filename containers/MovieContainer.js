@@ -68,11 +68,10 @@ export default function Movie({ id }) {
 
       <div className='relative z-10 w-full max-w-3xl px-3 mx-auto -mt-32 pointer-events-none lg:-mt-56'>
         <div className='flex items-end gap-3'>
-          <div className='relative w-44 aspect-[1/1.5] pointer-events-auto'>
+          <div className='relative w-44 aspect-[1/1.4] pointer-events-auto border-4'>
             <img
               src={createMovieImageURL(movie.poster_path)}
               alt={movie.title}
-              fill={true}
             />
           </div>
 
@@ -89,7 +88,7 @@ export default function Movie({ id }) {
           </ul>
         </div>
 
-        <div className='px-12 py-36'>
+        <div className='px-12 py-24'>
           <div className='flex items-center gap-3'>
             <h1 className='text-2xl '>{movie.title}</h1>
             {!isEmpty(trailer) && (

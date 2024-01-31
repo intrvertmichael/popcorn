@@ -59,7 +59,6 @@ export default function Carousel({ images }) {
           <img
             alt={images[galleryPosition].file_path}
             src={createMovieImageURL(images[galleryPosition].file_path)}
-            fill={true}
             priority
           />
         )}

@@ -37,7 +37,6 @@ export default function ProfileMovie({ movie, saved, liked, disliked }) {
         <img
           src={createMovieImageURL(movie.poster_path)}
           alt={movie.original_title}
-          fill={true}
         />
       </Link>
 
