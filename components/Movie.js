@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
 
 import { createMovieImageURL } from "utils/movie.api"
 import { formatRating } from "utils/general"
@@ -32,11 +32,10 @@ export default function Movie({ movie, fb_liked, className }) {
     >
       <Link href={"/movie/" + movie.id} passHref={true}>
         <li className='relative h-full' key={movie.id}>
-          <Image
+          <img
             src={createMovieImageURL(movie.poster_path)}
             alt={movie.original_title}
             fill={true}
-            sizes='25vw'
           />
 
           <div className='relative z-10 flex flex-col items-center justify-center w-full h-full p-3 text-center transition-opacity duration-500 opacity-0 bg-black/90 group-hover:opacity-100'>

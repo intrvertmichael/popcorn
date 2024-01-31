@@ -1,4 +1,4 @@
-import Image from "next/image"
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
 
@@ -33,7 +33,7 @@ export default function Trending() {
           passHref
           className='aspect-[1/1.5] relative'
         >
-          <Image src={movie.image} alt={movie.title} fill={true} sizes='10vw' />
+          <img src={movie.image} alt={movie.title} fill={true} />
         </Link>
       ))}
     </ul>

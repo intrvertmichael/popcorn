@@ -1,4 +1,4 @@
-import Image from "next/image"
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
 import { isEmpty } from "lodash"
@@ -69,11 +69,10 @@ export default function Movie({ id }) {
       <div className='relative z-10 w-full max-w-3xl px-3 mx-auto -mt-32 pointer-events-none lg:-mt-56'>
         <div className='flex items-end gap-3'>
           <div className='relative w-44 aspect-[1/1.5] pointer-events-auto'>
-            <Image
+            <img
               src={createMovieImageURL(movie.poster_path)}
               alt={movie.title}
               fill={true}
-              sizes='20vw'
             />
           </div>
 

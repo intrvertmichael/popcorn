@@ -1,6 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
-import Image from "next/image"
-
 import { createMovieImageURL } from "utils/movie.api"
 import { useUserActions } from "hooks"
 import { PAGES } from "constants/general"
@@ -35,7 +34,7 @@ export default function ProfileMovie({ movie, saved, liked, disliked }) {
         passHref
         className='relative aspect-[1/1.5] w-40'
       >
-        <Image
+        <img
           src={createMovieImageURL(movie.poster_path)}
           alt={movie.original_title}
           fill={true}

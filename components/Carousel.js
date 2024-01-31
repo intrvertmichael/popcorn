@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect } from "react"
-import Image from "next/image"
 import { useRouter } from "next/router"
 import { isEmpty } from "lodash"
 
@@ -56,11 +56,10 @@ export default function Carousel({ images }) {
         onClick={nextClicked}
       >
         {images[galleryPosition] && (
-          <Image
+          <img
             alt={images[galleryPosition].file_path}
             src={createMovieImageURL(images[galleryPosition].file_path)}
             fill={true}
-            sizes='(max-width: 2400px) 100vw, (max-width: 1200px) 50vw'
             priority
           />
         )}
