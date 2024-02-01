@@ -25,6 +25,7 @@ export default function MyApp({ Component, pageProps }) {
         />
 
         <meta property='og:title' content='Popcorn' />
+
         <meta name='author' content='Michael Paguay' />
 
         <meta

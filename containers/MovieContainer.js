@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
+import Head from "next/head"
 import { useQuery } from "@tanstack/react-query"
 import { isEmpty } from "lodash"
 
@@ -64,6 +65,20 @@ export default function Movie({ id }) {
 
   return (
     <>
+      <Head>
+        <meta
+          name='image'
+          property='og:image'
+          content={createMovieImageURL(movie.poster_path)}
+        />
+
+        <meta
+          name='description'
+          property='og:description'
+          content={`Learn more about ${movie.title}`}
+        />
+      </Head>
+
       <Carousel images={images?.backdrops} />
 
       <div className='relative z-10 w-full max-w-3xl px-3 mx-auto -mt-32 pointer-events-none lg:-mt-56'>
