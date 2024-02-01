@@ -24,7 +24,7 @@ export default function ProfileContainer() {
   }
 
   return (
-    <div className='grid w-full max-w-4xl gap-12 py-12 mx-auto'>
+    <div className='grid w-full max-w-4xl gap-12 px-3 py-12 mx-auto'>
       <ProfiledUserInfo />
 
       <button

@@ -10,7 +10,7 @@ export default function ProfiledUserInfo() {
     <div className='flex flex-col items-center justify-center gap-6'>
       <div className='w-32 bg-gray-500 rounded-full aspect-square' />
 
-      <div className='grid w-1/3 gap-3 text-center group'>
+      <div className='grid gap-3 text-center md:w-1/3 group'>
         {username ? (
           <p className='text-3xl capitalize group-hover:hidden'>
             Hello {username}

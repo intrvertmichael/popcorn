@@ -50,11 +50,6 @@ export default function MovieCollection({ view, movieList }) {
       ? "w-full scroll-smooth overflow-x-scroll snap-x snap-mandatory"
       : ""
 
-  const moviesListStyle =
-    view === "bar"
-      ? "w-[400%] md:w-[334%] xl:w-[286%] grid grid-cols-20 grid-rows-1"
-      : "grid grid-cols-4"
-
   const handleRMovement = e => {
     e.preventDefault()
     movieBar.current.scrollLeft += scrollAmount
@@ -99,7 +94,13 @@ export default function MovieCollection({ view, movieList }) {
         )}
 
         <div className={moviesWrapperStyle} ref={movieBar}>
-          <ul className={moviesListStyle}>
+          <ul
+            className={
+              view === "bar"
+                ? `w-[680%] sm:w-[500%] md:w-[400%] lg:w-[340%] xl:w-[200%] grid grid-cols-20 grid-rows-1`
+                : "grid grid-cols-4"
+            }
+          >
             {view === "bar" ? movies.slice(0, 20) : movies}
           </ul>
         </div>

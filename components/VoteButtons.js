@@ -2,7 +2,7 @@ import { useUserActions } from "hooks"
 
 const styles = {
   votingButtons:
-    "pointer-events-auto text-3xl py-2 px-3 rounded border border-transparent hover:border-neutral-500",
+    "pointer-events-auto text-2xl md:text-3xl py-1 sm:py-2 px-2 sm:px-3 rounded border border-transparent hover:border-neutral-500",
   selectedButton: "border-white hover:border-white",
 }
 

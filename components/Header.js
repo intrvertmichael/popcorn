@@ -44,7 +44,10 @@ export default function Header() {
               </h1>
             </Link>
 
-            <h2 className='text-neutral-500' onClick={showSearch}>
+            <h2
+              className='hidden text-neutral-500 sm:block'
+              onClick={showSearch}
+            >
               Find what to watch
             </h2>
           </div>

@@ -71,7 +71,7 @@ export default function LikedMovieTags({ movie, liked, saved }) {
             <input
               type='text'
               autoFocus
-              className='text-black'
+              className='w-full text-black'
               onChange={e => setTagText(e.target.value)}
             />
           </form>

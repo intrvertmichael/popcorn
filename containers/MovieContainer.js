@@ -88,7 +88,7 @@ export default function Movie({ id }) {
           </ul>
         </div>
 
-        <div className='px-12 py-24'>
+        <div className='px-6 py-12 sm:px-12 sm:py-24'>
           <div className='flex items-center gap-3'>
             <h1 className='text-2xl '>{movie.title}</h1>
             {!isEmpty(trailer) && (

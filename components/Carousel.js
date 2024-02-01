@@ -59,13 +59,12 @@ export default function Carousel({ images }) {
           <img
             alt={images[galleryPosition].file_path}
             src={createMovieImageURL(images[galleryPosition].file_path)}
-            priority
           />
         )}
       </div>
 
       {images.length > 1 && (
-        <div className='absolute top-0 right-0 flex gap-2 p-3 text-neutral-400 rounded-bl-xl bg-neutral-950'>
+        <div className='absolute top-0 right-0 flex gap-2 p-3 sm:text-neutral-400 rounded-bl-xl sm:bg-neutral-950'>
           <button
             className={buttonStyle}
             onClick={() => {

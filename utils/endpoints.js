@@ -26,13 +26,15 @@ export const fetchGenres = async () => {
 }
 
 export const getRecommendedMovieData = async recommended => {
-  return await Promise.all(
-    recommended.map(async movie => {
-      const res = await fetch("api/search", { headers: { movie } })
-      const data = await res.json()
-      const result = data.results[0]
+  if (Array.isArray(recommended)) {
+    return await Promise.all(
+      recommended.map(async movie => {
+        const res = await fetch("api/search", { headers: { movie } })
+        const data = await res.json()
+        const result = data.results[0]
 
-      return result
-    }),
-  )
+        return result
+      }),
+    )
+  }
 }

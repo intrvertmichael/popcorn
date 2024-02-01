@@ -13,7 +13,7 @@ export default function Trending() {
 
   if (isLoading) {
     return (
-      <div className='grid grid-cols-10 gap-1'>
+      <div className='grid gap-1 sm:grid-cols-10'>
         {makeArray(10).map(key => (
           <div
             key={key}
@@ -25,7 +25,7 @@ export default function Trending() {
   }
 
   return (
-    <ul className='grid grid-cols-10'>
+    <ul className='grid grid-cols-5 sm:grid-cols-10'>
       {trending?.map(movie => (
         <Link
           key={movie.id}

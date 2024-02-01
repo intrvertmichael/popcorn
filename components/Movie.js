@@ -26,7 +26,7 @@ export default function Movie({ movie, fb_liked, className }) {
 
   return (
     <div
-      className={`relative w-full group aspect-[1/1.5] ${
+      className={`relative w-full group aspect-[1/1.5] overflow-hidden ${
         liked ? "border-4 border-green-500 " : ""
       }${className}`}
     >
@@ -38,7 +38,7 @@ export default function Movie({ movie, fb_liked, className }) {
           />
 
           <div className='absolute top-0 z-10 flex flex-col items-center justify-center w-full h-full p-3 text-center transition-opacity duration-500 opacity-0 bg-black/90 group-hover:opacity-100'>
-            <h3 className='text-2xl'>{title}</h3>
+            <h3 className='sm:text-2xl'>{title}</h3>
             <p>★ {formatRating(movie.vote_average)}</p>
           </div>
         </li>
