@@ -56,7 +56,7 @@ export default function Carousel({ images }) {
         <meta
           name='image'
           property='og:image'
-          content={createMovieImageURL(images[galleryPosition].file_path)}
+          content={createMovieImageURL(images[galleryPosition]?.file_path)}
         />
       </Head>
 
