@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect } from "react"
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { isEmpty } from "lodash"
 
@@ -50,45 +51,55 @@ export default function Carousel({ images }) {
   }
 
   return (
-    <div className='relative max-w-5xl mx-auto overflow-hidden bg-neutral-950'>
-      <div
-        className='aspect-[16/9] cursor-pointer relative'
-        onClick={nextClicked}
-      >
-        {images[galleryPosition] && (
-          <img
-            alt={images[galleryPosition].file_path}
-            src={createMovieImageURL(images[galleryPosition].file_path)}
-          />
+    <>
+      <Head>
+        <meta
+          name='image'
+          property='og:image'
+          content={createMovieImageURL(images[galleryPosition].file_path)}
+        />
+      </Head>
+
+      <div className='relative max-w-5xl mx-auto overflow-hidden bg-neutral-950'>
+        <div
+          className='aspect-[16/9] cursor-pointer relative'
+          onClick={nextClicked}
+        >
+          {images[galleryPosition] && (
+            <img
+              alt={images[galleryPosition].file_path}
+              src={createMovieImageURL(images[galleryPosition].file_path)}
+            />
+          )}
+        </div>
+
+        {images.length > 1 && (
+          <div className='absolute top-0 right-0 flex gap-2 p-3 sm:text-neutral-400 rounded-bl-xl sm:bg-neutral-950'>
+            <button
+              className={buttonStyle}
+              onClick={() => {
+                setGalleryPosition(
+                  images.length > galleryPosition &&
+                    galleryPosition > GALLERY_START
+                    ? galleryPosition - GALLERY_CHANGE
+                    : GALLERY_END,
+                )
+              }}
+            >
+              ◀
+            </button>
+
+            <div>
+              <span className='text-white'>{galleryPosition || 0}</span> /{" "}
+              {images.length - 1}
+            </div>
+
+            <button className={buttonStyle} onClick={nextClicked}>
+              ▶
+            </button>
+          </div>
         )}
       </div>
-
-      {images.length > 1 && (
-        <div className='absolute top-0 right-0 flex gap-2 p-3 sm:text-neutral-400 rounded-bl-xl sm:bg-neutral-950'>
-          <button
-            className={buttonStyle}
-            onClick={() => {
-              setGalleryPosition(
-                images.length > galleryPosition &&
-                  galleryPosition > GALLERY_START
-                  ? galleryPosition - GALLERY_CHANGE
-                  : GALLERY_END,
-              )
-            }}
-          >
-            ◀
-          </button>
-
-          <div>
-            <span className='text-white'>{galleryPosition || 0}</span> /{" "}
-            {images.length - 1}
-          </div>
-
-          <button className={buttonStyle} onClick={nextClicked}>
-            ▶
-          </button>
-        </div>
-      )}
-    </div>
+    </>
   )
 }

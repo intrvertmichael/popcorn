@@ -66,13 +66,7 @@ export default function Movie({ id }) {
   return (
     <>
       <Head>
-        <meta
-          name='image'
-          property='og:image'
-          content={createMovieImageURL(movie.poster_path)}
-        />
-
-        <meta property='og:title' content={movie.title} />
+        <meta property='og:title' content={`🍿 ${movie.title}`} />
 
         <meta
           name='description'
