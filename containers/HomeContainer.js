@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
 
@@ -36,36 +37,54 @@ export default function Home() {
   const showFavorites = Boolean(likedMovies?.length >= LIKED_MOVIES_LIMIT)
 
   return (
-    <div className='flex flex-col h-full'>
-      {genres && showFavorites ? (
-        <>
-          <h2 className='py-32 text-2xl text-center'>
-            Based on your Liked Movies:
-          </h2>
+    <>
+      <Head>
+        <meta property='og:title' content='Popcorn' />
 
-          <Ai likedMovies={likedMovies} />
+        <meta
+          name='image'
+          property='og:image'
+          content='https://i.imgur.com/ZNdeYuX.jpg'
+        />
 
-          {sortedFavoriteGenres.map(favoriteGenre => (
-            <FavoriteGenreMovies
-              key={favoriteGenre[0]}
-              allGenres={genres}
-              favoriteGenre={favoriteGenre}
+        <meta
+          name='description'
+          property='og:description'
+          content='Created a movie app to discover new and old movies. You can like, save, and dislike movies to organize them. Tags allow you to find the movies you want faster.'
+        />
+      </Head>
+
+      <div className='flex flex-col h-full'>
+        {genres && showFavorites ? (
+          <>
+            <h2 className='py-32 text-2xl text-center'>
+              Based on your Liked Movies:
+            </h2>
+
+            <Ai likedMovies={likedMovies} />
+
+            {sortedFavoriteGenres.map(favoriteGenre => (
+              <FavoriteGenreMovies
+                key={favoriteGenre[0]}
+                allGenres={genres}
+                favoriteGenre={favoriteGenre}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+            <Intro />
+
+            <MovieCollection
+              view='bar'
+              movieList={{
+                title: "Best of 2023",
+                movies: best?.results,
+              }}
             />
-          ))}
-        </>
-      ) : (
-        <>
-          <Intro />
-
-          <MovieCollection
-            view='bar'
-            movieList={{
-              title: "Best of 2023",
-              movies: best?.results,
-            }}
-          />
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   )
 }
